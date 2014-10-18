@@ -12,7 +12,7 @@ var halls = [
 
 var periods = [
     'breakfast',
-    'brunch,'
+    'brunch',
     'lunch',
     'dinner',
     'late night'
