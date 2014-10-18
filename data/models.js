@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    Model = mongoose.model;
+    Schema = mongoose.Schema;
 
 var halls = [
     'Baker',
@@ -28,26 +27,30 @@ var userSchema = new Schema({
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
-    }],
-    votes: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Vote'
     }]
+    // votes: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Vote'
+    // }]
 });
 
 var reviewSchema = new Schema({
     author: {
-        type: Schema.Types.ObjectID,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     scope: {
-        type: Schema.Types.ObjectID,
+        type: Schema.Types.ObjectId,
         ref: 'Scope'
     },
     rating: {
         type: Number,
-        min: 0,
+        min: 1,
         max: 5
+    },
+    voters: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     rank: Number,
     content: String,
@@ -63,31 +66,33 @@ var scopeSchema = new Schema({
     period: {
         type: String,
         enum: periods
-    }
+    },
+    numStars: Number,
+    totalReviews: Number
 });
 
-var voteSchema = new Schema({
-    voter: {
-        type: Schema.Types.ObjectID,
-        ref: 'User'
-    },
-    review: {
-        type: Schema.Types.ObjectID,
-        ref: 'Review'
-    },
-    vote: Number
-});
+// var voteSchema = new Schema({
+//     voter: {
+//         type: Schema.Types.ObjectID,
+//         ref: 'User'
+//     },
+//     review: {
+//         type: Schema.Types.ObjectID,
+//         ref: 'Review'
+//     },
+//     vote: Number
+// });
 
-var User = Model('User', userSchema),
-    Review = Model('Review', reviewSchema),
-    Scope = Model('Scope', scopeSchema),
-    Vote = Model('Vote', voteSchema);
+var User = mongoose.model('User', userSchema),
+    Review = mongoose.model('Review', reviewSchema),
+    Scope = mongoose.model('Scope', scopeSchema);
+    // Vote = Model('Vote', voteSchema);
 
-Vote.schema.path('vote').validate(function (val) {
-    return Math.abs(val) === 1;
-}, 'Vote must be +1 or -1.');
+// Vote.schema.path('vote').validate(function (val) {
+//     return Math.abs(val) === 1;
+// }, 'Vote must be +1 or -1.');
 
 module.exports.User = User;
-moduel.exports.Review = Review;
-moduel.exports.Scope = Scope;
-moduel.exports.Vote = Vote;
+module.exports.Review = Review;
+module.exports.Scope = Scope;
+// moduel.exports.Vote = Vote;
