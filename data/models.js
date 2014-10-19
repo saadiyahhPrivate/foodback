@@ -28,10 +28,6 @@ var userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Review'
     }]
-    // votes: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Vote'
-    // }]
 });
 
 var reviewSchema = new Schema({
@@ -52,7 +48,7 @@ var reviewSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    rank: Number,
+    score: Number,
     content: String,
     posted: Date,
     edited: Boolean
@@ -71,28 +67,10 @@ var scopeSchema = new Schema({
     totalReviews: Number
 });
 
-// var voteSchema = new Schema({
-//     voter: {
-//         type: Schema.Types.ObjectID,
-//         ref: 'User'
-//     },
-//     review: {
-//         type: Schema.Types.ObjectID,
-//         ref: 'Review'
-//     },
-//     vote: Number
-// });
-
 var User = mongoose.model('User', userSchema),
     Review = mongoose.model('Review', reviewSchema),
     Scope = mongoose.model('Scope', scopeSchema);
-    // Vote = Model('Vote', voteSchema);
-
-// Vote.schema.path('vote').validate(function (val) {
-//     return Math.abs(val) === 1;
-// }, 'Vote must be +1 or -1.');
 
 module.exports.User = User;
 module.exports.Review = Review;
 module.exports.Scope = Scope;
-// moduel.exports.Vote = Vote;
