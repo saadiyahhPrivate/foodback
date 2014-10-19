@@ -6,8 +6,7 @@ var upvote = require('./upvote/index');
 var downvote = require('./downvote/index');
 
 router.use('/post', post);
-router.use('/upvote', upvote);
-router.use('/downvote', downvote);
+router.use('/vote', vote);
 
 router.get('/', function(req, res) {
     res.status(200).send('Search to be implemented.');
