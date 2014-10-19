@@ -14,6 +14,9 @@ var config = require('./data/config');
 var models = require('./data/models');
 
 var app = express();
+var db = mongoose.createConnection(config.hostname, config.database);
+
+app.set('db', db);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

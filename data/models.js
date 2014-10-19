@@ -48,6 +48,7 @@ var reviewSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    tages: [String],
     score: Number,
     content: String,
     posted: Date,
