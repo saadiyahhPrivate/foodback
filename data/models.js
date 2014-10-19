@@ -18,12 +18,15 @@ var periods = [
 ];
 
 var userSchema = new Schema({
-    firstname: String,
-    lastname: String,
-    username: String,
-    password: String, // may remove when cert. auth. up
-    joined: Date,
-    reputation: Number,
+    _id: {
+        type: String,
+        required: true
+    }, // User objects have their usernames as the primary key
+//    firstname: String,
+//    lastname: String,
+//    password: String,
+//    joined: Date,
+//    reputation: Number,
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
@@ -32,7 +35,7 @@ var userSchema = new Schema({
 
 var reviewSchema = new Schema({
     author: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User'
     },
     scope: {
@@ -44,15 +47,12 @@ var reviewSchema = new Schema({
         min: 1,
         max: 5
     },
-    voters: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    tages: [String],
-    score: Number,
+    tags: [String],
     content: String,
-    posted: Date,
-    edited: Boolean
+    score: Number,
+    voters: [String],
+//    posted: Date,
+//    edited: Boolean
 });
 
 var scopeSchema = new Schema({
@@ -75,3 +75,5 @@ var User = mongoose.model('User', userSchema),
 module.exports.User = User;
 module.exports.Review = Review;
 module.exports.Scope = Scope;
+module.exports.halls = halls;
+module.exports.periods = periods;
