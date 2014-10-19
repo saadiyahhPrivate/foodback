@@ -18,8 +18,7 @@ _scores, voters_
 Sophia
 
 working files:
-* /routes/upvote/index.js
-* /routes/downvote/index.js
+* /routes/vote/index.js
 
 #### Searching for reviews
 
