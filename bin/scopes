@@ -105,6 +105,4 @@ function init() {
     }
 }
 
-init();
-
-db.close();
+module.exports = init;

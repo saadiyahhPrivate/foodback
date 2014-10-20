@@ -31,9 +31,11 @@ working files:
 
 #### Note
 
-To initialize the scopes, run `node bin/scopes` **only once**. Running
+Ignore
+
+<s>To initialize the scopes, run `node bin/scopes` **only once**. Running
 it again will clear and reinsert, but data in `Scope#numStars` and
-`Scope#totalStars` will be reset to zero.
+`Scope#totalStars` will be reset to zero.<s>
 
 #### Misc
 

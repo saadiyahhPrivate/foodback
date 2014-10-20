@@ -39,6 +39,7 @@ router.get('/:dininghall', function(req, res) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scopes) {
+            console.log('Just hall 1');
             var ids = scopes.map(function (val, i, arr) {
                 return val._id;
             });
@@ -54,6 +55,7 @@ router.get('/:dininghall', function(req, res) {
                 utils.sendSuccessResponse(res, reviews);
             });
         } else {
+            console.log('Just hall 2');
             utils.sendSuccessResponse(res, []);
         }
     });
@@ -68,6 +70,7 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scope) {
+            console.log('Hall & period 1');
             var query = {scope: scope._id};
             if (req.query.tags) {
                 tags = req.query.tags.split(',');
@@ -80,6 +83,7 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
                 utils.sendSuccessResponse(res, reviews);
             });
         } else {
+            console.log('Hall & period 2');
             utils.sendSuccessResponse(res, []);
         }
     });
