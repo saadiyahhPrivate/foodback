@@ -50,7 +50,7 @@ var reviewSchema = new Schema({
     tags: [String],
     content: String,
     score: Number,
-    voters: [String],
+    voters: [String]
 //    posted: Date,
 //    edited: Boolean
 });

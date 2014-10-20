@@ -42,13 +42,15 @@ function makeNewReview(reqBody){
      - err: on failure, an error message
 ASSUMPTION: on the form, store the user as author in an invisible field
 */
-router.post('/', function(req, res) {
+router.get('/', function(req, res) {
 	//Temporary user name placeholder == user
-	var user = req.body.author;
+	var user = req.body.author; //TEST: "saadiyah"; //
+	//TEST: var scope = {hall:"baker", period:"brunch"}
 	var scope = {hall:req.body.hall, period:req.body.period};
 	//checks if the user is authenticated
 	if (user !== undefined){
 		var my_review_JSON = makeNewReview(req.body);
+		//TEST:var my_review_JSON = {author:user, rating:3, score:3, voters:[], tags:[], content: "lalala"};
 		//find the scopeID, and add it to the my_review_JSON
 		Scope.findOne(scope, function(err, doc){
 	    	if (err){
