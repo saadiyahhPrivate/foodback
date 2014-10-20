@@ -31,7 +31,7 @@ function makeNewReview(reqBody){
     return incompleteReview;
 }
 
-/*GET /reviews/post : Post the Review to the database and updates the User's reviews list
+/*POST /reviews/post : Post the Review to the database and updates the User's reviews list
  Request parameters:
      - none
  Response:
@@ -49,33 +49,38 @@ router.get('/', function(req, res) {
 		//find the scopeID, and add it to the my_review_JSON
 		Scope.findOne(scope, function(err, doc){
 	    	if (err){
-	    		utils.sendErrResponse(res, 500, "Could not find the scope you defined.");
+	    		utils.sendErrResponse(res, 500, "Error: Could not find the scope you defined.");
 	    	}
 	    	else{
-	    		var scopeID = doc._id;
-	    		my_review_JSON.scope = scopeID; //add the scope to the review JSON
-	    		var newReview = new Review(my_review_JSON); //make it into a review Object
-	    		// now add the review to the database
-				newReview.save(function(error, doc){
-					if (error){
-						utils.sendErrResponse(res, 500, "An error occured while adding your review to the database");
-					}
-					else{
-						var reviewID = newReview._id;
-						//add the review ID to the user's list of reviews
-						User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
-							if (e){
-								utils.sendErrResponse(res, 500, "There was a problem adding the review to your list of reviews");
-							}
-							else{
-								//success
-								utils.sendSuccessResponse(res, my_review_JSON);
-								// TODO phase 3: page to be rendered
-							}
-						});
-					}
-				});
-			}
+	    		if (doc !== null){
+		    		var scopeID = doc._id;
+		    		my_review_JSON.scope = scopeID; //add the scope to the review JSON
+		    		var newReview = new Review(my_review_JSON); //make it into a review Object
+		    		// now add the review to the database
+					newReview.save(function(error, doc){
+						if (error){
+							utils.sendErrResponse(res, 500, "An error occured while adding your review to the database");
+						}
+						else{
+							var reviewID = newReview._id;
+							//add the review ID to the user's list of reviews
+							User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
+								if (e){
+									utils.sendErrResponse(res, 500, "There was a problem adding the review to your list of reviews");
+								}
+								else{
+									//success
+									utils.sendSuccessResponse(res, my_review_JSON);
+									// TODO phase 3: page to be rendered
+								}
+							});
+						}
+					});
+				}
+				else{
+					utils.sendErrResponse(res, 500, "Could not find the scope you defined.");
+				}
+		    }
 		});	
     }
     else{
