@@ -10,11 +10,21 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var reviews = require('./routes/reviews');
 
-var config = require('./data/config');
 var models = require('./data/models');
 
 var app = express();
-mongoose.connect('mongodb://' + config.hostname + '/' + config.database);
+
+var connection_string = 'localhost/ps3';
+
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' +
+            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PORT + '/ps3';
+}
+
+mongoose.connect('mongodb://' + connection_string);
+
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -69,5 +79,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
+var port = process.env.OPENSHIFT_NODEJS_PORT;
+var ip = process.env.OPENSHIFT_NODEJS_IP;
+app.listen(port || 8080, ip);
 
 module.exports = app;
