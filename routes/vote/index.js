@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../data/models');
-var utils = require('../utils/utils');
+var models = require('../../data/models');
+var utils = require('../../utils/utils');
 
 var reviews = models.Review;
 
@@ -23,7 +23,7 @@ var applyVote = function(req, res, review_id, vote) {
                     break;
                 }
             }
-            
+
             if (!valid) {
                 utils.sendErrResponse(res, 403, 'Already voted on this review');
             } else {

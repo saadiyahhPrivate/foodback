@@ -14,6 +14,13 @@ var config = require('./data/config');
 var models = require('./data/models');
 
 var app = express();
+mongoose.connect('mongodb://' + config.hostname + '/' + config.database);
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    app.set('db', db);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

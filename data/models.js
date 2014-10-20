@@ -2,11 +2,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var halls = [
-    'Baker',
-    'Maseeh',
-    'McCormick',
-    'Next',
-    'Simmons'
+    'baker',
+    'maseeh',
+    'mccormick',
+    'next',
+    'simmons'
 ];
 
 var periods = [
@@ -14,7 +14,7 @@ var periods = [
     'brunch',
     'lunch',
     'dinner',
-    'late night'
+    'late-night'
 ];
 
 var userSchema = new Schema({
@@ -35,7 +35,7 @@ var userSchema = new Schema({
 
 var reviewSchema = new Schema({
     author: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User'
     },
     scope: {
@@ -47,9 +47,10 @@ var reviewSchema = new Schema({
         min: 1,
         max: 5
     },
+    tags: [String],
     content: String,
     score: Number,
-    voters: [String],
+    voters: [String]
 //    posted: Date,
 //    edited: Boolean
 });
