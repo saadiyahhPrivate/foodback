@@ -9,10 +9,11 @@ var User = models.User,
 
 var post = require('./post/index');
 var vote = require('./vote/index');
+var remove = require('./delete/index'); //using delete throws an error (keyword)
 
 router.use('/post', post);
 router.use('/vote', vote);
-router.use('/delete', delete);
+router.use('/delete', remove);
 
 router.get('/', function(req, res) {
     var tags;

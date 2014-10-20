@@ -40,7 +40,7 @@ router.get('/:review_id', function(req, res) {
 			}
 		}
 	});
-}
+});
 
 module.exports = router;
 
