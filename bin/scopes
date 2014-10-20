@@ -1,9 +1,3 @@
-var mongoose = require('mongoose');
-var config = require('../data/config');
-
-mongoose.connect('mongodb://' + config.hostname + '/' + config.database);
-var db = mongoose.connection;
-
 var models = require('../data/models'),
     Scope = models.Scope;
 
@@ -96,6 +90,4 @@ function init() {
     }
 }
 
-init();
-
-db.close();
+module.exports = init;

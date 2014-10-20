@@ -1,86 +1,26 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'mod_ssl' ]
-2 info using npm@1.4.28
-3 info using node@v0.10.32
-4 warn package.json httpd@0.0.2 No repository field.
-5 warn package.json openssl@0.1.0 No repository field.
-6 verbose readDependencies using package.json deps
-7 verbose cache add [ 'mod_ssl', null ]
-8 verbose cache add name=undefined spec="mod_ssl" args=["mod_ssl",null]
-9 verbose parsed url { protocol: null,
-9 verbose parsed url   slashes: null,
-9 verbose parsed url   auth: null,
-9 verbose parsed url   host: null,
-9 verbose parsed url   port: null,
-9 verbose parsed url   hostname: null,
-9 verbose parsed url   hash: null,
-9 verbose parsed url   search: null,
-9 verbose parsed url   query: null,
-9 verbose parsed url   pathname: 'mod_ssl',
-9 verbose parsed url   path: 'mod_ssl',
-9 verbose parsed url   href: 'mod_ssl' }
-10 silly lockFile b89360de-mod-ssl mod_ssl
-11 verbose lock mod_ssl /Users/saadiyah/.npm/b89360de-mod-ssl.lock
-12 silly lockFile b89360de-mod-ssl mod_ssl
-13 silly lockFile b89360de-mod-ssl mod_ssl
-14 verbose addNamed [ 'mod_ssl', '' ]
-15 verbose addNamed [ null, '*' ]
-16 silly lockFile 3c2f6044-mod-ssl mod_ssl@
-17 verbose lock mod_ssl@ /Users/saadiyah/.npm/3c2f6044-mod-ssl.lock
-18 silly addNameRange { name: 'mod_ssl', range: '*', hasData: false }
-19 verbose request where is /mod_ssl
-20 verbose request registry https://registry.npmjs.org/
-21 verbose request id 0461a811dc8543df
-22 verbose url raw /mod_ssl
-23 verbose url resolving [ 'https://registry.npmjs.org/', './mod_ssl' ]
-24 verbose url resolved https://registry.npmjs.org/mod_ssl
-25 verbose request where is https://registry.npmjs.org/mod_ssl
-26 info trying registry request attempt 1 at 15:25:38
-27 http GET https://registry.npmjs.org/mod_ssl
-28 http 404 https://registry.npmjs.org/mod_ssl
-29 verbose headers { date: 'Mon, 20 Oct 2014 19:25:39 GMT',
-29 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-29 verbose headers   'content-type': 'application/json',
-29 verbose headers   'cache-control': 'max-age=0',
-29 verbose headers   'content-length': '52',
-29 verbose headers   'accept-ranges': 'bytes',
-29 verbose headers   via: '1.1 varnish',
-29 verbose headers   age: '0',
-29 verbose headers   'x-served-by': 'cache-atl6234-ATL',
-29 verbose headers   'x-cache': 'MISS',
-29 verbose headers   'x-cache-hits': '0',
-29 verbose headers   'x-timer': 'S1413833139.060364,VS0,VE27',
-29 verbose headers   'keep-alive': 'timeout=10, max=50',
-29 verbose headers   connection: 'Keep-Alive' }
-30 silly registry.get cb [ 404,
-30 silly registry.get   { date: 'Mon, 20 Oct 2014 19:25:39 GMT',
-30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-30 silly registry.get     'content-type': 'application/json',
-30 silly registry.get     'cache-control': 'max-age=0',
-30 silly registry.get     'content-length': '52',
-30 silly registry.get     'accept-ranges': 'bytes',
-30 silly registry.get     via: '1.1 varnish',
-30 silly registry.get     age: '0',
-30 silly registry.get     'x-served-by': 'cache-atl6234-ATL',
-30 silly registry.get     'x-cache': 'MISS',
-30 silly registry.get     'x-cache-hits': '0',
-30 silly registry.get     'x-timer': 'S1413833139.060364,VS0,VE27',
-30 silly registry.get     'keep-alive': 'timeout=10, max=50',
-30 silly registry.get     connection: 'Keep-Alive' } ]
-31 silly lockFile 3c2f6044-mod-ssl mod_ssl@
-32 silly lockFile 3c2f6044-mod-ssl mod_ssl@
-33 error 404 404 Not Found: mod_ssl
-33 error 404
-33 error 404 'mod_ssl' is not in the npm registry.
-33 error 404 You should bug the author to publish it
-33 error 404 It was specified as a dependency of 'Foodback'
-33 error 404
-33 error 404 Note that you can also install from a
-33 error 404 tarball, folder, or http url, or git url.
-34 error System Darwin 13.4.0
-35 error command "node" "/usr/local/bin/npm" "install" "mod_ssl"
-36 error cwd /Users/saadiyah/Desktop/Fall 2014/mit 6.170 homework/saadiyah_abdihd_skw_proj3
-37 error node -v v0.10.32
-38 error npm -v 1.4.28
-39 error code E404
-40 verbose exit [ 1, true ]
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
+2 info using npm@1.3.21
+3 info using node@v0.10.24
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart Foodback@0.0.0
+6 info start Foodback@0.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info Foodback@0.0.0 Failed to exec start script
+9 error Foodback@0.0.0 start: `node ./bin/www`
+9 error Exit status 8
+10 error Failed at the Foodback@0.0.0 start script.
+10 error This is most likely a problem with the Foodback package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     node ./bin/www
+10 error You can get their info via:
+10 error     npm owner ls Foodback
+10 error There is likely additional logging output above.
+11 error System Linux 3.13.0-37-generic
+12 error command "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+13 error cwd /home/ahmad/Dropbox/MIT/Classes/6.170/psets/mini_proj
+14 error node -v v0.10.24
+15 error npm -v 1.3.21
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]
