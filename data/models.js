@@ -2,11 +2,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var halls = [
-    'Baker',
-    'Maseeh',
-    'McCormick',
-    'Next',
-    'Simmons'
+    'baker',
+    'maseeh',
+    'mccormick',
+    'next',
+    'simmons'
 ];
 
 var periods = [
@@ -14,7 +14,7 @@ var periods = [
     'brunch',
     'lunch',
     'dinner',
-    'late night'
+    'late-night'
 ];
 
 var userSchema = new Schema({
@@ -75,5 +75,3 @@ var User = mongoose.model('User', userSchema),
 module.exports.User = User;
 module.exports.Review = Review;
 module.exports.Scope = Scope;
-module.exports.halls = halls;
-module.exports.periods = periods;
