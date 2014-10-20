@@ -4,7 +4,7 @@ var router = express.Router();
 var utils = require("../../utils/utils");
 var Review = require("../../data/models").Review;
 
-/*GET /reviews/delete/:REVIEW_ID : Remove the review form the Database
+/*GET /reviews/delete/:REVIEW_ID : Remove the review from the Database
  Request parameters:
      - the ID of the review to be removed
  Response:

@@ -7,8 +7,10 @@ var Review = require("../../data/models").Review;
 var User = require("../../data/models").User;
 
 /*
-HELPER FUNCTON: given the information gathered by the review form, creates a 
-new review JSON (without a scope) and returns it to the caller
+HELPER FUNCTON:
+Parameters: the req.body gathered from the form 
+Does: creates a new review JSON (without a scope)
+Returns: the JSON object to the caller
 Assumption: All the fields mentioned are properly formatted and specified
 */
 function makeNewReview(reqBody){
@@ -31,7 +33,7 @@ function makeNewReview(reqBody){
     return incompleteReview;
 }
 
-/*GET /reviews/post : Post the Review to the database and updates the User's reviews list
+/*POST /reviews/post : Post the Review to the database and updates the User's reviews list
  Request parameters:
      - none
  Response:
@@ -39,7 +41,7 @@ function makeNewReview(reqBody){
      - err: on failure, an error message
 ASSUMPTION: on the form, store the user as author in an invisible field
 */
-router.get('/', function(req, res) {
+router.post('/', function(req, res) {
 	//Temporary user name placeholder == user
 	var user = req.body.author;
 	var scope = {hall:req.body.hall, period:req.body.period};
