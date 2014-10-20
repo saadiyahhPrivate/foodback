@@ -19,6 +19,7 @@ function makeNewReview(reqBody){
     var content = reqBody.content;
     var score = reqBody.score;
     var tags = reqBody.tags;
+    var voters = [];
     //assumes the tags is a string of comma separated strings
     if (tags == undefined){ 
     	tags = [];
@@ -29,7 +30,7 @@ function makeNewReview(reqBody){
     }
     // Create a review JSON WITHOUT a scope
     var incompleteReview = {"author":author, "rating":rating, "content":content,
-    						"score":score, "voters":[], "tags":tags}
+    						"score":score, "voters":[], "tags":tags, "voters":voters}
     return incompleteReview;
 }
 
