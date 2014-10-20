@@ -49,7 +49,7 @@ router.get('/', function(req, res) {
 		//find the scopeID, and add it to the my_review_JSON
 		Scope.findOne(scope, function(err, doc){
 	    	if (err){
-	    		utils.sendErrResponse(res, 500, "Error: Could not find the scope you defined.");
+	    		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");
 	    	}
 	    	else{
 	    		if (doc !== null){
@@ -59,14 +59,14 @@ router.get('/', function(req, res) {
 		    		// now add the review to the database
 					newReview.save(function(error, doc){
 						if (error){
-							utils.sendErrResponse(res, 500, "An error occured while adding your review to the database");
+							utils.sendErrResponse(res, 500, "Unknown Error: An error occured while adding your review to the database");
 						}
 						else{
 							var reviewID = newReview._id;
 							//add the review ID to the user's list of reviews
 							User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
 								if (e){
-									utils.sendErrResponse(res, 500, "There was a problem adding the review to your list of reviews");
+									utils.sendErrResponse(res, 500, "Unknown Error: There was a problem adding the review to your list of reviews");
 								}
 								else{
 									//success
@@ -78,13 +78,13 @@ router.get('/', function(req, res) {
 					});
 				}
 				else{
-					utils.sendErrResponse(res, 500, "Could not find the scope you defined.");
+					utils.sendErrResponse(res, 404, "Could not find the scope you defined.");
 				}
 		    }
 		});	
     }
     else{
-    	utils.sendErrResponse(res, 500, "You are not eligible to post a review");
+    	utils.sendErrResponse(res, 403, "You are not eligible to post a review");
     }
 });
 

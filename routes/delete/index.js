@@ -18,7 +18,7 @@ router.get('/:review_id', function(req, res) {
 
 	Review.findOne({_id:review_id}, function(err, doc){
 		if (err){
-			utils.sendErrResponse(res, 500, "Error: Could not find the review you want.");
+			utils.sendErrResponse(res, 500, "Unknown Error: Could not find the review you want.");
 		}
 		else{
 			if (doc !== null){
@@ -33,10 +33,10 @@ router.get('/:review_id', function(req, res) {
 					    }
 					});
 				}else{
-					utils.sendErrResponse(res, 500, "You are not eligible to delete this review.");
+					utils.sendErrResponse(res, 403, "You are not eligible to delete this review.");
 				}
 			}else{
-				utils.sendErrResponse(res, 500, "Could not find the review you are looking for.");
+				utils.sendErrResponse(res, 404, "Could not find the review you are looking for.");
 			}
 		}
 	});
