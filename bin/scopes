@@ -1,7 +1,16 @@
 var mongoose = require('mongoose');
-var config = require('../data/config');
 
-mongoose.connect('mongodb://' + config.hostname + '/' + config.database);
+var connection_string = 'localhost/ps3';
+
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' +
+            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PORT + '/ps3';
+}
+
+mongoose.connect('mongodb://' + connection_string);
+
 var db = mongoose.connection;
 
 var models = require('../data/models'),

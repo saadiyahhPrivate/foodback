@@ -2,6 +2,10 @@
   "name": "Foodback",
   "version": "0.0.0",
   "private": true,
+
+  "scripts": {
+    "start": "node ./bin/scopes"
+  },
   
   "engines": {
     "node": ">= 0.10.30",
