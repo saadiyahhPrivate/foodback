@@ -31,7 +31,7 @@ function makeNewReview(reqBody){
     return incompleteReview;
 }
 
-/*POST /reviews/post : Post the Review to the database and updates the User's reviews list
+/*GET /reviews/post : Post the Review to the database and updates the User's reviews list
  Request parameters:
      - none
  Response:

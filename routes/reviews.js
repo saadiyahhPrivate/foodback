@@ -12,6 +12,7 @@ var vote = require('./vote/index');
 
 router.use('/post', post);
 router.use('/vote', vote);
+router.use('/delete', delete);
 
 router.get('/', function(req, res) {
     var tags;
