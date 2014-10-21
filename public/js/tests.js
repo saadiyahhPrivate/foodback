@@ -1,7 +1,6 @@
 // Saadiyah
 QUnit.asyncTest("Post Test", function (assert) {
     var review = {
-        author: 'abdihd',
         hall: 'simmons',
         period: 'brunch',
         rating: 5,
@@ -34,9 +33,7 @@ QUnit.asyncTest("Post Test", function (assert) {
                 success: function (data) {
                     var content = data.content;
                     assert.ok(data.success, 'Post success.');
-                    assert.strictEqual(content.author, review.author, 'Check author.');
-                    assert.strictEqual(content.hall, review.hall, 'Check hall.');
-                    assert.strictEqual(content.period, review.period, 'Check period.');
+                    assert.strictEqual(content.author, user.username, 'Check author.');
                     assert.strictEqual(content.rating, review.rating, 'Check rating.');
                     assert.strictEqual(content.content, review.content, 'Check content.');
                     assert.deepEqual(content.tags, ['food', 'chef'], 'Check tags.');
@@ -47,12 +44,12 @@ QUnit.asyncTest("Post Test", function (assert) {
                         success: function (data) {
                             var content = data.content[0];
                             assert.ok(data.success, 'Query success.');
-                            assert.strictEqual(content.author, review.author, 'Check author.');
+                            assert.strictEqual(content.author, user.username, 'Check author 2.');
                             assert.strictEqual(content.hall, review.hall, 'Check hall.');
                             assert.strictEqual(content.period, review.period, 'Check period.');
-                            assert.strictEqual(content.rating, review.rating, 'Check rating.');
-                            assert.strictEqual(content.content, review.content, 'Check content.');
-                            assert.deepEqual(content.tags, ['food', 'chef'], 'Check tags.');
+                            assert.strictEqual(content.rating, review.rating, 'Check rating 2.');
+                            assert.strictEqual(content.content, review.content, 'Check content 2.');
+                            assert.deepEqual(content.tags, ['food', 'chef'], 'Check tags 2.');
                             $.ajax({
                                 type: 'GET',
                                 url: '/users/logout',

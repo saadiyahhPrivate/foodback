@@ -1,9 +1,10 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
@@ -14,6 +15,7 @@ var models = require('./data/models');
 
 var app = express();
 
+// Connect to MongoDB
 var connection_string = 'localhost/ps3';
 
 if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
@@ -32,12 +34,13 @@ db.once('open', function callback () {
     app.set('db', db);
 });
 
+// Set up Express sessions
+app.use(session({secret: 'asdlfkj'}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -78,7 +81,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 var port = process.env.OPENSHIFT_NODEJS_PORT;
 var ip = process.env.OPENSHIFT_NODEJS_IP;
