@@ -42,55 +42,51 @@ function makeNewReview(reqBody){
      - err: on failure, an error message
 ASSUMPTION: on the form, store the user as author in an invisible field
 */
-router.get('/', function(req, res) {
+router.get('/', utils.requireLogin, function(req, res) {
 	//Temporary user name placeholder == user
-	var user = req.body.author; //TEST: "saadiyah"; //
+	var user = req.session.username;
 	//TEST: var scope = {hall:"baker", period:"brunch"}
 	var scope = {hall:req.body.hall, period:req.body.period};
 	//checks if the user is authenticated
-	if (user !== undefined){
-		var my_review_JSON = makeNewReview(req.body);
-		//TEST:var my_review_JSON = {author:user, rating:3, score:3, voters:[], tags:[], content: "lalala"};
-		//find the scopeID, and add it to the my_review_JSON
-		Scope.findOne(scope, function(err, doc){
-	    	if (err){
-	    		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");
-	    	}
-	    	else{
-	    		if (doc !== null){
-		    		var scopeID = doc._id;
-		    		my_review_JSON.scope = scopeID; //add the scope to the review JSON
-		    		var newReview = new Review(my_review_JSON); //make it into a review Object
-		    		// now add the review to the database
-					newReview.save(function(error, doc){
-						if (error){
-							utils.sendErrResponse(res, 500, "Unknown Error: An error occured while adding your review to the database");
-						}
-						else{
-							var reviewID = newReview._id;
-							//add the review ID to the user's list of reviews
-							User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
-								if (e){
-									utils.sendErrResponse(res, 500, "Unknown Error: There was a problem adding the review to your list of reviews");
-								}
-								else{
-									//success
-									utils.sendSuccessResponse(res, my_review_JSON);
-									// TODO phase 3: page to be rendered
-								}
-							});
-						}
-					});
-				}
-				else{
-					utils.sendErrResponse(res, 404, "Could not find the scope you defined.");
-				}
-		    }
-		});	
-    }
-    else{
-    	utils.sendErrResponse(res, 403, "You are not eligible to post a review");
-    }
+	var my_review_JSON = makeNewReview(req.body);
+	//TEST:var my_review_JSON = {author:user, rating:3, score:3, voters:[], tags:[], content: "lalala"};
+	//find the scopeID, and add it to the my_review_JSON
+	Scope.findOne(scope, function(err, doc){
+    	if (err){
+    		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");
+    	}
+    	else{
+    		if (doc !== null){
+	    		var scopeID = doc._id;
+	    		my_review_JSON.scope = scopeID; //add the scope to the review JSON
+	    		var newReview = new Review(my_review_JSON); //make it into a review Object
+	    		// now add the review to the database
+				newReview.save(function(error, doc){
+					if (error){
+						utils.sendErrResponse(res, 500, "Unknown Error: An error occured while adding your review to the database");
+					}
+					else{
+						var reviewID = newReview._id;
+						//add the review ID to the user's list of reviews
+						User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
+							if (e){
+								utils.sendErrResponse(res, 500, "Unknown Error: There was a problem adding the review to your list of reviews");
+							}
+							else{
+								//success
+								utils.sendSuccessResponse(res, my_review_JSON);
+								// TODO phase 3: page to be rendered
+							}
+						});
+					}
+				});
+			}
+			else{
+				utils.sendErrResponse(res, 404, "Could not find the scope you defined.");
+			}
+	    }
+	});	
+
 });
 
 module.exports = router;
