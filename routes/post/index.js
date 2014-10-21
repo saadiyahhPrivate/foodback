@@ -8,13 +8,12 @@ var User = require("../../data/models").User;
 
 /*
 HELPER FUNCTON:
-Parameters: the req.body gathered from the form
+Parameters: the username of the review author and the request body
 Does: creates a new review JSON (without a scope)
 Returns: the JSON object to the caller
 Assumption: All the fields mentioned are properly formatted and specified
 */
-function makeNewReview(reqBody){
-    var author = reqBody.author;
+function makeNewReview(author, reqBody){
     var rating = reqBody.rating;
     var content = reqBody.content;
     var tags = reqBody.tags;
@@ -33,23 +32,20 @@ function makeNewReview(reqBody){
     return incompleteReview;
 }
 
-/*POST /reviews/post : Post the Review to the database and updates the User's reviews list
- Request parameters:
-     - none
- Response:
-     - success: true if the review was successfully submitted
-     - err: on failure, an error message
-ASSUMPTION: on the form, store the user as author in an invisible field
-*/
+// POST /reviews/post
+// Request body:
+//     - hall: the dining hall that this review is for
+//     - period: the meal period that this review is for
+//     - rating: the star rating for the review, a number from 1-5
+//     - content: the text content of the review
+//     - (OPTIONAL) tags: a comma-separated list of tags to apply to the review
+// Response:
+//     - success: true if the review was successfully submitted
+//     - err: on failure, an error message
 router.post('/', utils.requireLogin, function(req, res) {
-	//Temporary user name placeholder == user
 	var user = req.session.username;
-	//TEST: var scope = {hall:"baker", period:"brunch"}
 	var scope = {hall:req.body.hall, period:req.body.period};
-	//checks if the user is authenticated
-	var my_review_JSON = makeNewReview(req.body);
-	//TEST:var my_review_JSON = {author:user, rating:3, score:3, voters:[], tags:[], content: "lalala"};
-	//find the scopeID, and add it to the my_review_JSON
+	var my_review_JSON = makeNewReview(user, req.body);
 	Scope.findOne(scope, function(err, doc){
     	if (err){
     		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");

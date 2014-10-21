@@ -21,23 +21,12 @@ var userSchema = new Schema({
     _id: {
         type: String,
         required: true
-    }, // User objects have their usernames as the primary key
-//    firstname: String,
-//    lastname: String,
-//    password: String,
-//    joined: Date,
-//    reputation: Number,
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Review'
-    }]
+    }, // User objects have their Kerberos as the primary key
+    password: String
 });
 
 var reviewSchema = new Schema({
-    author: {
-        type: String,
-        ref: 'User'
-    },
+    author: String,
     scope: {
         type: Schema.Types.ObjectId,
         ref: 'Scope'
@@ -50,9 +39,7 @@ var reviewSchema = new Schema({
     tags: [String],
     content: String,
     score: Number,
-    voters: [String],
-//    posted: Date,
-//    edited: Boolean
+    voters: [String]
 });
 
 var scopeSchema = new Schema({
