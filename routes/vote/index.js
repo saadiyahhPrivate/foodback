@@ -14,7 +14,7 @@ var applyVote = function(req, res, review_id, vote) {
         } else if (!doc) {
             utils.sendErrResponse(res, 404, 'Could not find that review');
         } else {
-            var user = req.user;
+            var user = req.session.username;
             var valid = true;
             var voters = doc.voters;
             for (var i = 0; i < voters.length; i++) {
@@ -47,7 +47,7 @@ var applyVote = function(req, res, review_id, vote) {
 // Response:
 //     - success: true if the vote was successfully submitted
 //     - err: on failure, an error message
-router.get('/up/:review_id', function(req, res) {
+router.get('/up/:review_id', utils.requireLogin, function(req, res) {
     applyVote(req, res, req.params.review_id, 1);
 });
 
@@ -57,7 +57,7 @@ router.get('/up/:review_id', function(req, res) {
 // Response:
 //     - success: true if the vote was successfully submitted
 //     - err: on failure, an error message
-router.get('/down/:review_id', function(req, res) {
+router.get('/down/:review_id', utils.requireLogin, function(req, res) {
     applyVote(req, res, req.params.review_id, -1);
 });
 
