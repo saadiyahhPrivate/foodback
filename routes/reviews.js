@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
         tags = req.query.tags.split(',');
         query.tags = {$in: tags};
     }
-    Review.find({}).populate('author', '_id').exec(function (err, reviews) {
+    Review.find({}).populate('scope', 'hall period -_id').exec(function (err, reviews) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else {
@@ -56,9 +56,8 @@ router.get('/:dininghall', function(req, res) {
 
     Scope.find({hall: hall}, '_id', function (err, scopes) {
         if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error.');
+            utils.sendErrResponse(res, 500, 'Unknown error 1.');
         } else if (scopes) {
-            console.log('Just hall 1');
             var ids = scopes.map(function (val, i, arr) {
                 return val._id;
             });
@@ -67,15 +66,14 @@ router.get('/:dininghall', function(req, res) {
                 tags = req.query.tags.split(',');
                 query.tags = {$in: tags};
             }
-            Review.find(query).populate('author', '_id').exec(function (err, reviews) {
+            Review.find(query).populate('scope', 'hall period -_id').exec(function (err, reviews) {
                 if (err) {
-                    utils.sendErrResponse(res, 500, 'Unknown error.');
+                    utils.sendErrResponse(res, 500, 'Unknown error 2.');
                 } else {
                 	utils.sendSuccessResponse(res, reviews);
                 }
             });
         } else {
-            console.log('Just hall 2');
             utils.sendSuccessResponse(res, []);
         }
     });
@@ -99,23 +97,21 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
 
     Scope.findOne({hall: hall, period: period}, '_id', function (err, scope) {
         if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error.');
+            utils.sendErrResponse(res, 500, 'Unknown error 2.');
         } else if (scope) {
-            console.log('Hall & period 1');
             var query = {scope: scope._id};
             if (req.query.tags) {
                 tags = req.query.tags.split(',');
                 query.tags = {$in: tags};
             }
-            Review.find(query).populate('author', '_id').exec(function (err, reviews) {
+            Review.find(query).populate('scope', 'hall period -_id').exec(function (err, reviews) {
                 if (err) {
-                    utils.sendErrResponse(res, 500, 'Unknown error.');
+                    utils.sendErrResponse(res, 500, 'Unknown error 3.');
                 } else {
                 	utils.sendSuccessResponse(res, reviews);
                 }
             });
         } else {
-            console.log('Hall & period 2');
             utils.sendSuccessResponse(res, []);
         }
     });

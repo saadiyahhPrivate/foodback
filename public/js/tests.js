@@ -34,7 +34,7 @@ QUnit.asyncTest("Post Test", function (assert) {
                     var content = data.content;
                     assert.ok(data.success, 'Post success.');
                     assert.strictEqual(content.author, user.username, 'Check author.');
-                    assert.strictEqual(content.rating, review.rating, 'Check rating.');
+                    assert.equal(content.rating, review.rating, 'Check rating.');
                     assert.strictEqual(content.content, review.content, 'Check content.');
                     assert.deepEqual(content.tags, ['food', 'chef'], 'Check tags.');
                     $.ajax({
@@ -45,9 +45,9 @@ QUnit.asyncTest("Post Test", function (assert) {
                             var content = data.content[0];
                             assert.ok(data.success, 'Query success.');
                             assert.strictEqual(content.author, user.username, 'Check author 2.');
-                            assert.strictEqual(content.hall, review.hall, 'Check hall.');
-                            assert.strictEqual(content.period, review.period, 'Check period.');
-                            assert.strictEqual(content.rating, review.rating, 'Check rating 2.');
+                            assert.strictEqual(content.scope.hall, review.hall, 'Check hall.');
+                            assert.strictEqual(content.scope.period, review.period, 'Check period.');
+                            assert.equal(content.rating, review.rating, 'Check rating 2.');
                             assert.strictEqual(content.content, review.content, 'Check content 2.');
                             assert.deepEqual(content.tags, ['food', 'chef'], 'Check tags 2.');
                             $.ajax({
