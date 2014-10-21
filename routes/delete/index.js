@@ -4,15 +4,13 @@ var router = express.Router();
 var utils = require("../../utils/utils");
 var Review = require("../../data/models").Review;
 
-/*GET /reviews/delete/:REVIEW_ID : Remove the review from the Database
- Request parameters:
-     - the ID of the review to be removed
- Response:
-     - success: true if the review was successfully removed
-     - err: on failure, an error message
-ASSUMPTION: the user is identifiable from certificates
-*/
-router.get('/:review_id',utils.requireLogin, function(req, res) {
+// GET /reviews/delete/:review_id
+// Request parameters:
+//     - review_id: a String representation of the MongoDB _id of the review
+// Response:
+//     - success: true if the review was successfully deleted
+//     - err: on failure, an error message
+router.get('/:review_id', utils.requireLogin, function(req, res) {
 	var user = req.session.username; // sessions usernames
 	var review_id = req.params.review_id;
 
