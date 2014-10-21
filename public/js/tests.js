@@ -1,3 +1,5 @@
+QUnit.config.reorder = false;
+
 var review = {
 	hall: 'simmons',
 	period: 'brunch',
@@ -29,7 +31,7 @@ function checkReview(assert, newReview) {
 }
 
 // Sophia
-QUnit.test("Login Test", function(assert) {
+QUnit.asyncTest("Login Test", function(assert) {
     $.ajax({
         type: 'POST',
         url: '/users/login',
@@ -45,7 +47,7 @@ QUnit.test("Login Test", function(assert) {
 
 // Saadiyah
 function postTest() {
-	QUnit.test("Post Test", function(assert) {
+	QUnit.asyncTest("Post Test", function(assert) {
 	    $.ajax({
             type: 'POST',
             url: '/reviews/post',
@@ -64,7 +66,7 @@ function postTest() {
 
 // Abdi
 function allReviewsTest() {
-	QUnit.test("Get All Reviews", function(assert) {
+	QUnit.asyncTest("Get All Reviews", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews',
@@ -84,7 +86,7 @@ function allReviewsTest() {
 
 // Abdi
 function allReviewsTestTags() {
-	QUnit.test("Get All Reviews with Tags", function(assert) {
+	QUnit.asyncTest("Get All Reviews with Tags", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews?tags=food,chef',
@@ -104,7 +106,7 @@ function allReviewsTestTags() {
 
 // Abdi
 function hallReviewsTest() {
-	QUnit.test("Get Reviews by Dining Hall", function(assert) {
+	QUnit.asyncTest("Get Reviews by Dining Hall", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/simmons',
@@ -124,7 +126,7 @@ function hallReviewsTest() {
 
 // Abdi
 function hallReviewsTestTags() {
-	QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
+	QUnit.asyncTest("Get Reviews by Dining Hall with Tags", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/simmons?tags=food,chef',
@@ -144,7 +146,7 @@ function hallReviewsTestTags() {
 
 // Abdi
 function scopeReviewsTest() {
-	QUnit.test("Get Reviews by Scope", function(assert) {
+	QUnit.asyncTest("Get Reviews by Scope", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/simmons/brunch',
@@ -164,7 +166,7 @@ function scopeReviewsTest() {
 
 // Abdi
 function scopeReviewsTestTags() {
-	QUnit.test("Get Reviews by Scope with Tags", function(assert) {
+	QUnit.asyncTest("Get Reviews by Scope with Tags", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/simmons/brunch?tags=food,chef',
@@ -184,7 +186,7 @@ function scopeReviewsTestTags() {
 
 // Sophia
 function upvoteTest() {
-	QUnit.test("Upvote Test", function(assert) {
+	QUnit.asyncTest("Upvote Test", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/vote/up/' + currentReviewId,
@@ -203,7 +205,7 @@ function upvoteTest() {
 
 // Saadiyah
 function deleteTest() {
-	QUnit.test("Delete Test", function(assert) {
+	QUnit.asyncTest("Delete Test", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/delete/' + currentReviewId,
@@ -238,7 +240,7 @@ function helperPost() {
 
 // Sophia
 function downvoteTest() {
-	QUnit.test("Downvote Test", function(assert) {
+	QUnit.asyncTest("Downvote Test", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/reviews/vote/down/' + currentReviewId,
@@ -257,7 +259,7 @@ function downvoteTest() {
 
 // Sophia
 function logoutTest() {
-	QUnit.test("Logout Test", function(assert) {
+	QUnit.asyncTest("Logout Test", function(assert) {
 		$.ajax({
 	        type: 'GET',
 	        url: '/users/logout',
