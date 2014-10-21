@@ -171,7 +171,9 @@ QUnit.test("Upvote Test", function(assert) {
             assert.strictEqual(data.content.score, 1, 'Check upvote.');
             start();
         },
-        error: error
+        error: function(data) {
+        	console.log(data.err);
+        }
     });
 });
 
