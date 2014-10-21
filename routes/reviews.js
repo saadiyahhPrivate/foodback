@@ -15,6 +15,14 @@ router.use('/post', post);
 router.use('/vote', vote);
 router.use('/delete', remove);
 
+// GET /reviews
+// Request query:
+//     - (OPTIONAL) tags: a comma-separated list of tags to search for
+// Response:
+//     - success: true if the search finished without error
+//     - content: on success, an array containing the review objects that
+//                matched the search
+//     - err: on failure, an error message
 router.get('/', function(req, res) {
     var tags;
 
@@ -26,11 +34,22 @@ router.get('/', function(req, res) {
     Review.find({}).populate('author', '_id').exec(function (err, reviews) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
+        } else {
+        	utils.sendSuccessResponse(res, reviews);
         }
-        utils.sendSuccessResponse(res, reviews);
     });
 });
 
+// GET /reviews/:dininghall
+// Request parameters:
+//     - dininghall: the name of the dining hall for which to find reviews
+// Request query:
+//     - (OPTIONAL) tags: a comma-separated list of tags to search for
+// Response:
+//     - success: true if the search finished without error
+//     - content: on success, an array containing the review objects that
+//                matched the search
+//     - err: on failure, an error message
 router.get('/:dininghall', function(req, res) {
     var hall = req.params.dininghall,
         tags;
@@ -51,8 +70,9 @@ router.get('/:dininghall', function(req, res) {
             Review.find(query).populate('author', '_id').exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
+                } else {
+                	utils.sendSuccessResponse(res, reviews);
                 }
-                utils.sendSuccessResponse(res, reviews);
             });
         } else {
             console.log('Just hall 2');
@@ -61,6 +81,17 @@ router.get('/:dininghall', function(req, res) {
     });
 });
 
+// GET /reviews/:dininghall/:mealperiod
+// Request parameters:
+//     - dininghall: the name of the dining hall for which to find reviews
+//     - mealperiod: the name of the meal period for which to find reviews
+// Request query:
+//     - (OPTIONAL) tags: a comma-separated list of tags to search for
+// Response:
+//     - success: true if the search finished without error
+//     - content: on success, an array containing the review objects that
+//                matched the search
+//     - err: on failure, an error message
 router.get('/:dininghall/:mealperiod', function(req, res) {
     var hall = req.params.dininghall,
         period = req.params.mealperiod,
@@ -79,8 +110,9 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
             Review.find(query).populate('author', '_id').exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
+                } else {
+                	utils.sendSuccessResponse(res, reviews);
                 }
-                utils.sendSuccessResponse(res, reviews);
             });
         } else {
             console.log('Hall & period 2');
