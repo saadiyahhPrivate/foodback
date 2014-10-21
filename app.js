@@ -87,8 +87,3 @@ var ip = process.env.OPENSHIFT_NODEJS_IP;
 app.listen(port || 8080, ip);
 
 module.exports = app;
-
-var user = new models.User({
-    _id: 'foodback',
-    password: 'pa55w0rd'});
-user.save(function(err) {});
