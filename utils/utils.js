@@ -23,7 +23,7 @@ utils.sendErrResponse = function(res, errcode, err) {
 utils.requireLogin = function(req, res, next) {
 	if (!req.session.username) {
 		utils.sendErrResponse(res, 403,
-				'You must be logged in to perform this function');
+				'You must be logged in to perform this action');
 	} else {
 		next();
 	}
