@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
         tags = req.query.tags.split(',');
         query.tags = {$in: tags};
     }
-    Review.find({}, function (err, reviews) {
+    Review.find({}).populate('author', '_id').exec(function (err, reviews) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         }
@@ -48,7 +48,7 @@ router.get('/:dininghall', function(req, res) {
                 tags = req.query.tags.split(',');
                 query.tags = {$in: tags};
             }
-            Review.find(query, function (err, reviews) {
+            Review.find(query).populate('author', '_id').exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 }
@@ -76,7 +76,7 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
                 tags = req.query.tags.split(',');
                 query.tags = {$in: tags};
             }
-            Review.find(query, function (err, reviews) {
+            Review.find(query).populate('author', '_id').exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 }
