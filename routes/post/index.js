@@ -44,11 +44,8 @@ function makeNewReview(author, reqBody){
 //     - err: on failure, an error message
 router.post('/', utils.requireLogin, function(req, res) {
 	var user = req.session.username;
-	//TEST: var scope = {hall:"baker", period:"brunch"}
 	var scope = {hall:req.body.hall, period:req.body.period};
 	var my_review_JSON = makeNewReview(user, req.body);
-	//TEST:var my_review_JSON = {author:user, rating:3, score:3, voters:[], tags:[], content: "lalala"};
-	//find the scopeID, and add it to the my_review_JSON
 	Scope.findOne(scope, function(err, doc){
     	if (err){
     		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");
