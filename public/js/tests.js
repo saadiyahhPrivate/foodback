@@ -31,7 +31,8 @@ function checkReview(assert, newReview) {
 }
 
 // Sophia
-QUnit.asyncTest("Login Test", function(assert) {
+QUnit.test("Login Test", function(assert) {
+	stop();
     $.ajax({
         type: 'POST',
         url: '/users/login',
@@ -39,30 +40,29 @@ QUnit.asyncTest("Login Test", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Login success.');
-            postTest();
+            start();
         },
         error: error
     });
 });
 
 // Saadiyah
-function postTest() {
-	QUnit.asyncTest("Post Test", function(assert) {
-	    $.ajax({
-            type: 'POST',
-            url: '/reviews/post',
-            data: review,
-            dataType: 'json',
-            success: function(data) {
-                assert.ok(data.success, 'Post success.');
-                checkReview(assert, data.content.review);
-                currentReviewId = review._id;
-                allReviewsTest();
-            },
-            error: error
-        });
-	});
-}
+QUnit.test("Post Test", function(assert) {
+	stop();
+    $.ajax({
+        type: 'POST',
+        url: '/reviews/post',
+        data: review,
+        dataType: 'json',
+        success: function(data) {
+            assert.ok(data.success, 'Post success.');
+            checkReview(assert, data.content.review);
+            currentReviewId = review._id;
+            allReviewsTest();
+        },
+        error: error
+    });
+});
 
 // Abdi
 function allReviewsTest() {
