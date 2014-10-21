@@ -24,15 +24,15 @@ function makeNewReview(author, reqBody){
     var voters = [];
     //assumes the tags is a string of comma separated strings
     if (tags == undefined){
-    	tags = [];
+        tags = [];
     }
     else{
-    	//parse tags into an array
-    	var tags = tags.trim().split(/\s*,\s*/);
+        //parse tags into an array
+        var tags = tags.trim().split(/\s*,\s*/);
     }
     // Create a review JSON WITHOUT a scope
     var incompleteReview = {author: author, rating: rating, content: content,
-    						score: 0, tags: tags, voters: voters};
+                            score: 0, tags: tags, voters: voters};
     return incompleteReview;
 }
 
@@ -49,46 +49,46 @@ function makeNewReview(author, reqBody){
 //                contains the review that was just posted
 //     - err: on failure, an error message
 router.post('/', utils.requireLogin, function(req, res) {
-	var user = req.session.username;
-	var scope = {hall: req.body.hall, period: req.body.period};
-	var my_review_JSON = makeNewReview(user, req.body);
-	Scope.findOne(scope, function(err, doc) {
-    	if (err) {
-    		utils.sendErrResponse(res, 500, "Unknown Error");
-    	} else {
-    		if (doc) {
-	    		var scopeID = doc._id;
-	    		my_review_JSON.scope = scopeID;
-	    		var newReview = new Review(my_review_JSON);
-	    		
-	    		newReview.save(function(err, review) {
-					if (err) {
-						utils.sendErrResponse(res, 500, "Unknown Error");
-					} else {
-						var reviewID = doc._id;
-						User.update({_id: user}, {$push: {reviews: reviewID}},
-								{upsert:true}, function(err, user) {
-							if (err) {
-								utils.sendErrResponse(res, 500, "Unknown Error");
-							} else {
-								review.populate('scope', function(err, doc) {
-									if (err) {
-										utils.sendErrResponse(res, 500, "Unknown Error");
-									} else {
-										utils.sendSuccessResponse(res, {review: doc});
-									}
-								});
-								// TODO phase 3: page to be rendered
-							}
-						});
-					}
-				});
-			} else {
-				utils.sendErrResponse(res, 404,
-						"Could not find the scope you defined.");
-			}
-	    }
-	});
+    var user = req.session.username;
+    var scope = {hall: req.body.hall, period: req.body.period};
+    var my_review_JSON = makeNewReview(user, req.body);
+    Scope.findOne(scope, function(err, doc) {
+        if (err) {
+            utils.sendErrResponse(res, 500, "Unknown Error");
+        } else {
+            if (doc) {
+                var scopeID = doc._id;
+                my_review_JSON.scope = scopeID;
+                var newReview = new Review(my_review_JSON);
+                
+                newReview.save(function(err, review) {
+                    if (err) {
+                        utils.sendErrResponse(res, 500, "Unknown Error");
+                    } else {
+                        var reviewID = doc._id;
+                        User.update({_id: user}, {$push: {reviews: reviewID}},
+                                {upsert:true}, function(err, user) {
+                            if (err) {
+                                utils.sendErrResponse(res, 500, "Unknown Error");
+                            } else {
+                                review.populate('scope', function(err, doc) {
+                                    if (err) {
+                                        utils.sendErrResponse(res, 500, "Unknown Error");
+                                    } else {
+                                        utils.sendSuccessResponse(res, {review: doc});
+                                    }
+                                });
+                                // TODO phase 3: page to be rendered
+                            }
+                        });
+                    }
+                });
+            } else {
+                utils.sendErrResponse(res, 404,
+                        "Could not find the scope you defined.");
+            }
+        }
+    });
 
 });
 
