@@ -45,6 +45,8 @@ function makeNewReview(author, reqBody){
 //     - (OPTIONAL) tags: a comma-separated list of tags to apply to the review
 // Response:
 //     - success: true if the review was successfully submitted
+//     - content: on success, an object with a single field 'review', which
+//                contains the review that was just posted
 //     - err: on failure, an error message
 router.post('/', utils.requireLogin, function(req, res) {
 	var user = req.session.username;
@@ -63,13 +65,13 @@ router.post('/', utils.requireLogin, function(req, res) {
 					if (err) {
 						utils.sendErrResponse(res, 500, "Unknown Error");
 					} else {
-						var reviewID = newReview._id;
+						var reviewID = doc._id;
 						User.update({_id: user}, {$push: {reviews: reviewID}},
 								{upsert:true}, function(err, doc) {
 							if (err) {
 								utils.sendErrResponse(res, 500, "Unknown Error");
 							} else {
-								utils.sendSuccessResponse(res, my_review_JSON);
+								utils.sendSuccessResponse(res, {review: doc});
 								// TODO phase 3: page to be rendered
 							}
 						});
