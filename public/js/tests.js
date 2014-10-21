@@ -18,6 +18,7 @@ var currentReviewId;
 
 function error(xhr) {
 	console.log(xhr.responseText);
+	start();
 }
 
 // Assert that the given review is equivalent to the test review.
@@ -199,7 +200,7 @@ QUnit.test("Post Test 2", function(assert) {
         success: function(data) {
             assert.ok(data.success, 'Post success.');
             checkReview(assert, data.content.review);
-            currentReviewId = review._id;
+            currentReviewId = data.content.review._id;
             start();
         },
         error: error
@@ -215,6 +216,19 @@ QUnit.test("Downvote Test", function(assert) {
         success: function(data) {
             assert.ok(data.success, 'Downvote success.');
             assert.strictEqual(data.content.score, -1, 'Check downvote.');
+            start();
+        },
+        error: error
+    });
+});
+
+QUnit.test("Delete Test 2", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/delete/' + currentReviewId,
+        success: function(data) {
+            assert.ok(data.success, 'Delete success.');
             start();
         },
         error: error
