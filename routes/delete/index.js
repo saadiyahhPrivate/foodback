@@ -12,8 +12,8 @@ var Review = require("../../data/models").Review;
      - err: on failure, an error message
 ASSUMPTION: the user is identifiable from certificates
 */
-router.get('/:review_id', function(req, res) {
-	var user = req.body.user; // placeholder
+router.get('/:review_id',utils.requireLogin, function(req, res) {
+	var user = req.session.username; // sessions usernames
 	var review_id = req.params.review_id;
 
 	Review.findOne({_id:review_id}, function(err, doc){
