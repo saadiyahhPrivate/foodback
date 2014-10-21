@@ -58,215 +58,179 @@ QUnit.test("Post Test", function(assert) {
             assert.ok(data.success, 'Post success.');
             checkReview(assert, data.content.review);
             currentReviewId = review._id;
-            allReviewsTest();
+            start();
         },
         error: error
     });
 });
 
 // Abdi
-function allReviewsTest() {
-	QUnit.asyncTest("Get All Reviews", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews',
-	        dataType: 'json',
-	        success: function(data) {
-	        	assert.ok(data.success, 'Query success.');
-	        	checkReview(assert, data.content[0]);
-	            allReviewsTestTags();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	allReviewsTestTags();
-	        }
-	    });
-	});
-}
+QUnit.test("Get All Reviews", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews',
+        dataType: 'json',
+        success: function(data) {
+        	assert.ok(data.success, 'Query success.');
+        	checkReview(assert, data.content[0]);
+            start();
+        },
+        error: error
+    });
+});
 
 // Abdi
-function allReviewsTestTags() {
-	QUnit.asyncTest("Get All Reviews with Tags", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews?tags=food,chef',
-	        dataType: 'json',
-	        success: function(data) {
-	        	assert.ok(data.success, 'Query success.');
-	        	checkReview(assert, data.content[0]);
-	            hallReviewsTest();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	hallReviewsTest();
-	        }
-	    });
-	});
-}
+QUnit.test("Get All Reviews with Tags", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews?tags=food,chef',
+        dataType: 'json',
+        success: function(data) {
+        	assert.ok(data.success, 'Query success.');
+        	checkReview(assert, data.content[0]);
+            start();
+        },
+        error: error
+    });
+});
 
 // Abdi
-function hallReviewsTest() {
-	QUnit.asyncTest("Get Reviews by Dining Hall", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/simmons',
-	        dataType: 'json',
-	        success: function(data) {
-	        	assert.ok(data.success, 'Query success.');
-	        	checkReview(assert, data.content[0]);
-	            hallReviewsTestTags();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	hallReviewsTestTags();
-	        }
-	    });
-	});
-}
+QUnit.test("Get Reviews by Dining Hall", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/simmons',
+        dataType: 'json',
+        success: function(data) {
+        	assert.ok(data.success, 'Query success.');
+        	checkReview(assert, data.content[0]);
+            start();
+        },
+        error: error
+    });
+});
 
 // Abdi
-function hallReviewsTestTags() {
-	QUnit.asyncTest("Get Reviews by Dining Hall with Tags", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/simmons?tags=food,chef',
-	        dataType: 'json',
-	        success: function(data) {
-	        	assert.ok(data.success, 'Query success.');
-	        	checkReview(assert, data.content[0]);
-	            scopeReviewsTest();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	scopeReviewsTest();
-	        }
-	    });
-	});
-}
+QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/simmons?tags=food,chef',
+        dataType: 'json',
+        success: function(data) {
+        	assert.ok(data.success, 'Query success.');
+        	checkReview(assert, data.content[0]);
+            start();
+        },
+        error: error
+    });
+});
 
 // Abdi
-function scopeReviewsTest() {
-	QUnit.asyncTest("Get Reviews by Scope", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/simmons/brunch',
-	        dataType: 'json',
-	        success: function(data) {
-	        	assert.ok(data.success, 'Query success.');
-	        	checkReview(assert, data.content[0]);
-	            scopeReviewsTestTags();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	scopeReviewsTestTags();
-	        }
-	    });
-	});
-}
+QUnit.test("Get Reviews by Scope", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/simmons/brunch',
+        dataType: 'json',
+        success: function(data) {
+        	assert.ok(data.success, 'Query success.');
+        	checkReview(assert, data.content[0]);
+            start();
+        },
+        error: error
+    });
+});
 
 // Abdi
-function scopeReviewsTestTags() {
-	QUnit.asyncTest("Get Reviews by Scope with Tags", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/simmons/brunch?tags=food,chef',
-	        dataType: 'json',
-	        success: function(data) {
-	        	assert.ok(data.success, 'Query success.');
-	        	checkReview(assert, data.content[0]);
-	            upvoteTest();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	upvoteTest();
-	        }
-	    });
-	});
-}
+QUnit.test("Get Reviews by Scope with Tags", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/simmons/brunch?tags=food,chef',
+        dataType: 'json',
+        success: function(data) {
+        	assert.ok(data.success, 'Query success.');
+        	checkReview(assert, data.content[0]);
+            start();
+        },
+        error: error
+    });
+});
 
 // Sophia
-function upvoteTest() {
-	QUnit.asyncTest("Upvote Test", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/vote/up/' + currentReviewId,
-	        success: function(data) {
-	            assert.ok(data.success, 'Upvote success.');
-	            assert.strictEqual(data.content.score, 1, 'Check upvote.');
-	            deleteTest();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	deleteTest();
-	        }
-	    });
-	});
-}
+QUnit.test("Upvote Test", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/vote/up/' + currentReviewId,
+        success: function(data) {
+            assert.ok(data.success, 'Upvote success.');
+            assert.strictEqual(data.content.score, 1, 'Check upvote.');
+            start();
+        },
+        error: error
+    });
+});
 
 // Saadiyah
-function deleteTest() {
-	QUnit.asyncTest("Delete Test", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/delete/' + currentReviewId,
-	        success: function(data) {
-	            assert.ok(data.success, 'Delete success.');
-	            helperPost();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	helperPost();
-	        }
-	    });
-	});
-}
-
-function helperPost() {
+QUnit.test("Delete Test", function(assert) {
+	stop();
 	$.ajax({
+        type: 'GET',
+        url: '/reviews/delete/' + currentReviewId,
+        success: function(data) {
+            assert.ok(data.success, 'Delete success.');
+            start();
+        },
+        error: error
+    });
+});
+
+QUnit.test("Post Test 2", function(assert) {
+	stop();
+    $.ajax({
         type: 'POST',
         url: '/reviews/post',
         data: review,
         dataType: 'json',
         success: function(data) {
+            assert.ok(data.success, 'Post success.');
+            checkReview(assert, data.content.review);
             currentReviewId = review._id;
-            downvoteTest();
+            start();
         },
-        error: function(err) {
-        	error(err);
-        	logoutTest();
-        }
+        error: error
     });
-}
+});
 
 // Sophia
-function downvoteTest() {
-	QUnit.asyncTest("Downvote Test", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/reviews/vote/down/' + currentReviewId,
-	        success: function(data) {
-	            assert.ok(data.success, 'Downvote success.');
-	            assert.strictEqual(data.content.score, -1, 'Check downvote.');
-	            logoutTest();
-	        },
-	        error: function(err) {
-	        	error(err);
-	        	logoutTest();
-	        }
-	    });
-	});
-}
+QUnit.test("Downvote Test", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/reviews/vote/down/' + currentReviewId,
+        success: function(data) {
+            assert.ok(data.success, 'Downvote success.');
+            assert.strictEqual(data.content.score, -1, 'Check downvote.');
+            start();
+        },
+        error: error
+    });
+});
 
 // Sophia
-function logoutTest() {
-	QUnit.asyncTest("Logout Test", function(assert) {
-		$.ajax({
-	        type: 'GET',
-	        url: '/users/logout',
-	        success: function(data) {
-	            assert.ok(data.success, 'Logout success.');
-	        },
-	        error: error
-	    });
-	});
-}
+QUnit.asyncTest("Logout Test", function(assert) {
+	stop();
+	$.ajax({
+        type: 'GET',
+        url: '/users/logout',
+        success: function(data) {
+            assert.ok(data.success, 'Logout success.');
+            start();
+        },
+        error: error
+    });
+});

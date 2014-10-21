@@ -61,17 +61,17 @@ router.post('/', utils.requireLogin, function(req, res) {
 	    		my_review_JSON.scope = scopeID;
 	    		var newReview = new Review(my_review_JSON);
 	    		
-	    		newReview.save(function(err, doc) {
+	    		newReview.save(function(err, review) {
 					if (err) {
 						utils.sendErrResponse(res, 500, "Unknown Error");
 					} else {
 						var reviewID = doc._id;
 						User.update({_id: user}, {$push: {reviews: reviewID}},
-								{upsert:true}, function(err, doc) {
+								{upsert:true}, function(err, user) {
 							if (err) {
 								utils.sendErrResponse(res, 500, "Unknown Error");
 							} else {
-								utils.sendSuccessResponse(res, {review: doc});
+								utils.sendSuccessResponse(res, {review: review});
 								// TODO phase 3: page to be rendered
 							}
 						});
