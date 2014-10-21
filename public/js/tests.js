@@ -236,7 +236,7 @@ QUnit.test("Delete Test 2", function(assert) {
 });
 
 // Sophia
-QUnit.asyncTest("Logout Test", function(assert) {
+QUnit.test("Logout Test", function(assert) {
 	stop();
 	$.ajax({
         type: 'GET',

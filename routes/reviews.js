@@ -18,6 +18,13 @@ router.use('/post', post);
 router.use('/vote', vote);
 router.use('/delete', remove);
 
+function attachTags(req, query) {
+    if (req.query.tags) {
+        var tags = req.query.tags.split(',');
+        query.tags = {$in: tags};
+    }
+}
+
 // GET /reviews
 // Request query:
 //     - (OPTIONAL) tags: a comma-separated list of tags to search for
@@ -27,14 +34,9 @@ router.use('/delete', remove);
 //                matched the search
 //     - err: on failure, an error message
 router.get('/', function(req, res) {
-    var tags;
-
     var query = {};
-    if (req.query.tags) {
-        tags = req.query.tags.split(',');
-        query.tags = {$in: tags};
-    }
-    
+    attachTags(req, query);
+
     var results = Review.find(query).populate('scope', 'hall period -_id');
     results.exec(function (err, reviews) {
         if (err) {
@@ -56,25 +58,21 @@ router.get('/', function(req, res) {
 //                matched the search
 //     - err: on failure, an error message
 router.get('/:dininghall', function(req, res) {
-    var hall = req.params.dininghall,
-        tags;
+    var hall = req.params.dininghall;
 
     Scope.find({hall: hall}, '_id', function (err, scopes) {
         if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error 1.');
+            utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scopes) {
             var ids = scopes.map(function (val, i, arr) {
                 return val._id;
             });
             var query = {scope: {$in: ids}};
-            if (req.query.tags) {
-                tags = req.query.tags.split(',');
-                query.tags = {$in: tags};
-            }
+            attachTags(req, query);
             var results = Review.find(query).populate('scope', 'hall period -_id');
             results.exec(function (err, reviews) {
                 if (err) {
-                    utils.sendErrResponse(res, 500, 'Unknown error 2.');
+                    utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
                 	utils.sendSuccessResponse(res, reviews);
                 }
@@ -98,22 +96,18 @@ router.get('/:dininghall', function(req, res) {
 //     - err: on failure, an error message
 router.get('/:dininghall/:mealperiod', function(req, res) {
     var hall = req.params.dininghall,
-        period = req.params.mealperiod,
-        tags;
+        period = req.params.mealperiod;
 
     Scope.findOne({hall: hall, period: period}, '_id', function (err, scope) {
         if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error 2.');
+            utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scope) {
             var query = {scope: scope._id};
-            if (req.query.tags) {
-                tags = req.query.tags.split(',');
-                query.tags = {$in: tags};
-            }
+            attachTags(req, query);
             var results = Review.find(query).populate('scope', 'hall period -_id');
             results.exec(function (err, reviews) {
                 if (err) {
-                    utils.sendErrResponse(res, 500, 'Unknown error 3.');
+                    utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
                 	utils.sendSuccessResponse(res, reviews);
                 }
