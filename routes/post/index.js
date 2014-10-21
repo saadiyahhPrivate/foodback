@@ -8,7 +8,7 @@ var User = require("../../data/models").User;
 
 /*
 HELPER FUNCTON:
-Parameters: the req.body gathered from the form 
+Parameters: the req.body gathered from the form
 Does: creates a new review JSON (without a scope)
 Returns: the JSON object to the caller
 Assumption: All the fields mentioned are properly formatted and specified
@@ -20,7 +20,7 @@ function makeNewReview(reqBody){
     var tags = reqBody.tags;
     var voters = [];
     //assumes the tags is a string of comma separated strings
-    if (tags == undefined){ 
+    if (tags == undefined){
     	tags = [];
     }
     else{
@@ -41,7 +41,7 @@ function makeNewReview(reqBody){
      - err: on failure, an error message
 ASSUMPTION: on the form, store the user as author in an invisible field
 */
-router.get('/', utils.requireLogin, function(req, res) {
+router.post('/', utils.requireLogin, function(req, res) {
 	//Temporary user name placeholder == user
 	var user = req.session.username;
 	//TEST: var scope = {hall:"baker", period:"brunch"}
@@ -53,6 +53,7 @@ router.get('/', utils.requireLogin, function(req, res) {
 	Scope.findOne(scope, function(err, doc){
     	if (err){
     		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");
+            console.log('1');
     	}
     	else{
     		if (doc !== null){
@@ -63,6 +64,7 @@ router.get('/', utils.requireLogin, function(req, res) {
 				newReview.save(function(error, doc){
 					if (error){
 						utils.sendErrResponse(res, 500, "Unknown Error: An error occured while adding your review to the database");
+                        console.log('2');
 					}
 					else{
 						var reviewID = newReview._id;
@@ -70,6 +72,7 @@ router.get('/', utils.requireLogin, function(req, res) {
 						User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
 							if (e){
 								utils.sendErrResponse(res, 500, "Unknown Error: There was a problem adding the review to your list of reviews");
+                                console.log('3');
 							}
 							else{
 								//success
@@ -82,9 +85,10 @@ router.get('/', utils.requireLogin, function(req, res) {
 			}
 			else{
 				utils.sendErrResponse(res, 404, "Could not find the scope you defined.");
+                console.log('4');
 			}
 	    }
-	});	
+	});
 
 });
 
