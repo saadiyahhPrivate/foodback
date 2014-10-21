@@ -71,7 +71,13 @@ router.post('/', utils.requireLogin, function(req, res) {
 							if (err) {
 								utils.sendErrResponse(res, 500, "Unknown Error");
 							} else {
-								utils.sendSuccessResponse(res, {review: review});
+								review.populate('scope', function(err, doc) {
+									if (err) {
+										utils.sendErrResponse(res, 500, "Unknown Error");
+									} else {
+										utils.sendSuccessResponse(res, {review: doc});
+									}
+								});
 								// TODO phase 3: page to be rendered
 							}
 						});
