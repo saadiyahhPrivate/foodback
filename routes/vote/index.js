@@ -36,7 +36,7 @@ var applyVote = function(req, res, review_id, vote) {
                     if (err) {
                         utils.sendErrResponse(res, 500, 'Unknown error');
                     } else {
-                        utils.sendSuccessResponse(res); // no data to return
+                        utils.sendSuccessResponse(res, {score: doc.score});
                     }
                 });
             }
@@ -49,6 +49,8 @@ var applyVote = function(req, res, review_id, vote) {
 //     - review_id: a String representation of the MongoDB _id of the review
 // Response:
 //     - success: true if the vote was successfully submitted
+//     - content: on success, an object with a single field 'score', which
+//                contains the new score of the review
 //     - err: on failure, an error message
 router.get('/up/:review_id', utils.requireLogin, function(req, res) {
     applyVote(req, res, req.params.review_id, 1);
@@ -59,6 +61,8 @@ router.get('/up/:review_id', utils.requireLogin, function(req, res) {
 //     - review_id: a String representation of the MongoDB _id of the review
 // Response:
 //     - success: true if the vote was successfully submitted
+//     - content: on success, an object with a single field 'score', which
+//                contains the new score of the review
 //     - err: on failure, an error message
 router.get('/down/:review_id', utils.requireLogin, function(req, res) {
     applyVote(req, res, req.params.review_id, -1);
