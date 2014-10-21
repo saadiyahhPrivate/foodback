@@ -57,7 +57,7 @@ QUnit.test("Post Test", function(assert) {
         success: function(data) {
             assert.ok(data.success, 'Post success.');
             checkReview(assert, data.content.review);
-            currentReviewId = review._id;
+            currentReviewId = data.content.review._id;
             start();
         },
         error: error
@@ -171,9 +171,7 @@ QUnit.test("Upvote Test", function(assert) {
             assert.strictEqual(data.content.score, 1, 'Check upvote.');
             start();
         },
-        error: function(data) {
-        	console.log(data.err);
-        }
+        error: error
     });
 });
 
