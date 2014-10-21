@@ -68,8 +68,7 @@ router.post('/signup', function(req, res, next) {
             } else {
                 var user = new User({
                     _id: username,
-                    password: password,
-                    reviews: []});
+                    password: password});
                 user.save(function(err) {
                     if (!err) {
                         loginUser(req, username);
