@@ -127,7 +127,6 @@ router.post('/login', function(req, res, next) {
 //     - success: true if the user was logged out
 //     - err: on failure, an error message
 router.get('/logout', utils.requireLogin, function(req, res) {
-    // delete req.session.username;
     req.session.destroy(function (err) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Logout failed.');
