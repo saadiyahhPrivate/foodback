@@ -1,13 +1,31 @@
-QUnit.test("Fake Test", function (assert) {
-	assert.ok(true, 'Tests that first param is true.');
-    assert.equal('1', 1, 'Tests that first two params are equal (may cast).');
-    assert.strictEqual(5, 5, 'Tests that first two params are strictly equal.');
-});
-
 // Saadiyah
-// QUnit.asyncTest("Post Test", function (assert) {
-//
-// });
+QUnit.asyncTest("Post Test", function (assert) {
+    var review = {
+        author: 'abdihd',
+        hall: 'simmons',
+        period: 'brunch',
+        rating: 5,
+        content: 'The food was really good today!',
+        tags: 'food,chef',
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/reviews/post',
+        data: review,
+        dataType: 'json',
+        success: function (data) {
+            var content = data.content;
+            assert.ok(data.success, 'Post success.');
+            assert.strictEqual(content.author, review.author, 'Check author.');
+            assert.strictEqual(content.hall, review.hall, 'Check hall.');
+            assert.strictEqual(content.period, review.period, 'Check period.');
+            assert.strictEqual(content.rating, review.rating, 'Check rating.');
+            assert.strictEqual(content.content, review.content, 'Check content.');
+            assert.deepEqual(content.tags, ['food', 'chef'], 'Check tags.');
+        }
+    });
+});
 
 // Sophia
 // QUnit.asyncTest("Vote Test", function (assert) {
@@ -28,10 +46,9 @@ QUnit.asyncTest("Search Test", function (assert) {
         type: 'GET',
         url: '/reviews/simmons/brunch',
         dataType: 'json',
-        success: function (data, status) {
+        success: function (data) {
             assert.ok(data.success, 'Check for success.')
             assert.deepEqual(data.content, [], 'Array is empty.');
-            console.log(data);
         }
     });
 

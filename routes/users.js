@@ -3,8 +3,8 @@ var EMAIL_REGEX = /^\w+@mit\.edu$/;
 
 var express = require('express');
 var router = express.Router();
-var models = require('../../data/models');
-var utils = require('../../utils/utils');
+var models = require('../data/models');
+var utils = require('../utils/utils');
 
 var User = models.User;
 
@@ -34,10 +34,10 @@ router.post('/signup', function(req, res, next) {
         utils.sendErrResponse(res, 403, 'You are already logged in');
         return;
     }
-    
+
     var email = req.body.email;
     var password = req.body.password;
-    
+
     // Input validation
     if (!(email && password)) {
         utils.sendErrResponse(res, 403, 'Email and password are required');
@@ -53,9 +53,9 @@ router.post('/signup', function(req, res, next) {
                 PASSWORD_MAX_LENGTH + ' characters.');
         return;
     }
-    
+
     var username = email.substring(email.length - 8);
-    
+
     // Inputs okay, begin database work
     User.findById(username, function(err, doc) {
         if (!err) {
@@ -94,16 +94,16 @@ router.post('/login', function(req, res, next) {
         utils.sendErrResponse(res, 403, 'You are already logged in');
         return;
     }
-    
+
     var username = req.body.username;
     var password = req.body.password;
-    
+
     // Input validation
     if (!(username && password)) {
         utils.sendErrResponse(res, 403, 'Must enter a username and password');
         return;
     }
-    
+
     // Inputs okay, attempt login
     User.findById(username, function(err, doc) {
         if (err) {
