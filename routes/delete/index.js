@@ -1,3 +1,6 @@
+// Review delete feature
+// author: Saadiyah
+
 var express = require('express');
 var router = express.Router();
 
@@ -14,27 +17,27 @@ router.get('/:review_id', utils.requireLogin, function(req, res) {
 	var user = req.session.username; // sessions usernames
 	var review_id = req.params.review_id;
 
-	Review.findOne({_id:review_id}, function(err, doc){
-		if (err){
-			utils.sendErrResponse(res, 500, "Unknown Error: Could not find the review you want.");
-		}
-		else{
-			if (doc !== null){
-				if (doc.author == user){
-					Review.findByIdAndRemove(review_id, function(e, docs){
-						if (e){
-					        res.send("There was a problem deleting your post.");
-					    }else{
-					        docs.save();
+	Review.findById(review_id, function(err, doc){
+		if (err) {
+			utils.sendErrResponse(res, 500, "Unknown Error");
+		} else {
+			if (doc) {
+				if (doc.author === user) {
+					doc.remove(function(err) {
+						if (err) {
+							utils.sendErrResponse(res, 500, "Unknown Error");
+					    } else{
 					        //success
-					        utils.sendSuccessResponse(res, {}); //nothing to send
+					        utils.sendSuccessResponse(res); //nothing to send
 					    }
 					});
-				}else{
-					utils.sendErrResponse(res, 403, "You are not eligible to delete this review.");
+				} else {
+					utils.sendErrResponse(res, 403,
+							"You are not eligible to delete this review.");
 				}
-			}else{
-				utils.sendErrResponse(res, 404, "Could not find the review you are looking for.");
+			} else{
+				utils.sendErrResponse(res, 404,
+						"Could not find the review you are looking for.");
 			}
 		}
 	});

@@ -1,3 +1,6 @@
+// User accounts feature
+// author: Sophia
+
 var PASSWORD_MAX_LENGTH = 30;
 var EMAIL_REGEX = /^\w+@mit\.edu$/;
 

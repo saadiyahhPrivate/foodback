@@ -1,3 +1,6 @@
+// Review search feature
+// author: Abdi
+
 var express = require('express');
 var router = express.Router();
 
@@ -31,7 +34,9 @@ router.get('/', function(req, res) {
         tags = req.query.tags.split(',');
         query.tags = {$in: tags};
     }
-    Review.find({}).populate('scope', 'hall period -_id').exec(function (err, reviews) {
+    
+    var results = Review.find(query).populate('scope', 'hall period -_id');
+    results.exec(function (err, reviews) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else {
@@ -66,7 +71,8 @@ router.get('/:dininghall', function(req, res) {
                 tags = req.query.tags.split(',');
                 query.tags = {$in: tags};
             }
-            Review.find(query).populate('scope', 'hall period -_id').exec(function (err, reviews) {
+            var results = Review.find(query).populate('scope', 'hall period -_id');
+            results.exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error 2.');
                 } else {
@@ -104,7 +110,8 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
                 tags = req.query.tags.split(',');
                 query.tags = {$in: tags};
             }
-            Review.find(query).populate('scope', 'hall period -_id').exec(function (err, reviews) {
+            var results = Review.find(query).populate('scope', 'hall period -_id');
+            results.exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error 3.');
                 } else {

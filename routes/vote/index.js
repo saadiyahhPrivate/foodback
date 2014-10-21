@@ -1,3 +1,6 @@
+// Voting feature
+// author: Sophia
+
 var express = require('express');
 var router = express.Router();
 var models = require('../../data/models');

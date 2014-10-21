@@ -1,10 +1,14 @@
+// Review post feature
+// author: Saadiyah
+
 var express = require('express');
 var router = express.Router();
 
 var utils = require("../../utils/utils");
-var Scope = require("../../data/models").Scope;
-var Review = require("../../data/models").Review;
-var User = require("../../data/models").User;
+var models = require("../../data/models");
+var Scope = models.Scope;
+var Review = models.Review;
+var User = models.User;
 
 /*
 HELPER FUNCTON:
@@ -27,8 +31,8 @@ function makeNewReview(author, reqBody){
     	var tags = tags.trim().split(/\s*,\s*/);
     }
     // Create a review JSON WITHOUT a scope
-    var incompleteReview = {"author":author, "rating":rating, "content":content,
-    						"score":0, "voters":[], "tags":tags, "voters":voters}
+    var incompleteReview = {author: author, rating: rating, content: content,
+    						score: 0, tags: tags, voters: voters};
     return incompleteReview;
 }
 
@@ -44,42 +48,36 @@ function makeNewReview(author, reqBody){
 //     - err: on failure, an error message
 router.post('/', utils.requireLogin, function(req, res) {
 	var user = req.session.username;
-	var scope = {hall:req.body.hall, period:req.body.period};
+	var scope = {hall: req.body.hall, period: req.body.period};
 	var my_review_JSON = makeNewReview(user, req.body);
-	Scope.findOne(scope, function(err, doc){
-    	if (err){
-    		utils.sendErrResponse(res, 500, "Unknown Error: Could not find the scope you defined.");
-            console.log('1');
-    	}
-    	else{
-    		if (doc !== null){
+	Scope.findOne(scope, function(err, doc) {
+    	if (err) {
+    		utils.sendErrResponse(res, 500, "Unknown Error");
+    	} else {
+    		if (doc) {
 	    		var scopeID = doc._id;
-	    		my_review_JSON.scope = scopeID; //add the scope to the review JSON
-	    		var newReview = new Review(my_review_JSON); //make it into a review Object
-	    		// now add the review to the database
-				newReview.save(function(error, doc){
-					if (error){
-						utils.sendErrResponse(res, 500, "Unknown Error: An error occured while adding your review to the database");
-					}
-					else{
+	    		my_review_JSON.scope = scopeID;
+	    		var newReview = new Review(my_review_JSON);
+	    		
+	    		newReview.save(function(err, doc) {
+					if (err) {
+						utils.sendErrResponse(res, 500, "Unknown Error");
+					} else {
 						var reviewID = newReview._id;
-						//add the review ID to the user's list of reviews
-						User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
-							if (e){
-								utils.sendErrResponse(res, 500, "Unknown Error: There was a problem adding the review to your list of reviews");
-							}
-							else{
-								//success
+						User.update({_id: user}, {$push: {reviews: reviewID}},
+								{upsert:true}, function(err, doc) {
+							if (err) {
+								utils.sendErrResponse(res, 500, "Unknown Error");
+							} else {
 								utils.sendSuccessResponse(res, my_review_JSON);
 								// TODO phase 3: page to be rendered
 							}
 						});
 					}
 				});
-			}
-			else{
-				utils.sendErrResponse(res, 404, "Could not find the scope you defined.");
-                console.log('4');
+			} else {
+				utils.sendErrResponse(res, 404,
+						"Could not find the scope you defined.");
 			}
 	    }
 	});

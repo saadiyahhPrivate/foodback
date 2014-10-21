@@ -36,8 +36,8 @@ var reviewSchema = new Schema({
         min: 1,
         max: 5
     },
-    tags: [String],
     content: String,
+    tags: [String],
     score: Number,
     voters: [String]
 });
