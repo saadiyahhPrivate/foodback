@@ -60,7 +60,6 @@ router.post('/', utils.requireLogin, function(req, res) {
 				newReview.save(function(error, doc){
 					if (error){
 						utils.sendErrResponse(res, 500, "Unknown Error: An error occured while adding your review to the database");
-                        console.log('2');
 					}
 					else{
 						var reviewID = newReview._id;
@@ -68,7 +67,6 @@ router.post('/', utils.requireLogin, function(req, res) {
 						User.update({_id:user}, {$push:{reviews:reviewID}}, {upsert:true}, function(e, doc){
 							if (e){
 								utils.sendErrResponse(res, 500, "Unknown Error: There was a problem adding the review to your list of reviews");
-                                console.log('3');
 							}
 							else{
 								//success
