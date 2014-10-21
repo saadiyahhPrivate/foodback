@@ -3,8 +3,8 @@ var EMAIL_REGEX = /^\w+@mit\.edu$/;
 
 var express = require('express');
 var router = express.Router();
-var models = require('../../data/models');
-var utils = require('../../utils/utils');
+var models = require('../data/models');
+var utils = require('../utils/utils');
 
 var User = models.User;
 
