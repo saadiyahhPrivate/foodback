@@ -27,7 +27,10 @@ var userSchema = new Schema({
 });
 
 var reviewSchema = new Schema({
-    author: String,
+    author: {
+        type: String,
+        ref: 'User'
+    },
     scope: {
         type: Schema.Types.ObjectId,
         ref: 'Scope'

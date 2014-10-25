@@ -18,10 +18,36 @@ router.use('/post', post);
 router.use('/vote', vote);
 router.use('/delete', remove);
 
+function getReviewHandle(query) {
+    return Review.find(query).populate('author', '-password').populate('scope', 'hall period -_id');
+}
+
 function attachTags(req, query) {
     if (req.query.tags) {
         var tags = req.query.tags.split(',');
         query.tags = {$in: tags};
+    }
+}
+
+function parseReviews(req, reviews) {
+    if (req.session.username) {
+        var username = req.session.username,
+            i;
+        for (i = 0; i < reviews.length; i++) {
+            var review = reviews[i];
+            review.canDelete = review.author._id === username ? true : false;
+            review.canVote = review.voters.indexOf(username) === -1 ? true: false;
+            delete review.author._id;
+            delete review.voters;
+        }
+    } else {
+        var i;
+        for (i = 0; i < reviews.length; i++) {
+            var review = reviews[i];
+            review.canDelete = false;
+            review.canVote = false;
+            delete review.voters;
+        }
     }
 }
 
@@ -37,11 +63,12 @@ router.get('/', function(req, res) {
     var query = {};
     attachTags(req, query);
 
-    var results = Review.find(query).populate('scope', 'hall period -_id');
-    results.exec(function (err, reviews) {
+    var handle = getReviewHandle(query);
+    handle.exec(function (err, reviews) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else {
+            parseReviews(reviews);
             utils.sendSuccessResponse(res, reviews);
         }
     });
@@ -69,11 +96,13 @@ router.get('/:dininghall', function(req, res) {
             });
             var query = {scope: {$in: ids}};
             attachTags(req, query);
-            var results = Review.find(query).populate('scope', 'hall period -_id');
-            results.exec(function (err, reviews) {
+
+            var handle = getReviewHandle(query);
+            handle.exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
+                    parseReviews(reviews);
                     utils.sendSuccessResponse(res, reviews);
                 }
             });
@@ -104,11 +133,13 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
         } else if (scope) {
             var query = {scope: scope._id};
             attachTags(req, query);
-            var results = Review.find(query).populate('scope', 'hall period -_id');
-            results.exec(function (err, reviews) {
+
+            var handle = getReviewHandle(query);
+            handle.exec(function (err, reviews) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
+                    parseReviews(reviews);
                     utils.sendSuccessResponse(res, reviews);
                 }
             });
