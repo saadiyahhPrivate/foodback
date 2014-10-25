@@ -1,17 +1,17 @@
 QUnit.config.reorder = false;
 
 var review = {
-    hall: 'simmons',
-    period: 'brunch',
+    hall: 'Simmons',
+    period: 'Brunch',
     rating: 5,
     content: 'The food was really good today!',
     tags: 'food,chef'
 }
 
 var user = {
-    email: 'foodback@mit.edu',
-    password: 'pa55w0rd',
-    username: 'foodback'
+	username: 'foodback',
+    name: 'Foodback',
+    password: 'pa55w0rd'
 }
 
 var currentReviewId;
