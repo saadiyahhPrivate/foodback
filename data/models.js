@@ -22,6 +22,7 @@ var userSchema = new Schema({
         type: String,
         required: true
     }, // User objects have their Kerberos as the primary key
+    name: String,
     password: String
 });
 

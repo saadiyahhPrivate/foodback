@@ -1,6 +1,7 @@
 // User accounts feature
 // author: Sophia
 
+var NAME_MAX_LENGTH = 20;
 var PASSWORD_MAX_LENGTH = 30;
 var EMAIL_REGEX = /^\w+@mit\.edu$/;
 
@@ -25,6 +26,7 @@ var validateEmail = function(email) {
 // POST /users/signup
 // Request body:
 //     - email: the email address to use for the account; must be @mit.edu
+//     - name: the first name of the user; must be <= 20 chars
 //     - password: the password to use for the account; must be <= 30 chars
 // Response:
 //     - success: true if the user was created and logged in
@@ -39,16 +41,22 @@ router.post('/signup', function(req, res, next) {
     }
 
     var email = req.body.email;
+    var name = req.body.name;
     var password = req.body.password;
 
     // Input validation
-    if (!(email && password)) {
-        utils.sendErrResponse(res, 403, 'Email and password are required');
+    if (!(email && name && password)) {
+        utils.sendErrResponse(res, 403, 'All fields are required');
         return;
     }
     if (!validateEmail(email)) {
         utils.sendErrResponse(res, 403,
                 'Your email must be a valid "@mit.edu" email address');
+        return;
+    }
+    if (name.length > NAME_MAX_LENGTH) {
+    	utils.sendErrResponse(res, 403, 'Name cannot exceed ' +
+                NAME_MAX_LENGTH + ' characters.');
         return;
     }
     if (password.length > PASSWORD_MAX_LENGTH) {
@@ -68,6 +76,7 @@ router.post('/signup', function(req, res, next) {
             } else {
                 var user = new User({
                     _id: username,
+                    name: name,
                     password: password});
                 user.save(function(err) {
                     if (!err) {
