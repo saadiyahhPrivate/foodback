@@ -3,7 +3,7 @@
 
 var NAME_MAX_LENGTH = 20;
 var PASSWORD_MAX_LENGTH = 30;
-var EMAIL_REGEX = /^\w+@mit\.edu$/;
+var KERBEROS_REGEX = /^[a-z0-9]{3,8}$/;
 
 var express = require('express');
 var router = express.Router();
@@ -17,15 +17,18 @@ var loginUser = function(req, username) {
     req.session.username = username;
 }
 
-// Checks that an email address is a valid @mit.edu email address. Returns true
-// if it is valid, or false otherwise.
-var validateEmail = function(email) {
-    return EMAIL_REGEX.test(email);
+// Checks that a string is a valid MIT Kerberos ID. Returns true if it is valid,
+// or false otherwise.
+// According to http://kb.mit.edu/confluence/x/QwTn a valid Kerberos ID is "3-8
+// characters long, containing only lowercase letters and/or numbers."
+var validateKerberos = function(kerberos) {
+	return KERBEROS_REGEX.test(kerberos);
 }
 
 // POST /users/signup
 // Request body:
-//     - email: the email address to use for the account; must be @mit.edu
+//     - kerberos: the user's Kerberos ID, i.e. the part of their email before
+//                 the @mit.edu
 //     - name: the first name of the user; must be <= 20 chars
 //     - password: the password to use for the account; must be <= 30 chars
 // Response:
@@ -40,18 +43,19 @@ router.post('/signup', function(req, res, next) {
         return;
     }
 
-    var email = req.body.email;
+    var kerberos = req.body.kerberos;
     var name = req.body.name;
     var password = req.body.password;
 
     // Input validation
-    if (!(email && name && password)) {
+    if (!(kerberos && name && password)) {
         utils.sendErrResponse(res, 403, 'All fields are required');
         return;
     }
-    if (!validateEmail(email)) {
+    var username = kerberos.toLowerCase();
+    if (!validateKerberos(username)) {
         utils.sendErrResponse(res, 403,
-                'Your email must be a valid "@mit.edu" email address');
+                'You did not enter a valid Kerberos ID.');
         return;
     }
     if (name.length > NAME_MAX_LENGTH) {
@@ -65,14 +69,13 @@ router.post('/signup', function(req, res, next) {
         return;
     }
 
-    var username = email.substring(email.length - 8);
-
     // Inputs okay, begin database work
     User.findById(username, function(err, doc) {
         if (!err) {
             if (doc) {
                 utils.sendErrResponse(res, 403,
-                        'An account already exists for ' + email);
+                        'An account already exists for ' +
+                        username + '@mit.edu');
             } else {
                 var user = new User({
                     _id: username,
