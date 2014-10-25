@@ -69,7 +69,7 @@ router.get('/', function(req, res) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else {
-            parseReviews(reviews);
+            parseReviews(req, reviews);
             utils.sendSuccessResponse(res, reviews);
         }
     });
@@ -103,7 +103,7 @@ router.get('/:dininghall', function(req, res) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
-                    parseReviews(reviews);
+                    parseReviews(req, reviews);
                     utils.sendSuccessResponse(res, reviews);
                 }
             });
@@ -140,7 +140,7 @@ router.get('/:dininghall/:mealperiod', function(req, res) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
-                    parseReviews(reviews);
+                    parseReviews(req, reviews);
                     utils.sendSuccessResponse(res, reviews);
                 }
             });
