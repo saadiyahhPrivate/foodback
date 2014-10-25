@@ -37,6 +37,7 @@ function findReview(assert, reviews) {
 	for (var i = 0; i < reviews.length; i++) {
 		if (reviews[i]._id == currentReviewId) {
 			checkReview(assert, reviews[i]);
+			return;
 		}
 	}
 	
