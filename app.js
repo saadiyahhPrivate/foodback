@@ -179,11 +179,3 @@ function init() {
 }
 
 init();
-
-var User = models.User;
-var user = new User({
-	_id: 'foodback',
-    name: 'Foodback',
-    password: 'pa55w0rd'
-});
-user.save();
