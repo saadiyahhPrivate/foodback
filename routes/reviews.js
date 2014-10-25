@@ -46,6 +46,7 @@ function parseReviews(req, reviews) {
             var review = reviews[i];
             review.canDelete = false;
             review.canVote = false;
+            delete review.author._id;
             delete review.voters;
         }
     }

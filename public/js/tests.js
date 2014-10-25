@@ -23,7 +23,6 @@ function error(xhr) {
 
 // Assert that the given review is equivalent to the test review.
 function checkReview(assert, newReview) {
-    assert.strictEqual(newReview.author, user.username, 'Check author.');
     assert.strictEqual(newReview.scope.hall, review.hall, 'Check hall.');
     assert.strictEqual(newReview.scope.period, review.period, 'Check period.');
     assert.equal(newReview.rating, review.rating, 'Check rating.');
