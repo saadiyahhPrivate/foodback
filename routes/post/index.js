@@ -60,7 +60,7 @@ router.post('/', utils.requireLogin, function(req, res) {
                 var scopeID = doc._id;
                 my_review_JSON.scope = scopeID;
                 var newReview = new Review(my_review_JSON);
-                
+
                 newReview.save(function(err, review) {
                     if (err) {
                         utils.sendErrResponse(res, 500, "Unknown Error");

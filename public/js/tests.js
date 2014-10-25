@@ -11,7 +11,8 @@ var review = {
 var user = {
     email: 'foodback@mit.edu',
     password: 'pa55w0rd',
-    username: 'foodback'
+    username: 'foodback',
+    name: 'Food Back'
 }
 
 var currentReviewId;
@@ -23,7 +24,8 @@ function error(xhr) {
 
 // Assert that the given review is equivalent to the test review.
 function checkReview(assert, newReview) {
-    assert.strictEqual(newReview.author, user.username, 'Check author.');
+//    assert.strictEqual(newReview.author, user.username, 'Check author.');
+    assert.strictEqual(newReview.author.name, user.name);
     assert.strictEqual(newReview.scope.hall, review.hall, 'Check hall.');
     assert.strictEqual(newReview.scope.period, review.period, 'Check period.');
     assert.equal(newReview.rating, review.rating, 'Check rating.');
@@ -34,14 +36,14 @@ function checkReview(assert, newReview) {
 // Assert that the given list of reviews contains a review with the current
 // review ID, and that the identified review is equivalent to the test review.
 function findReview(assert, reviews) {
-	for (var i = 0; i < reviews.length; i++) {
-		if (reviews[i]._id == currentReviewId) {
-			checkReview(assert, reviews[i]);
-			return;
-		}
-	}
-	
-	assert.ok(false, 'Could not find review.');
+    for (var i = 0; i < reviews.length; i++) {
+        if (reviews[i]._id == currentReviewId) {
+            checkReview(assert, reviews[i]);
+            return;
+        }
+    }
+
+    assert.ok(false, 'Could not find review.');
 }
 
 // Sophia
