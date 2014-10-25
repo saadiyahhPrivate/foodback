@@ -31,6 +31,18 @@ function checkReview(assert, newReview) {
     assert.deepEqual(newReview.tags, ['food', 'chef'], 'Check tags.');
 }
 
+// Assert that the given list of reviews contains a review with the current
+// review ID, and that the identified review is equivalent to the test review.
+function findReview(assert, reviews) {
+	for (var i = 0; i < reviews.length; i++) {
+		if (reviews[i]._id == currentReviewId) {
+			checkReview(assert, reviews[i]);
+		}
+	}
+	
+	assert.ok(false, 'Could not find review.');
+}
+
 // Sophia
 QUnit.test("Login Test", function(assert) {
     stop();
@@ -74,7 +86,7 @@ QUnit.test("Get All Reviews", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            checkReview(assert, data.content[0]);
+            findReview(assert, data.content);
             start();
         },
         error: error
@@ -90,7 +102,7 @@ QUnit.test("Get All Reviews with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            checkReview(assert, data.content[0]);
+            findReview(assert, data.content);
             start();
         },
         error: error
@@ -106,7 +118,7 @@ QUnit.test("Get Reviews by Dining Hall", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            checkReview(assert, data.content[0]);
+            findReview(assert, data.content);
             start();
         },
         error: error
@@ -122,7 +134,7 @@ QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            checkReview(assert, data.content[0]);
+            findReview(assert, data.content);
             start();
         },
         error: error
@@ -138,7 +150,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            checkReview(assert, data.content[0]);
+            findReview(assert, data.content);
             start();
         },
         error: error
@@ -154,7 +166,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            checkReview(assert, data.content[0]);
+            findReview(assert, data.content);
             start();
         },
         error: error
