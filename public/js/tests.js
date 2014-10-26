@@ -1,18 +1,17 @@
 QUnit.config.reorder = false;
 
 var review = {
-    hall: 'simmons',
-    period: 'brunch',
+    hall: 'Simmons',
+    period: 'Brunch',
     rating: 5,
     content: 'The food was really good today!',
     tags: 'food,chef'
 }
 
 var user = {
-    email: 'foodback@mit.edu',
-    password: 'pa55w0rd',
     username: 'foodback',
-    name: 'Food Back'
+    name: 'Foodback',
+    password: 'pa55w0rd'
 }
 
 var currentReviewId;
@@ -23,12 +22,8 @@ function error(xhr) {
 }
 
 // Assert that the given review is equivalent to the test review.
-function checkReview(assert, newReview) {
-<<<<<<< HEAD
-//    assert.strictEqual(newReview.author, user.username, 'Check author.');
-    assert.strictEqual(newReview.author.name, user.name);
-=======
->>>>>>> fcbe195647952d597978351d266e4e31e00ed0e7
+function checkReview(assert, newReview) {;
+//    assert.strictEqual(newReview.author.name, user.name, 'Check author');
     assert.strictEqual(newReview.scope.hall, review.hall, 'Check hall.');
     assert.strictEqual(newReview.scope.period, review.period, 'Check period.');
     assert.equal(newReview.rating, review.rating, 'Check rating.');
@@ -120,7 +115,7 @@ QUnit.test("Get Reviews by Dining Hall", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons',
+        url: '/reviews/Simmons',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -136,7 +131,7 @@ QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons?tags=food,chef',
+        url: '/reviews/Simmons?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -152,7 +147,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons/brunch',
+        url: '/reviews/Simmons/Brunch',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -168,7 +163,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons/brunch?tags=food,chef',
+        url: '/reviews/Simmons/Brunch?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
