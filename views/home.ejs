@@ -24,7 +24,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/">Reviews</a></li>
                     </ul>
-					<ul class="nav navbar-nav navbar-right">
+					<ul id="user-header" class="nav navbar-nav navbar-right">
 						<% if (typeof user == 'undefined') { %>
 							<li><a href="/users/login">Log In or Sign Up</a></li>
 						<% } else { %>
@@ -40,92 +40,90 @@
 			<div id="success-container" class="alert alert-success" role="alert"></div>
 			<h1>Welcome!</h1>
 			
-			<button id="make_button">Make a review</button>
+			<button id="make_button" class="btn btn-md btn-default btn-block">Make a review</button>
 			<form id="post_form">
-			<div>
-			<label for="hall">Which dining hall?</label>
-			<select name="hall" required>
-			<option value="Baker">Baker</option>
-			<option value="Maseeh">Maseeh</option>
-			<option value="McCormick">McCormick</option>
-			<option value="Next">Next</option>
-			<option value="Simmons">Simmons</option>
-			</select>
-			</div>
-			
-			<div>
-			<label for="period">Which meal period?</label>
-			<select name="period" required>
-			<option value="Breakfast">Breakfast</option>
-			<option value="Brunch">Brunch</option>
-			<option value="Lunch">Lunch (Maseeh only)</option>
-			<option value="Dinner">Dinner</option>
-			<option value="Late Night">Late Night (Simmons only)</option>
-			</select>
-			</div>
-			
-			<div>
-			<label for="content">Content</label><br>
-			<textarea name="content" rows="15" cols="50" required></textarea>
-			</div>
-			
-			<div>
-			<label for="rating">Rating:</label>
-			<select name="rating" required>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			</select>
-			</div>
-			
-			<div>
-			<label for="tags">Tags (separate tags with commas)</label>
-			<input type="text" name="tags">
-			</div>
-			
-			<button id="post_button" type="submit">Post</button>
+				<div>
+					<label class="control-label" for="hall">Which dining hall?</label>
+					<select class="form-control" name="hall" required>
+						<option value="Baker">Baker</option>
+						<option value="Maseeh">Maseeh</option>
+						<option value="McCormick">McCormick</option>
+						<option value="Next">Next</option>
+						<option value="Simmons">Simmons</option>
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label" for="period">Which meal period?</label>
+					<select class="form-control" name="period" required>
+						<option value="Breakfast">Breakfast</option>
+						<option value="Brunch">Brunch</option>
+						<option value="Lunch">Lunch (Maseeh only)</option>
+						<option value="Dinner">Dinner</option>
+						<option value="Late Night">Late Night (Simmons only)</option>
+					</select>
+				</div>
+				
+				<div>
+					<label class="control-label" for="content">Content</label><br>
+					<textarea class="form-control" name="content" rows="15" cols="50" required></textarea>
+				</div>
+				
+				<div>
+					<label class="control-label" for="rating">Rating:</label>
+					<select class="form-control" name="rating" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+				
+				<div>
+					<label class="control-label" for="tags">Tags (separate tags with commas)</label>
+					<input class="form-control" type="text" name="tags">
+				</div>
+				
+				<button id="post_button" class="btn btn-md btn-primary btn-block" type="submit">Post</button>
 			</form>
 			
 			<div id="reviews_container">
-			<h2>Reviews</h2>
-			
-			<form id="search_form">
-			<span>Filter by:</span>
-			<div>
-			<label>Dining hall:</label>
-			<select id="search_hall">
-			<option value="all" selected>All</option>
-			<option value="Baker">Baker</option>
-			<option value="Maseeh">Maseeh</option>
-			<option value="McCormick">McCormick</option>
-			<option value="Next">Next</option>
-			<option value="Simmons">Simmons</option>
-			</select>
-			</div>
-			
-			<div>
-			<label>Meal period:</label>
-			<select id="search_period" required>
-			<option value="all" selected>All</option>
-			<option value="Breakfast">Breakfast</option>
-			<option value="Brunch">Brunch</option>
-			<option value="Lunch">Lunch (Maseeh only)</option>
-			<option value="Dinner">Dinner</option>
-			<option value="Late Night">Late Night (Simmons only)</option>
-			</select>
-			</div>
-			
-			<div>
-			<label for="tags">Tags (separate tags with commas)</label>
-			<input type="text" id="search_tags">
-			</div>
-			</form>
-			
-			<div id="reviews">
-			
-			</div>
+				<h2>Reviews</h2>
+				
+				<form id="search_form">
+					<span>Filter by:</span>
+					<div>
+						<label class="control-label">Dining hall:</label>
+						<select class="form-control" id="search_hall">
+							<option value="all" selected>All</option>
+							<option value="Baker">Baker</option>
+							<option value="Maseeh">Maseeh</option>
+							<option value="McCormick">McCormick</option>
+							<option value="Next">Next</option>
+							<option value="Simmons">Simmons</option>
+						</select>
+					</div>
+					
+					<div>
+						<label class="control-label">Meal period:</label>
+						<select class="form-control" id="search_period" required>
+							<option value="all" selected>All</option>
+							<option value="Breakfast">Breakfast</option>
+							<option value="Brunch">Brunch</option>
+							<option value="Lunch">Lunch (Maseeh only)</option>
+							<option value="Dinner">Dinner</option>
+							<option value="Late Night">Late Night (Simmons only)</option>
+						</select>
+					</div>
+					
+					<div>
+						<label class="control-label" for="tags">Tags (separate tags with commas)</label>
+						<input class="form-control" type="text" id="search_tags">
+					</div>
+				</form>
+				
+				<div id="reviews"></div>
 			</div>
 		</div>
     </body>
