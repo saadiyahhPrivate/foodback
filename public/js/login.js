@@ -33,8 +33,28 @@ $(function() {
 			url: '/users/login',
 			type: "POST",
 			data: loginData,
-			success: function(response) {
+			success: function(data) {
 				window.location.href = '/';
+			},
+			error: error
+		});
+		e.preventDefault();
+		e.unbind();
+	});
+	
+	$("#signup-form").submit(function(e) {
+		var signupData = $(this).serializeArray();
+		$.ajax({
+			url: '/users/signup',
+			type: "POST",
+			data: signupData,
+			success: function(data) {
+				var response = $.parseJSON(data.responseText);
+				$('#success-container').text('Account successfully created. ' +
+						'A verification email has been sent to ' +
+						response.content.username + '@mit.edu. You must ' +
+						'verify your account before logging in.');
+				$('#success-container').show();
 			},
 			error: error
 		});

@@ -26,6 +26,7 @@ function postReview() {
 
 $(function () {
 	$('#error-container').hide();
+	$('#success-container').hide();
     $('#post_form').data('inView', false);
     $('#make_button').click(toggleReviewForm);
     $('#post_button').click(postReview);
