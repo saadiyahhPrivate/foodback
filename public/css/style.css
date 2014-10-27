@@ -8,6 +8,14 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
+.container {
+	max-width: 1000px;
+}
+
+.page-container {
+	margin-top: 70px;
+}
+
 #post_form {
     max-height: 0;
     overflow: hidden;
