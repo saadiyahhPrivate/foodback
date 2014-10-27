@@ -40,49 +40,54 @@
 			<div id="success-container" class="alert alert-success" role="alert"></div>
 			<h1>Welcome!</h1>
 			
-			<button id="make_button" class="btn btn-md btn-default btn-block">Make a review</button>
-			<form id="post_form">
-				<div>
-					<label class="control-label" for="hall">Which dining hall?</label>
-					<select class="form-control" name="hall" required>
-						<option value="Baker">Baker</option>
-						<option value="Maseeh">Maseeh</option>
-						<option value="McCormick">McCormick</option>
-						<option value="Next">Next</option>
-						<option value="Simmons">Simmons</option>
-					</select>
+			<button id="make_button" class="btn btn-md btn-default">Post a Review</button>
+			<form id="post_form" class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-xs-2" for="hall">Dining Hall</label>
+					<div class="col-xs-4">
+						<select class="form-control" name="hall" required>
+							<option value="Baker">Baker</option>
+							<option value="Maseeh">Maseeh</option>
+							<option value="McCormick">McCormick</option>
+							<option value="Next">Next</option>
+							<option value="Simmons">Simmons</option>
+						</select>
+					</div>
+					<label class="control-label col-xs-2" for="period">Which meal period?</label>
+					<div class="col-xs-4">
+						<select class="form-control" name="period" required>
+							<option value="Breakfast">Breakfast</option>
+							<option value="Brunch">Brunch</option>
+							<option value="Lunch">Lunch (Maseeh only)</option>
+							<option value="Dinner">Dinner</option>
+							<option value="Late Night">Late Night (Simmons only)</option>
+						</select>
+					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label" for="period">Which meal period?</label>
-					<select class="form-control" name="period" required>
-						<option value="Breakfast">Breakfast</option>
-						<option value="Brunch">Brunch</option>
-						<option value="Lunch">Lunch (Maseeh only)</option>
-						<option value="Dinner">Dinner</option>
-						<option value="Late Night">Late Night (Simmons only)</option>
-					</select>
-				</div>
-				
-				<div>
 					<label class="control-label" for="content">Content</label><br>
-					<textarea class="form-control" name="content" rows="15" cols="50" required></textarea>
 				</div>
 				
-				<div>
-					<label class="control-label" for="rating">Rating:</label>
-					<select class="form-control" name="rating" required>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-					</select>
+				<div class="form-group">
+					<textarea class="form-control" name="content" required></textarea>
 				</div>
 				
-				<div>
-					<label class="control-label" for="tags">Tags (separate tags with commas)</label>
-					<input class="form-control" type="text" name="tags">
+				<div class="form-group">
+					<label class="control-label col-xs-2" for="rating">Rating:</label>
+					<div class="col-xs-2">
+						<select class="form-control" name="rating" required>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</div>
+					<label class="control-label col-xs-2" for="tags">Tags (separate tags with commas)</label>
+					<div class="col-xs-6">
+						<input class="form-control" type="text" name="tags">
+					</div>
 				</div>
 				
 				<button id="post_button" class="btn btn-md btn-primary btn-block" type="submit">Post</button>
@@ -91,7 +96,7 @@
 			<div id="reviews_container">
 				<h2>Reviews</h2>
 				
-				<form id="search_form">
+				<form id="search_form" class="form-horizontal">
 					<span>Filter by:</span>
 					<div>
 						<label class="control-label">Dining hall:</label>
