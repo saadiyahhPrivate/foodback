@@ -28,17 +28,40 @@ $(function() {
 	});
 	
 	$("#login-form").submit(function(e) {
+		clearAlerts();
 		var loginData = $(this).serializeArray();
 		$.ajax({
 			url: '/users/login',
 			type: "POST",
 			data: loginData,
+			dataType: "json",
 			success: function(response) {
 				window.location.href = '/';
 			},
 			error: error
 		});
 		e.preventDefault();
-		e.unbind();
+		$(this).trigger('reset');
+	});
+	
+	$("#signup-form").submit(function(e) {
+		clearAlerts();
+		var signupData = $(this).serializeArray();
+		$.ajax({
+			url: '/users/signup',
+			type: "POST",
+			data: signupData,
+			dataType: "json",
+			success: function(response) {
+				$('#success-container').text('Account successfully created. ' +
+						'A verification email has been sent to ' +
+						response.content.username + '@mit.edu. You must ' +
+						'verify your account before logging in.');
+				$('#success-container').show();
+			},
+			error: error
+		});
+		e.preventDefault();
+		$(this).trigger('reset');
 	});
 });

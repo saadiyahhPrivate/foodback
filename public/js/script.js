@@ -4,6 +4,23 @@ function error(jqxhr) {
 	$('#error-container').show();
 }
 
+function clearAlerts() {
+	$('#error-container').hide();
+	$('#success-container').hide();
+}
+
+function logout() {
+	$.ajax({
+		url: '/users/logout',
+		type: "GET",
+		dataType: "json",
+		success: function(response) {
+			$('#user-header').text('<li><a href="/users/login">Log In or Sign Up</a></li>');
+		},
+		error: error
+	});
+}
+
 function toggleReviewForm() {
     var form = $('#post_form');
     var inView = form.data('inView');
@@ -26,7 +43,9 @@ function postReview() {
 
 $(function () {
 	$('#error-container').hide();
+	$('#success-container').hide();
     $('#post_form').data('inView', false);
     $('#make_button').click(toggleReviewForm);
     $('#post_button').click(postReview);
+    $('#logout-link').click(logout);
 });

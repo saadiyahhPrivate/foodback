@@ -17,6 +17,11 @@ router.get('/:review_id', utils.requireLogin, function(req, res) {
     var user = req.session.username; // sessions usernames
     var review_id = req.params.review_id;
 
+    if (!(req.session.username)) {
+        utils.sendErrResponse(res, 403, 'You must be signed in to do this action.');
+        return;
+    }
+
     Review.findById(review_id, function(err, doc){
         if (err) {
             utils.sendErrResponse(res, 500, "Unknown Error");

@@ -6,12 +6,19 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
+	text-align: center;
+}
+
+.page-container {
+	margin-top: 70px;
+	max-width: 850px;
 }
 
 #post_form {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
+	padding-top: 20px;
 
     transition: all 1s ease;
 }
@@ -20,22 +27,6 @@ h1, h2, h3, h4, h5, h6 {
     resize: none;
 }
 
-form div {
-    margin: 1em 0;
-}
-
-button, input {
-    outline: none;
-}
-
-button, select {
-    padding: 5px;
-    background-color: white;
-    border: 1px black solid;
-}
-
-button:active {
-    color: white;
-    background-color: black;
-    border-color: white;
+.form-center {
+	text-align: center;
 }

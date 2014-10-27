@@ -1,8 +1,8 @@
 QUnit.config.reorder = false;
 
 var review = {
-    hall: 'simmons',
-    period: 'brunch',
+    hall: 'Simmons',
+    period: 'Brunch',
     rating: 5,
     content: 'The food was really good today!',
     tags: 'food,chef'
@@ -114,7 +114,7 @@ QUnit.test("Get Reviews by Dining Hall", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons',
+        url: '/reviews/Simmons',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -131,7 +131,7 @@ QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons?tags=food,chef',
+        url: '/reviews/Simmons?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -148,7 +148,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons/brunch',
+        url: '/reviews/Simmons/Brunch',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -165,7 +165,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/simmons/brunch?tags=food,chef',
+        url: '/reviews/Simmons/Brunch?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');

@@ -23,7 +23,12 @@ var userSchema = new Schema({
         required: true
     }, // User objects have their Kerberos as the primary key
     name: String,
-    password: String
+    password: String,
+    verified: {
+    	type: Boolean,
+    	default: false
+    },
+    token: String
 });
 
 var reviewSchema = new Schema({
