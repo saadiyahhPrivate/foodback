@@ -28,6 +28,7 @@ $(function() {
 	});
 	
 	$("#login-form").submit(function(e) {
+		clearAlerts();
 		var loginData = $(this).serializeArray();
 		$.ajax({
 			url: '/users/login',
@@ -40,11 +41,10 @@ $(function() {
 		});
 		e.preventDefault();
 		$(this).trigger('reset');
-		$('#error-container').hide();
-		$('#success-container').hide();
 	});
 	
 	$("#signup-form").submit(function(e) {
+		clearAlerts();
 		var signupData = $(this).serializeArray();
 		$.ajax({
 			url: '/users/signup',
@@ -62,7 +62,5 @@ $(function() {
 		});
 		e.preventDefault();
 		$(this).trigger('reset');
-		$('#error-container').hide();
-		$('#success-container').hide();
 	});
 });

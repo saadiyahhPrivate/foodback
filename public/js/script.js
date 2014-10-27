@@ -4,6 +4,11 @@ function error(jqxhr) {
 	$('#error-container').show();
 }
 
+function clearAlerts() {
+	$('#error-container').hide();
+	$('#success-container').hide();
+}
+
 function toggleReviewForm() {
     var form = $('#post_form');
     var inView = form.data('inView');

@@ -55,15 +55,13 @@ var createUser = function(req, res, userInfo) {
         		userInfo._id + '/' + userInfo.token
         	};
         	
-//        	transporter.sendMail(mailOps, function(err, info) {
-//        	    if (err) {
-//        	    	utils.sendErrResponse(res, 500, 'Unknown error');
-//        	    } else {
-//        	    	utils.sendSuccessResponse(res, {username: userInfo._id});
-//        	    }
-//        	});
-            
-            utils.sendSuccessResponse(res, {username: userInfo._id});
+        	transporter.sendMail(mailOps, function(err, info) {
+        	    if (err) {
+        	    	utils.sendErrResponse(res, 500, 'Unknown error');
+        	    } else {
+        	    	utils.sendSuccessResponse(res, {username: userInfo._id});
+        	    }
+        	});
         }
     });
 }
