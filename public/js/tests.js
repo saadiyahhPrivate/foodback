@@ -148,7 +148,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/Simmons/Brunch',
+        url: '/reviews/Simmons/Late Night',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -165,7 +165,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/Simmons/Brunch?tags=food,chef',
+        url: '/reviews/Simmons/Late Night?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
