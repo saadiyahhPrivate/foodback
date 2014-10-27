@@ -48,6 +48,7 @@ $(function() {
 			url: '/users/signup',
 			type: "POST",
 			data: signupData,
+			dataType: "json",
 			success: function(data) {
 				var response = $.parseJSON(data);
 				$('#success-container').text('Account successfully created. ' +
