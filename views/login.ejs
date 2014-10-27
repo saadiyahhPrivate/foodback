@@ -31,32 +31,35 @@
             </div>
         </div>
         <div id="account-page-container">
-			<div id="login-container">
-				<h3>Log In</h3>
-				<form id="login-form" method="post">
-					<label for="login-username">Username</label>
-					<input type="text" id="login-username" class="form-control" name="username" required>
-					<label for="login-password">Password</label>
-					<input type="password" id="login-password" class="form-control" name="password" required>
-					<button class="btn btn-md btn-primary btn-block">Log In</button>
-				</form>
+			<div id="error-container" class="alert alert-danger" role="alert"></div>
+    		<div id="form-wrapper">
+				<div id="login-container">
+					<h3>Log In</h3>
+					<form id="login-form" method="post">
+						<label for="login-username">Username</label>
+						<input type="text" id="login-username" class="form-control" name="username" required>
+						<label for="login-password">Password</label>
+						<input type="password" id="login-password" class="form-control" name="password" required>
+						<button class="btn btn-md btn-primary btn-block" action="submit">Log In</button>
+					</form>
+				</div>
+				<div id="signup-container">
+					<h3>Sign Up</h3>
+					<form id="signup-form" method="post">
+						<label for="signup-kerberos">Email Address</label>
+						<div class="input-group">
+							<input type="text" id="signup-kerberos" class="form-control" name="kerberos" placeholder="MIT Kerberos ID" required>
+							<span class="input-group-addon">@mit.edu</span>
+						</div>
+						<label for="signup-name">First Name</label>
+						<input type="text" id="signup-name" class="form-control" name="name" required>
+						<label for="signup-password">Password</label>
+						<input type="password" id="signup-password" class="form-control" name="password" required>
+						<button class="btn btn-md btn-primary btn-block" action="submit">Sign Up</button>
+					</form>
+				</div>
+				<div class="clearfix"></div>
 			</div>
-			<div id="signup-container">
-				<h3>Sign Up</h3>
-				<form id="signup-form" method="post">
-					<label for="signup-kerberos">Email Address</label>
-					<div class="input-group">
-						<input type="text" id="signup-kerberos" class="form-control" name="kerberos" placeholder="MIT Kerberos ID" required>
-						<span class="input-group-addon">@mit.edu</span>
-					</div>
-					<label for="signup-name">First Name</label>
-					<input type="text" id="signup-name" class="form-control" name="name" required>
-					<label for="signup-password">Password</label>
-					<input type="password" id="signup-password" class="form-control" name="password" required>
-					<button class="btn btn-md btn-primary btn-block">Sign Up</button>
-				</form>
-			</div>
-			<div class="clearfix"></div>
 		</div>
     </body>
 </html>

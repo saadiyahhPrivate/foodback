@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$('#error-container').hide();
+	
 	$('#login-username').popover({
 		trigger: 'focus',
 		container: 'body',
@@ -25,5 +27,24 @@ $(document).ready(function() {
 		container: 'body',
 		placement: 'right',
 		content: 'For your security, please do NOT use your MIT Kerberos password. 30 character limit.'
+	});
+	
+	$("#login-form").submit(function(e) {
+		var loginData = $(this).serializeArray();
+		$.ajax({
+			url: '/users/login',
+			type: "POST",
+			data: loginData,
+			success: function(response) {
+				window.location.href = '/';
+			},
+			error: function(jqxhr) {
+				var response = $.parseJSON(jqxhr.responseText);
+				$('#error-container').text(response.err);
+				$('#error-container').show();
+			}
+		});
+		e.preventDefault();
+		e.unbind();
 	});
 });
