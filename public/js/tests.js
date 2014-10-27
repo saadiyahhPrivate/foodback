@@ -1,8 +1,8 @@
 QUnit.config.reorder = false;
 
 var review = {
-    hall: 'simmons',
-    period: 'brunch',
+    hall: 'Simmons',
+    period: 'Brunch',
     rating: 5,
     content: 'The food was really good today!',
     tags: 'food,chef'
