@@ -2,19 +2,19 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var halls = [
-    'Baker',
-    'Maseeh',
-    'McCormick',
-    'Next',
-    'Simmons'
+    'baker',
+    'maseeh',
+    'mccormick',
+    'next',
+    'simmons'
 ];
 
 var periods = [
-    'Breakfast',
-    'Brunch',
-    'Lunch',
-    'Dinner',
-    'Late Night'
+    'breakfast',
+    'brunch',
+    'lunch',
+    'dinner',
+    'late-night'
 ];
 
 var userSchema = new Schema({
