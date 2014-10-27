@@ -59,7 +59,7 @@ var createUser = function(req, res, userInfo) {
         	    if (err) {
         	    	utils.sendErrResponse(res, 500, 'Unknown error');
         	    } else {
-        	    	utils.sendSuccessResponse(res, {username: username});
+        	    	utils.sendSuccessResponse(res, {username: userInfo._id});
         	    }
         	});
         }
