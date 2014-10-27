@@ -49,7 +49,7 @@ $(function() {
 			type: "POST",
 			data: signupData,
 			success: function(data) {
-				var response = $.parseJSON(data.responseText);
+				var response = $.parseJSON(data);
 				$('#success-container').text('Account successfully created. ' +
 						'A verification email has been sent to ' +
 						response.content.username + '@mit.edu. You must ' +
