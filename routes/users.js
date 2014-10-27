@@ -3,6 +3,8 @@
 
 var NAME_MAX_LENGTH = 20;
 var PASSWORD_MAX_LENGTH = 30;
+// According to http://kb.mit.edu/confluence/x/QwTn a valid Kerberos ID is "3-8
+// characters long, containing only lowercase letters and/or numbers."
 var KERBEROS_REGEX = /^[a-z0-9]{3,8}$/;
 
 var express = require('express');
@@ -19,8 +21,6 @@ var loginUser = function(req, username) {
 
 // Checks that a string is a valid MIT Kerberos ID. Returns true if it is valid,
 // or false otherwise.
-// According to http://kb.mit.edu/confluence/x/QwTn a valid Kerberos ID is "3-8
-// characters long, containing only lowercase letters and/or numbers."
 var validateKerberos = function(kerberos) {
 	return KERBEROS_REGEX.test(kerberos);
 }
@@ -35,7 +35,7 @@ var validateKerberos = function(kerberos) {
 //     - success: true if the user was created and logged in
 //     - content: on success, an object with a single field 'username', which
 //                contains the username that has been granted to the new user
-//                (the part of their email address before the @mit.edu)
+//                (same as their Kerberos)
 //     - err: on failure, an error message
 router.post('/signup', function(req, res, next) {
     if (req.session.username) {
@@ -119,6 +119,7 @@ router.post('/login', function(req, res, next) {
     }
 
     // Inputs okay, attempt login
+    username = username.toLowerCase();
     User.findById(username, function(err, doc) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error');
