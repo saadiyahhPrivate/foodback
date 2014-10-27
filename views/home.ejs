@@ -46,6 +46,7 @@
 					<label class="control-label col-xs-2" for="hall">Dining Hall:</label>
 					<div class="col-xs-4">
 						<select class="form-control" name="hall" required>
+							<option value="" selected disabled>Select</option>
 							<option value="Baker">Baker</option>
 							<option value="Maseeh">Maseeh</option>
 							<option value="McCormick">McCormick</option>
@@ -56,6 +57,7 @@
 					<label class="control-label col-xs-2" for="period">Meal Period:</label>
 					<div class="col-xs-4">
 						<select class="form-control" name="period" required>
+							<option value="" selected disabled>Select</option>
 							<option value="Breakfast">Breakfast</option>
 							<option value="Brunch">Brunch</option>
 							<option value="Lunch">Lunch (Maseeh only)</option>
@@ -77,6 +79,7 @@
 					<label class="control-label col-xs-2" for="rating">Rating:</label>
 					<div class="col-xs-2">
 						<select class="form-control" name="rating" required>
+							<option value="" selected disabled>Select</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -90,7 +93,7 @@
 					</div>
 				</div>
 				
-				<button id="post_button" class="btn btn-md btn-primary btn-block" type="submit">Post</button>
+				<button id="post_button" class="btn btn-md btn-primary btn-block" action="submit">Post</button>
 			</form>
 			
 			<div id="reviews_container">
