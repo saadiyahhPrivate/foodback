@@ -34,7 +34,8 @@ $(function() {
 			url: '/users/login',
 			type: "POST",
 			data: loginData,
-			success: function(data) {
+			dataType: "json",
+			success: function(response) {
 				window.location.href = '/';
 			},
 			error: error
