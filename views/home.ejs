@@ -98,33 +98,36 @@
 				
 				<form id="search_form" class="form-horizontal">
 					<span>Filter by:</span>
-					<div>
-						<label class="control-label">Dining hall:</label>
-						<select class="form-control" id="search_hall">
-							<option value="all" selected>All</option>
-							<option value="Baker">Baker</option>
-							<option value="Maseeh">Maseeh</option>
-							<option value="McCormick">McCormick</option>
-							<option value="Next">Next</option>
-							<option value="Simmons">Simmons</option>
-						</select>
+					<div class="form-group">
+						<label class="control-label col-xs-2" for="hall">Dining Hall:</label>
+						<div class="col-xs-4">
+							<select id="search_hall" class="form-control" name="hall" required>
+								<option value="all" selected>All</option>
+								<option value="Baker">Baker</option>
+								<option value="Maseeh">Maseeh</option>
+								<option value="McCormick">McCormick</option>
+								<option value="Next">Next</option>
+								<option value="Simmons">Simmons</option>
+							</select>
+						</div>
+						<label class="control-label col-xs-2" for="period">Meal Period:</label>
+						<div class="col-xs-4">
+							<select id="search_period" class="form-control" name="period" required>
+								<option value="all" selected>All</option>
+								<option value="Breakfast">Breakfast</option>
+								<option value="Brunch">Brunch</option>
+								<option value="Lunch">Lunch (Maseeh only)</option>
+								<option value="Dinner">Dinner</option>
+								<option value="Late Night">Late Night (Simmons only)</option>
+							</select>
+						</div>
 					</div>
 					
-					<div>
-						<label class="control-label">Meal period:</label>
-						<select class="form-control" id="search_period" required>
-							<option value="all" selected>All</option>
-							<option value="Breakfast">Breakfast</option>
-							<option value="Brunch">Brunch</option>
-							<option value="Lunch">Lunch (Maseeh only)</option>
-							<option value="Dinner">Dinner</option>
-							<option value="Late Night">Late Night (Simmons only)</option>
-						</select>
-					</div>
-					
-					<div>
-						<label class="control-label" for="tags">Tags (separate tags with commas)</label>
-						<input class="form-control" type="text" id="search_tags">
+					<div class="form-group">
+						<label class="control-label col-xs-3" for="tags">Tags:</label>
+						<div class="col-xs-9">
+							<input id="search_tags" class="form-control" type="text" name="tags" placeholder="(separate tags with commas)">
+						</div>
 					</div>
 				</form>
 				
