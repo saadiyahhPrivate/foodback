@@ -1,13 +1,68 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Foodback Tests</title>
+        <title>Foodback | Home</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    </head>
-    <body>
 
+        <script type="text/javascript" src="/js/script.js"></script>
+    </head>
+
+    <body>
+        <h1>Welcome!</h1>
+
+        <button id="make_button">Make a review</button>
+        <form id="post_form" method="post" action="/reviews/post">
+            <div>
+                <label for="hall">Which dining hall?</label>
+                <select name="hall" required>
+                    <option value="baker">Baker</option>
+                    <option value="maseeh">Maseeh</option>
+                    <option value="mccormick">McCormick</option>
+                    <option value="next">Next</option>
+                    <option value="simmons">Simmons</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="period">Which meal period?</label>
+                <select name="period" required>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch (Maseeh only)</option>
+                    <option value="mccormick">McCormick</option>
+                    <option value="next">Next</option>
+                    <option value="late-night">Late Night (Simmons only)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="content">Content</label><br>
+                <textarea name="content" rows="15" cols="50" required></textarea>
+            </div>
+
+            <div>
+                <label for="rating">Rating:</label>
+                <select name="rating" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="tags">Tags (separate tags with commas)</label>
+                <input type="text" name="tags">
+            </div>
+
+            <button id="post_button" type="submit">Post</button>
+        </form>
+
+        <h2>Reviews</h2>
     </body>
 </html>

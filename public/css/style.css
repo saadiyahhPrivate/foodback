@@ -1,0 +1,41 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+
+#post_form {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    transition: all 1s ease;
+}
+
+#post_form textarea {
+    resize: none;
+}
+
+#post_form div {
+    margin: 1em 0;
+}
+
+button, input {
+    outline: none;
+}
+
+button, select {
+    padding: 5px;
+    background-color: white;
+    border: 1px black solid;
+}
+
+button:active {
+    color: white;
+    background-color: black;
+    border-color: white;
+}
