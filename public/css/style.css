@@ -25,3 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 #post_form textarea {
     resize: none;
 }
+
+.form-center {
+	margin: 0 auto;
+}
