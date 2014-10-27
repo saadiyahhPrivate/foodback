@@ -68,7 +68,11 @@ var createUser = function(req, res, userInfo) {
 
 // Login/signup page
 router.get('/login', function(req, res) {
-	res.render('login');
+	if (req.session.username) {
+		res.redirect('/');
+	} else {
+		res.render('login');
+	}
 });
 
 // POST /users/signup
