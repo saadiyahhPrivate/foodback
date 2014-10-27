@@ -39,7 +39,9 @@ $(function() {
 			error: error
 		});
 		e.preventDefault();
-		$(this).reset();
+		$(this).trigger('reset');
+		$('#error-container').hide();
+		$('#success-container').hide();
 	});
 	
 	$("#signup-form").submit(function(e) {
@@ -59,6 +61,8 @@ $(function() {
 			error: error
 		});
 		e.preventDefault();
-		$(this).reset();
+		$(this).trigger('reset');
+		$('#error-container').hide();
+		$('#success-container').hide();
 	});
 });
