@@ -1,0 +1,38 @@
+#account-page-container {
+    width: 620px;
+    margin: 50px auto 0 auto;
+    position: relative;
+}
+
+#login-container {
+    width: 280px;
+    float: left;
+}
+
+#signup-container {
+    width: 280px;
+    float: right;
+}
+
+#account-page-container .btn {
+    margin-top: 15px;
+}
+
+#signup-container:before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -30px;
+    margin-top: 15px;
+    content: " ";
+    width: 1px;
+    background: #dddddd;
+}
+
+.popover-content {
+    font-size: 85%;
+}
+
+.clearfix {
+    clear: both;
+}

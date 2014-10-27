@@ -25,6 +25,11 @@ var validateKerberos = function(kerberos) {
 	return KERBEROS_REGEX.test(kerberos);
 }
 
+// Login/signup page
+router.get('/login', function(req, res) {
+	res.render('login');
+});
+
 // POST /users/signup
 // Request body:
 //     - kerberos: the user's Kerberos ID, i.e. the part of their email before
