@@ -52,6 +52,12 @@ router.post('/', utils.requireLogin, function(req, res) {
     var user = req.session.username;
     var scope = {hall: req.body.hall, period: req.body.period};
     var my_review_JSON = makeNewReview(user, req.body);
+
+    if (!(req.body.hall && req.body.period && req.body.content && req.body.rating)){
+        utils.sendErrResponse(res, 403, 'All fields except tags are required');
+        return;
+    }
+
     Scope.findOne(scope, function(err, doc) {
         if (err) {
             utils.sendErrResponse(res, 500, "Unknown Error");
