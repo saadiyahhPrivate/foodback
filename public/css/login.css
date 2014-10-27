@@ -4,6 +4,10 @@
     position: relative;
 }
 
+#form-wrapper {
+    position: relative;
+}
+
 #login-container {
     width: 280px;
     float: left;
@@ -35,4 +39,8 @@
 
 .clearfix {
     clear: both;
+}
+
+.alert {
+    text-align: center;
 }
