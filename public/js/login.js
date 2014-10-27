@@ -39,6 +39,7 @@ $(function() {
 			error: error
 		});
 		e.preventDefault();
+		$(this).reset();
 	});
 	
 	$("#signup-form").submit(function(e) {
@@ -58,5 +59,6 @@ $(function() {
 			error: error
 		});
 		e.preventDefault();
+		$(this).reset();
 	});
 });
