@@ -25,23 +25,3 @@ h1, h2, h3, h4, h5, h6 {
 #post_form textarea {
     resize: none;
 }
-
-form div {
-    margin: 1em 0;
-}
-
-button, input {
-    outline: none;
-}
-
-button, select {
-    padding: 5px;
-    background-color: white;
-    border: 1px black solid;
-}
-
-button:active {
-    color: white;
-    background-color: black;
-    border-color: white;
-}
