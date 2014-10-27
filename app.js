@@ -89,11 +89,3 @@ var ip = process.env.OPENSHIFT_NODEJS_IP;
 app.listen(port || 8080, ip);
 
 module.exports = app;
-
-var User = models.User;
-User.findById('foodback', function(err, doc) {
-	var ObjectID = require('mongodb').ObjectID;
-	doc.verified = true;
-	doc.token = new ObjectID().valueOf();
-	doc.save(function(err) {});
-});
