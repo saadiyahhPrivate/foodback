@@ -48,14 +48,12 @@ $(function() {
 			type: "POST",
 			data: signupData,
 			dataType: "json",
-			success: function(data) {
-				console.log(data);
-//				var response = $.parseJSON(data);
-//				$('#success-container').text('Account successfully created. ' +
-//						'A verification email has been sent to ' +
-//						response.content.username + '@mit.edu. You must ' +
-//						'verify your account before logging in.');
-//				$('#success-container').show();
+			success: function(response) {
+				$('#success-container').text('Account successfully created. ' +
+						'A verification email has been sent to ' +
+						response.content.username + '@mit.edu. You must ' +
+						'verify your account before logging in.');
+				$('#success-container').show();
 			},
 			error: error
 		});
