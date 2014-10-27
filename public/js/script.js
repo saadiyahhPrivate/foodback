@@ -1,3 +1,9 @@
+function error(jqxhr) {
+	var response = $.parseJSON(jqxhr.responseText);
+	$('#error-container').text(response.err);
+	$('#error-container').show();
+}
+
 function toggleReviewForm() {
     var form = $('#post_form');
     var inView = form.data('inView');
@@ -19,6 +25,7 @@ function postReview() {
 }
 
 $(function () {
+	$('#error-container').hide();
     $('#post_form').data('inView', false);
     $('#make_button').click(toggleReviewForm);
     $('#post_button').click(postReview);

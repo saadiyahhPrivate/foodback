@@ -1,6 +1,4 @@
-$(document).ready(function() {
-	$('#error-container').hide();
-	
+$(function() {
 	$('#login-username').popover({
 		trigger: 'focus',
 		container: 'body',
@@ -38,11 +36,7 @@ $(document).ready(function() {
 			success: function(response) {
 				window.location.href = '/';
 			},
-			error: function(jqxhr) {
-				var response = $.parseJSON(jqxhr.responseText);
-				$('#error-container').text(response.err);
-				$('#error-container').show();
-			}
+			error: error
 		});
 		e.preventDefault();
 		e.unbind();
