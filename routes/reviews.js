@@ -24,7 +24,7 @@ function getReviewHandle(query) {
 
 function attachTags(req, query) {
     if (req.query.tags) {
-        var tags = req.query.tags.split(',');
+        var tags = req.query.tags.trim().split(/\s*,\s*/);
         query.tags = {$in: tags};
     }
 }

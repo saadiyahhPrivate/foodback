@@ -16,7 +16,7 @@
         <h1>Welcome!</h1>
 
         <button id="make_button">Make a review</button>
-        <form id="post_form" method="post" action="/reviews/post">
+        <form id="post_form">
             <div>
                 <label for="hall">Which dining hall?</label>
                 <select name="hall" required>
@@ -63,6 +63,44 @@
             <button id="post_button" type="submit">Post</button>
         </form>
 
-        <h2>Reviews</h2>
+        <div id="reviews_container">
+            <h2>Reviews</h2>
+
+            <form id="search_form">
+            <span>Filter by:</span>
+                <div>
+                    <label>Dining hall:</label>
+                    <select id="search_hall">
+                        <option value="all" selected>All</option>
+                        <option value="baker">Baker</option>
+                        <option value="maseeh">Maseeh</option>
+                        <option value="mccormick">McCormick</option>
+                        <option value="next">Next</option>
+                        <option value="simmons">Simmons</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Meal period:</label>
+                    <select id="search_period" required>
+                        <option value="all" selected>All</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch (Maseeh only)</option>
+                        <option value="mccormick">McCormick</option>
+                        <option value="next">Next</option>
+                        <option value="late-night">Late Night (Simmons only)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="tags">Tags (separate tags with commas)</label>
+                    <input type="text" id="search_tags">
+                </div>
+            </form>
+
+            <div id="reviews">
+
+            </div>
+        </div>
     </body>
 </html>

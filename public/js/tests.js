@@ -1,8 +1,8 @@
 QUnit.config.reorder = false;
 
 var review = {
-    hall: 'Simmons',
-    period: 'Brunch',
+    hall: 'simmons',
+    period: 'brunch',
     rating: 5,
     content: 'The food was really good today!',
     tags: 'food,chef'
@@ -35,13 +35,10 @@ function checkReview(assert, newReview) {;
 // review ID, and that the identified review is equivalent to the test review.
 function findReview(assert, reviews) {
     for (var i = 0; i < reviews.length; i++) {
-        if (reviews[i]._id == currentReviewId) {
-            checkReview(assert, reviews[i]);
-            return;
+        if (reviews[i]._id === currentReviewId) {
+            return reviews[i];
         }
     }
-
-    assert.ok(false, 'Could not find review.');
 }
 
 // Sophia
@@ -87,7 +84,8 @@ QUnit.test("Get All Reviews", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            findReview(assert, data.content);
+            var review = findReview(assert, data.content);
+            checkReview(assert, review);
             start();
         },
         error: error
@@ -103,7 +101,8 @@ QUnit.test("Get All Reviews with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            findReview(assert, data.content);
+            var review = findReview(assert, data.content);
+            checkReview(assert, review);
             start();
         },
         error: error
@@ -115,11 +114,12 @@ QUnit.test("Get Reviews by Dining Hall", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/Simmons',
+        url: '/reviews/simmons',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            findReview(assert, data.content);
+            var review = findReview(assert, data.content);
+            checkReview(assert, review);
             start();
         },
         error: error
@@ -131,11 +131,12 @@ QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/Simmons?tags=food,chef',
+        url: '/reviews/simmons?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            findReview(assert, data.content);
+            var review = findReview(assert, data.content);
+            checkReview(assert, review);
             start();
         },
         error: error
@@ -147,11 +148,12 @@ QUnit.test("Get Reviews by Scope", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/Simmons/Brunch',
+        url: '/reviews/simmons/brunch',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            findReview(assert, data.content);
+            var review = findReview(assert, data.content);
+            checkReview(assert, review);
             start();
         },
         error: error
@@ -163,11 +165,12 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews/Simmons/Brunch?tags=food,chef',
+        url: '/reviews/simmons/brunch?tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            findReview(assert, data.content);
+            var review = findReview(assert, data.content);
+            checkReview(assert, review);
             start();
         },
         error: error
