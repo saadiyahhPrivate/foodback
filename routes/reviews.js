@@ -15,7 +15,7 @@ var vote = require('./vote/index');
 router.use('/vote', vote);
 
 function getReviewHandle(query) {
-    return Review.find(query).populate('author', '-password').populate('scope', 'hall period -_id').sort('score');
+    return Review.find(query).populate('author', '-password').populate('scope', 'hall period -_id').sort('-score');
 }
 
 function attachTags(req, query) {

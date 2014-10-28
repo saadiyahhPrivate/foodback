@@ -148,8 +148,8 @@ function reviewHeader(author, hall, period, rating) {
 
 // Abdi
 function reviewBody(content, score, tags) {
-	var contentHTML = '<p>' + content.replace('\n\n', '</p><p>') + "</p>";
-	contentHTML = contentHTML.replace('\n', '<br \>');
+	var contentHTML = '<p>' + content.replace(/\n\n/g, '</p><p>') + "</p>";
+	contentHTML = contentHTML.replace(/\n/g, '<br \>');
     var content = $('<div>').addClass('review_content').append(contentHTML);
     var score = $('<span>').addClass('review_score').text(score + ' points');
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
