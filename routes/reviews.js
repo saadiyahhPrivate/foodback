@@ -26,16 +26,14 @@ function attachTags(req, query) {
 }
 
 function hallSearch(req, res, hall) {
-    Scope.find({hall: hall}, '_id', function (err, scopes) {
+    Scope.find({hall: hall}, function (err, scopes) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scopes) {
         	content = {score: 0, count: 0};
             for (var i = 0; i < scopes.length; i++) {
             	content.score += scopes[i].numStars;
-            	console.log(scopes[i].numStars);
             	content.count += scopes[i].totalReviews;
-            	console.log(scopes[i].totalReviews);
             }
             
             var ids = scopes.map(function (val, i, arr) {
@@ -61,7 +59,7 @@ function hallSearch(req, res, hall) {
 }
 
 function scopeSearch(req, res, hall, period) {
-	Scope.findOne({hall: hall, period: period}, '_id', function (err, scope) {
+	Scope.findOne({hall: hall, period: period}, function (err, scope) {
 	    if (err) {
 	        utils.sendErrResponse(res, 500, 'Unknown error.');
 	    } else if (scope) {
