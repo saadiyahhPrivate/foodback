@@ -67,8 +67,8 @@ QUnit.test("Post Test", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Post success.');
-            checkReview(assert, data.content.review);
-            currentReviewId = data.content.review._id;
+            checkReview(assert, data.content);
+            currentReviewId = data.content._id;
             start();
         },
         error: error
@@ -181,7 +181,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
 QUnit.test("Upvote Test", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/reviews/vote/up/' + currentReviewId,
         success: function(data) {
             assert.ok(data.success, 'Upvote success.');
@@ -215,8 +215,8 @@ QUnit.test("Post Test 2", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Post success.');
-            checkReview(assert, data.content.review);
-            currentReviewId = data.content.review._id;
+            checkReview(assert, data.content);
+            currentReviewId = data.content._id;
             start();
         },
         error: error
@@ -227,7 +227,7 @@ QUnit.test("Post Test 2", function(assert) {
 QUnit.test("Downvote Test", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/reviews/vote/down/' + currentReviewId,
         success: function(data) {
             assert.ok(data.success, 'Downvote success.');

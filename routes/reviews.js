@@ -10,13 +10,9 @@ var User = models.User,
     Review = models.Review,
     Scope = models.Scope;
 
-var post = require('./post/index');
 var vote = require('./vote/index');
-var remove = require('./delete/index'); // using delete throws an error (keyword)
 
-router.use('/post', post);
 router.use('/vote', vote);
-router.use('/delete', remove);
 
 function getReviewHandle(query) {
     return Review.find(query).populate('author', '-password').populate('scope', 'hall period -_id');
@@ -136,22 +132,14 @@ router.post('/', utils.requireLogin, function(req, res) {
 					if (err) {
 						utils.sendErrResponse(res, 500, "Unknown Error");
 					} else {
-						var reviewID = doc._id;
-						User.update({_id: user}, {$push: {reviews: reviewID}},
-								{upsert:true}, function(err, user) {
-									if (err) {
-										utils.sendErrResponse(res, 500, "Unknown Error");
-									} else {
-										review.populate('scope author', function(err, doc) {
-											if (err) {
-												utils.sendErrResponse(res, 500, "Unknown Error");
-											} else {
-												doc.author = doc.author.name;
-												utils.sendSuccessResponse(res, doc); // doc : populated review
-											}
-										});
-									}
-								});
+						review.populate('scope author', function(err, doc) {
+							if (err) {
+								utils.sendErrResponse(res, 500, "Unknown Error");
+							} else {
+								doc.author = doc.author.name;
+								utils.sendSuccessResponse(res, doc); // doc : populated review
+							}
+						});
 					}
 				});
 			} else {
@@ -168,7 +156,7 @@ router.post('/', utils.requireLogin, function(req, res) {
 // Response:
 //     - success: true if the review was successfully deleted
 //     - err: on failure, an error message
-router.del('/:review_id', utils.requireLogin, function(req, res) {
+router.delete('/:review_id', utils.requireLogin, function(req, res) {
 	var user = req.session.username; // sessions usernames
 	var review_id = req.params.review_id;
 
