@@ -52,7 +52,7 @@ $(function() {
 			data: signupData,
 			dataType: "json",
 			success: function(response) {
-				$(this).trigger('reset');
+				$("#signup-form").trigger('reset');
 				$('#success-container').text('Account successfully created. ' +
 						'A verification email has been sent to ' +
 						response.content.username + '@mit.edu. You must ' +
