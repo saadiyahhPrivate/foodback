@@ -175,6 +175,8 @@ function getReviews() {
 		},
 		error: error
 	});
+	
+	return false;
 }
 
 $(function () {
