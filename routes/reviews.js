@@ -136,22 +136,14 @@ router.post('/', utils.requireLogin, function(req, res) {
 					if (err) {
 						utils.sendErrResponse(res, 500, "Unknown Error");
 					} else {
-						var reviewID = doc._id;
-						User.update({_id: user}, {$push: {reviews: reviewID}},
-								{upsert:true}, function(err, user) {
-									if (err) {
-										utils.sendErrResponse(res, 500, "Unknown Error");
-									} else {
-										review.populate('scope author', function(err, doc) {
-											if (err) {
-												utils.sendErrResponse(res, 500, "Unknown Error");
-											} else {
-												doc.author = doc.author.name;
-												utils.sendSuccessResponse(res, doc); // doc : populated review
-											}
-										});
-									}
-								});
+						review.populate('scope author', function(err, doc) {
+							if (err) {
+								utils.sendErrResponse(res, 500, "Unknown Error");
+							} else {
+								doc.author = doc.author.name;
+								utils.sendSuccessResponse(res, doc); // doc : populated review
+							}
+						});
 					}
 				});
 			} else {

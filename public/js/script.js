@@ -32,7 +32,7 @@ function postReview() {
     }
 
     $.ajax({
-        url: "/reviews/post",
+        url: "/reviews",
         type: "POST",
         dataType: "json",
         data: review,
