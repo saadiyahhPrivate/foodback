@@ -59,7 +59,7 @@ function postReview() {
 
 // Saadiyah
 function deleteReview() {
-    var id = $(this).parent().data("id");
+    var id = $(this).parent().parent().data("id");
 
     $.ajax({
         url: "/reviews/"+ id,
@@ -75,7 +75,7 @@ function deleteReview() {
 
 // Sophia
 function upvote() {
-    var id = $(this).parent().parent().data("id");
+    var id = $(this).parent().parent().parent().data("id");
 
     $.ajax({
         url: "/reviews/vote/up/" + id,
@@ -91,7 +91,7 @@ function upvote() {
 
 // Sophia
 function downvote() {
-    var id = $(this).parent().parent().data("id");
+    var id = $(this).parent().parent().parent().data("id");
 
     $.ajax({
         url: "/reviews/vote/down/" + id,
