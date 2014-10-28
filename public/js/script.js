@@ -17,10 +17,6 @@ function logout() {
 		success: function(response) {
 			$('#user-header').text("");
 			$('#user-header').append('<li><a href="/users/login">Log In or Sign Up</a></li>');
-			$('#post_form').hide();
-			$('#make_button').hide();
-			$('.review_delete').hide();
-			$('.review_vote').hide();
 		},
 		error: error
 	});
@@ -108,7 +104,7 @@ function reviewBody(content, score, tags) {
 }
 
 function createReviewDiv(review) {
-	var author = review.author.name,
+	var author = review.author,
 		hall = formatString(review.scope.hall),
 		period = formatString(review.scope.period),
 		rating = review.rating,
@@ -147,13 +143,14 @@ function getReviews() {
 		tags = $('#search_tags').val();
 
 	if (hall !== 'all') {
-		base_url += '/' + hall;
+		base_url += '?dininghall=' + hall;
 		if (period !== 'all') {
-			base_url += '/' + period;
+			base_url += '&mealperiod=' + period;
 		}
+		base_url = tags === "" ? base_url : base_url + '&tags=' + tags;
+	} else {
+		base_url = tags === "" ? base_url : base_url + '?tags=' + tags;
 	}
-
-	base_url = tags === "" ? base_url : base_url + '?tags=' + tags;
 
 	$.ajax({
 		url: base_url,
@@ -165,7 +162,7 @@ function getReviews() {
 					reviewsDiv = $('#reviews'),
 					i;
 
-				for (i = 0; i < 0; i++) {
+				for (i = 0; i < reviews.length; i++) {
 					var div = createReviewDiv(reviews[i]);
 					reviewsDiv.append(div);
 				}
