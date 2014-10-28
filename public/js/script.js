@@ -5,8 +5,8 @@ function error(jqxhr) {
 }
 
 function clearAlerts() {
-	$('#error-container').slideUp();
-	$('#success-container').slideUp();
+	$('#error-container').hide();
+	$('#success-container').hide();
 }
 
 function logout() {
