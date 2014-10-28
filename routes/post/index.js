@@ -81,6 +81,7 @@ router.post('/', utils.requireLogin, function(req, res) {
                                     if (err) {
                                         utils.sendErrResponse(res, 500, "Unknown Error");
                                     } else {
+                                    	doc.author = doc.author.name;
                                         utils.sendSuccessResponse(res, {review: doc});
                                     }
                                 });
