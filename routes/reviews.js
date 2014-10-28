@@ -37,7 +37,7 @@ function parseReviews(req, reviews) {
             var review = reviews[i];
             review.canDelete = review.author._id === username ? true : false;
             review.canVote = review.voters.indexOf(username) === -1 ? true: false;
-            delete review.author._id;
+            review.author = review.author.name;
             delete review.voters;
         }
     } else {
@@ -46,7 +46,7 @@ function parseReviews(req, reviews) {
             var review = reviews[i];
             review.canDelete = false;
             review.canVote = false;
-            delete review.author._id;
+            review.author = review.author.name;
             delete review.voters;
         }
     }
