@@ -189,6 +189,14 @@ router.post('/', utils.requireLogin, function(req, res) {
 				var scopeID = doc._id;
 				my_review_JSON.scope = scopeID;
 				var newReview = new Review(my_review_JSON);
+				
+				doc.numStars += newReview.rating;
+				doc.totalReviews++;
+				doc.save(function(err, doc2) {
+					if (err) {
+						console.log("Error updating scope score");
+					}
+				});
 
 				newReview.save(function(err, review) {
 					if (err) {
@@ -233,6 +241,16 @@ router.delete('/:review_id', utils.requireLogin, function(req, res) {
 		} else {
 			if (doc) {
 				if (doc.author === user) {
+					Scope.findById(doc.scope, function(err, scope) {
+						scope.numStars -= doc.rating;
+						scope.totalReviews--;
+						scope.save(function(err, doc2) {
+							if (err) {
+								console.log("Error updating scope score");
+							}
+						});
+					});
+					
 					doc.remove(function(err) {
 						if (err) {
 							utils.sendErrResponse(res, 500, "Unknown Error");
