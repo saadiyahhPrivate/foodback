@@ -66,8 +66,6 @@ function deleteReview() {
         type: "DELETE",
         dataType: "json",
         success: function(data) {
-            $('#success-container').text('Review successfully deleted.');
-            $('#success-container').slideDown();
             getReviews();
         },
         error:error
@@ -84,8 +82,6 @@ function upvote() {
         type: "POST",
         dataType: "json",
         success: function(data) {
-            $('#success-container').text('Your vote has been cast.');
-            $('#success-container').slideDown();
             getReviews();
         },
         error:error
@@ -102,8 +98,6 @@ function downvote() {
         type: "POST",
         dataType: "json",
         success: function(data) {
-            $('#success-container').text('Your vote has been cast.');
-            $('#success-container').slideDown();
             getReviews();
         },
         error:error
@@ -154,7 +148,9 @@ function reviewHeader(author, hall, period, rating) {
 
 // Abdi
 function reviewBody(content, score, tags) {
-    var content = $('<p>').addClass('review_title').text(content);
+	var contentHTML = '<p>' + content.replace('\n\n', '</p><p>') + "</p>";
+	contentHTML = contentHTML.replace('\n', '<br \>');
+    var content = $('<div>').addClass('review_content').append(contentHTML);
     var score = $('<span>').addClass('review_score').text(score + ' points');
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
     
