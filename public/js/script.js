@@ -1,12 +1,12 @@
 function error(jqxhr) {
 	var response = $.parseJSON(jqxhr.responseText);
 	$('#error-container').text(response.err);
-	$('#error-container').show();
+	$('#error-container').slideDown();
 }
 
 function clearAlerts() {
-	$('#error-container').hide();
-	$('#success-container').hide();
+	$('#error-container').slideUp();
+	$('#success-container').slideUp();
 }
 
 function logout() {
