@@ -25,6 +25,55 @@ function attachTags(req, query) {
     }
 }
 
+function hallSearch(req, res, hall) {
+    Scope.find({hall: hall}, '_id', function (err, scopes) {
+        if (err) {
+            utils.sendErrResponse(res, 500, 'Unknown error.');
+        } else if (scopes) {
+            var ids = scopes.map(function (val, i, arr) {
+                return val._id;
+            });
+            var query = {scope: {$in: ids}};
+            attachTags(req, query);
+
+            var handle = getReviewHandle(query);
+            handle.exec(function (err, reviews) {
+                if (err) {
+                    utils.sendErrResponse(res, 500, 'Unknown error.');
+                } else {
+                    parseReviews(req, reviews);
+                    utils.sendSuccessResponse(res, reviews);
+                }
+            });
+        } else {
+            utils.sendSuccessResponse(res, []);
+        }
+    });
+}
+
+function scopeSearch(req, res, hall, period) {
+	Scope.findOne({hall: hall, period: period}, '_id', function (err, scope) {
+	    if (err) {
+	        utils.sendErrResponse(res, 500, 'Unknown error.');
+	    } else if (scope) {
+	        var query = {scope: scope._id};
+	        attachTags(req, query);
+	
+	        var handle = getReviewHandle(query);
+	        handle.exec(function (err, reviews) {
+	            if (err) {
+	                utils.sendErrResponse(res, 500, 'Unknown error.');
+	            } else {
+	                parseReviews(req, reviews);
+	                utils.sendSuccessResponse(res, reviews);
+	            }
+	        });
+	    } else {
+	        utils.sendSuccessResponse(res, []);
+	    }
+	});
+}
+
 function parseReviews(req, reviews) {
     if (req.session.username) {
         var username = req.session.username,
@@ -76,6 +125,8 @@ function makeNewReview(author, reqBody){
 
 // GET /reviews
 // Request query:
+//     - (OPTIONAL) dininghall: the name of the dining hall for which to find reviews
+//     - (OPTIONAL) mealperiod: the name of the meal period for which to find reviews
 //     - (OPTIONAL) tags: a comma-separated list of tags to search for
 // Response:
 //     - success: true if the search finished without error
@@ -83,18 +134,29 @@ function makeNewReview(author, reqBody){
 //                matched the search
 //     - err: on failure, an error message
 router.get('/', function(req, res) {
-    var query = {};
-    attachTags(req, query);
+	var hall = req.query.dininghall,
+    var period = req.query.mealperiod;
+	
+	if (dininghall) {
+		if (mealperiod) {
+			scopeSearch(req, res, hall, period);
+		} else {
+			hallSearch(req, res, hall);
+		}
+	} else {
+		var query = {};
+	    attachTags(req, query);
 
-    var handle = getReviewHandle(query);
-    handle.exec(function (err, reviews) {
-        if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error.');
-        } else {
-            parseReviews(req, reviews);
-            utils.sendSuccessResponse(res, reviews);
-        }
-    });
+	    var handle = getReviewHandle(query);
+	    handle.exec(function (err, reviews) {
+	        if (err) {
+	            utils.sendErrResponse(res, 500, 'Unknown error.');
+	        } else {
+	            parseReviews(req, reviews);
+	            utils.sendSuccessResponse(res, reviews);
+	        }
+	    });
+	}
 });
 
 // POST /reviews
@@ -189,81 +251,6 @@ router.delete('/:review_id', utils.requireLogin, function(req, res) {
 			}
 		}
 	});
-});
-
-// GET /reviews/:dininghall
-// Request parameters:
-//     - dininghall: the name of the dining hall for which to find reviews
-// Request query:
-//     - (OPTIONAL) tags: a comma-separated list of tags to search for
-// Response:
-//     - success: true if the search finished without error
-//     - content: on success, an array containing the review objects that
-//                matched the search
-//     - err: on failure, an error message
-router.get('/:dininghall', function(req, res) {
-    var hall = req.params.dininghall;
-
-    Scope.find({hall: hall}, '_id', function (err, scopes) {
-        if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error.');
-        } else if (scopes) {
-            var ids = scopes.map(function (val, i, arr) {
-                return val._id;
-            });
-            var query = {scope: {$in: ids}};
-            attachTags(req, query);
-
-            var handle = getReviewHandle(query);
-            handle.exec(function (err, reviews) {
-                if (err) {
-                    utils.sendErrResponse(res, 500, 'Unknown error.');
-                } else {
-                    parseReviews(req, reviews);
-                    utils.sendSuccessResponse(res, reviews);
-                }
-            });
-        } else {
-            utils.sendSuccessResponse(res, []);
-        }
-    });
-});
-
-// GET /reviews/:dininghall/:mealperiod
-// Request parameters:
-//     - dininghall: the name of the dining hall for which to find reviews
-//     - mealperiod: the name of the meal period for which to find reviews
-// Request query:
-//     - (OPTIONAL) tags: a comma-separated list of tags to search for
-// Response:
-//     - success: true if the search finished without error
-//     - content: on success, an array containing the review objects that
-//                matched the search
-//     - err: on failure, an error message
-router.get('/:dininghall/:mealperiod', function(req, res) {
-    var hall = req.params.dininghall,
-        period = req.params.mealperiod;
-
-    Scope.findOne({hall: hall, period: period}, '_id', function (err, scope) {
-        if (err) {
-            utils.sendErrResponse(res, 500, 'Unknown error.');
-        } else if (scope) {
-            var query = {scope: scope._id};
-            attachTags(req, query);
-
-            var handle = getReviewHandle(query);
-            handle.exec(function (err, reviews) {
-                if (err) {
-                    utils.sendErrResponse(res, 500, 'Unknown error.');
-                } else {
-                    parseReviews(req, reviews);
-                    utils.sendSuccessResponse(res, reviews);
-                }
-            });
-        } else {
-            utils.sendSuccessResponse(res, []);
-        }
-    });
 });
 
 module.exports = router;
