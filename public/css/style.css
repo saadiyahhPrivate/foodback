@@ -51,6 +51,10 @@ h1, h2, h3, h4, h5, h6 {
     font-style: italic;
 }
 
-.review_score, .review_rating {
-    display: block;
+.review_vote .btn {
+	margin-left: 5px;
+}
+
+.review_delete {
+	margin-left: 10px;
 }
