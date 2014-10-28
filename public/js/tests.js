@@ -131,7 +131,7 @@ QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews?dininghall=simmons?tags=food,chef',
+        url: '/reviews?dininghall=simmons&tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -148,7 +148,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews?dininghall=simmons?mealperiod=brunch',
+        url: '/reviews?dininghall=simmons&mealperiod=brunch',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
@@ -165,7 +165,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
         type: 'GET',
-        url: '/reviews?dininghall=simmons?mealperiod=brunch?tags=food,chef',
+        url: '/reviews?dininghall=simmons&mealperiod=brunch&tags=food,chef',
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
