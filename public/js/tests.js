@@ -164,7 +164,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
 QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',]
+        type: 'GET',
         url: '/reviews/simmons/brunch?tags=food,chef',
         dataType: 'json',
         success: function(data) {
