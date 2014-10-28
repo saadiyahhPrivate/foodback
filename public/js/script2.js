@@ -37,7 +37,7 @@ function reviewBody(content, score, tags) {
     return $('<div>').addClass('review_body').append(content, tags, score);
 }
 
-function createReviewHTML(review) {
+function createReviewDiv(review) {
     var author = review.author.name,
         hall = formatString(review.scope.hall),
         period = formatString(review.scope.period),
@@ -59,7 +59,7 @@ function createReviewHTML(review) {
 
             var vote = $('<span>').addClass('review_vote');
             vote.append(up, down);
-            review.append(vote);
+            reviewDiv.append(vote);
         }
 
         if (review.canDelete) {
@@ -67,11 +67,42 @@ function createReviewHTML(review) {
             reviewDiv.append(del);
         }
 
-        return review;
+        return reviewDiv;
 }
 
 function getReviews() {
-    var
+    var base_url = '/reviews',
+        hall = $('#search_hall').val(),
+        period = $('#search_period').val(),
+        tags = $('#search_tags').val();
+
+    if (hall !== 'all') {
+        base_url += '/' + hall;
+        if (period !== 'all') {
+            base_url += '/' + period;
+        }
+    }
+
+    base_url = tags === "" ? base_url : base_url + '?tags=' + tags;
+
+    $.ajax({
+        url: base_url,
+        type: 'GET',
+        datatype: 'json',
+        success: function (data) {
+            if (data.success) {
+                var reviews = data.content,
+                    reviewsDiv = $('#reviews'),
+                    i;
+
+                for (i = 0; i < 0; i++) {
+                    var div = createReviewDiv(reviews[i]);
+                    reviewsDiv.append(div);
+                }
+            }
+        },
+        error: error
+    });
 }
 
 $(function () {
