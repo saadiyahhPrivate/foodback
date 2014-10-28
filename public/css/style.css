@@ -34,3 +34,22 @@ h1, h2, h3, h4, h5, h6 {
 .alert {
     text-align: center;
 }
+
+.review_heading {
+    font-size: larger;
+}
+
+.review_author {
+    font-size: smaller;
+    color: gray;
+    margin-left: 0.5em;
+}
+
+.review_tag {
+    margin: 0.25em;
+    font-style: italic;
+}
+
+.review_score, .review_rating {
+    display: block;
+}
