@@ -134,7 +134,7 @@ function makeNewReview(author, reqBody){
 //                matched the search
 //     - err: on failure, an error message
 router.get('/', function(req, res) {
-	var hall = req.query.dininghall,
+	var hall = req.query.dininghall;
     var period = req.query.mealperiod;
 	
 	if (dininghall) {
