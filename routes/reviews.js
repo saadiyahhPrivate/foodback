@@ -30,9 +30,7 @@ function hallSearch(req, res, hall) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scopes) {
-        	content = {};
-            content.score = 0;
-            content.count = 0;
+        	content = {score: 0, count: 0};
             for (var i = 0; i < scopes.length; i++) {
             	content.score += scopes[i].numStars;
             	content.count += scopes[i].totalReviews;
