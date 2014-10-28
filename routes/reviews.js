@@ -156,7 +156,7 @@ router.post('/', utils.requireLogin, function(req, res) {
 // Response:
 //     - success: true if the review was successfully deleted
 //     - err: on failure, an error message
-router.del('/:review_id', utils.requireLogin, function(req, res) {
+router.delete('/:review_id', utils.requireLogin, function(req, res) {
 	var user = req.session.username; // sessions usernames
 	var review_id = req.params.review_id;
 

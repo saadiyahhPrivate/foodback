@@ -1,5 +1,4 @@
-// Voting feature
-// author: Sophia
+// Voting feature (author: Sophia)
 
 var express = require('express');
 var router = express.Router();
@@ -44,7 +43,7 @@ var applyVote = function(req, res, review_id, vote) {
     });
 }
 
-// GET /reviews/vote/up/:review_id
+// POST /reviews/vote/up/:review_id
 // Request parameters:
 //     - review_id: a String representation of the MongoDB _id of the review
 // Response:
@@ -52,11 +51,11 @@ var applyVote = function(req, res, review_id, vote) {
 //     - content: on success, an object with a single field 'score', which
 //                contains the new score of the review
 //     - err: on failure, an error message
-router.get('/up/:review_id', utils.requireLogin, function(req, res) {
+router.post('/up/:review_id', utils.requireLogin, function(req, res) {
     applyVote(req, res, req.params.review_id, 1);
 });
 
-// GET /reviews/vote/down/:review_id
+// POST /reviews/vote/down/:review_id
 // Request parameters:
 //     - review_id: a String representation of the MongoDB _id of the review
 // Response:
@@ -64,7 +63,7 @@ router.get('/up/:review_id', utils.requireLogin, function(req, res) {
 //     - content: on success, an object with a single field 'score', which
 //                contains the new score of the review
 //     - err: on failure, an error message
-router.get('/down/:review_id', utils.requireLogin, function(req, res) {
+router.post('/down/:review_id', utils.requireLogin, function(req, res) {
     applyVote(req, res, req.params.review_id, -1);
 });
 
