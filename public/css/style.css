@@ -51,8 +51,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .review_tags {
-	display: block;
-	text-align: right;
+	float: left;
+}
+
+.review_options {
+	float: right;
 }
 
 .review_tag {

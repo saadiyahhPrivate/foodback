@@ -147,15 +147,10 @@ function reviewHeader(author, hall, period, rating) {
 }
 
 // Abdi
-function reviewBody(content, score, tags) {
+function reviewBody(content, tags) {
 	var contentHTML = '<p>' + content.replace(/\n\n/g, '</p><p>') + "</p>";
 	contentHTML = contentHTML.replace(/\n/g, '<br \>');
     var content = $('<div>').addClass('review_content').append(contentHTML);
-    if (score == 1) {
-    	var score = $('<span>').addClass('review_score').text('1 point');
-    } else {
-    	var score = $('<span>').addClass('review_score').text(score + ' points');
-    }
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
     
     if (tags.length > 0) {
@@ -164,11 +159,39 @@ function reviewBody(content, score, tags) {
             var tag = $('<span>').addClass('review_tag').text(tags[i]);
             tagsSpan.append(tag);
         }
-        return $('<div>').addClass('review_body').append(content, tagsSpan, score);
+        return $('<div>').addClass('review_body').append(content, tagsSpan);
     } else {
-    	return $('<div>').addClass('review_body').append(content, score);
+    	return $('<div>').addClass('review_body').append(content);
     }
-    
+}
+
+// Sophia
+function reviewOptions(score, canVote, canDelete) {
+	var optDiv = $('<div>').addClass('review_options');
+	
+	if (score == 1) {
+    	var score = $('<span>').addClass('review_score').text('1 point');
+    } else {
+    	var score = $('<span>').addClass('review_score').text(score + ' points');
+    }
+	
+	optDiv.append(score);
+	
+	if (canVote) {
+		var up = $('<button>').addClass('btn btn-sm btn-primary review_upvote').text('+1'),
+			down = $('<button>').addClass('btn btn-sm btn-primary review_downvote').text('-1');
+
+		var vote = $('<span>').addClass('review_vote');
+		vote.append(up, down);
+		optDiv.append(vote);
+	}
+
+	if (canDelete) {
+		var del = $('<button>').addClass('btn btn-sm btn-danger review_delete').text('Delete');
+		optDiv.append(del);
+	}
+	
+	return optDiv;
 }
 
 // Abdi
@@ -183,23 +206,10 @@ function createReviewDiv(review) {
 		id = review._id;
 
 		var header = reviewHeader(author, hall, period, rating);
-		var body = reviewBody(content, score, tags);
-		
-		if (review.canVote) {
-			var up = $('<button>').addClass('btn btn-sm btn-primary review_upvote').text('+1'),
-				down = $('<button>').addClass('btn btn-sm btn-primary review_downvote').text('-1');
+		var body = reviewBody(content, tags);
+		var options = reviewOptions(score, review.canVote, review.canDelete);
 
-			var vote = $('<span>').addClass('review_vote');
-			vote.append(up, down);
-			body.append(vote);
-		}
-
-		if (review.canDelete) {
-			var del = $('<button>').addClass('btn btn-sm btn-danger review_delete').text('Delete');
-			body.append(del);
-		}
-
-		var reviewDiv = $('<div>').addClass('panel-body review').append(header, body);
+		var reviewDiv = $('<div>').addClass('panel-body review').append(header, body, options);
 		reviewDiv.data('id', id);
 		
 		var reviewWrapper = $('<div>').addClass('panel panel-default').append(reviewDiv);
