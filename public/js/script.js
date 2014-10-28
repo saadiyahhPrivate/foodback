@@ -17,6 +17,10 @@ function logout() {
 		success: function(response) {
 			$('#user-header').text("");
 			$('#user-header').append('<li><a href="/users/login">Log In or Sign Up</a></li>');
+			$('#post_form').hide();
+			$('#make_button').hide();
+			$('.review_delete').hide();
+			$('.review_vote').hide();
 		},
 		error: error
 	});
