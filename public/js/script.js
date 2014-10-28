@@ -185,7 +185,7 @@ function createReviewDiv(review) {
 		var header = reviewHeader(author, hall, period, rating);
 		var body = reviewBody(content, score, tags);
 
-		var reviewDiv = $('<div>').addClass('review').append(header, body);
+		var reviewDiv = $('<div>').addClass('panel panel-default review').append(header, body);
 		reviewDiv.data('id', id);
 
 		if (review.canVote) {
