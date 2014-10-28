@@ -37,17 +37,10 @@ function postReview() {
         dataType: "json",
         data: review,
         success: function(data){
-            if (data.success === true){
-                location.reload();
-                $("#new_review_message").text("");
-            }
-            else{
-                $("#new_review_message").text("Failed to post review. Try again");
-            }
+        	$('#success-container').text('Review successfully posted.');
+			$('#success-container').slideDown();
         }, 
-        error: function(jqxhr){
-            $("#new_review_message").text("Failed to post review. Try again");
-        }
+        error: error
     });
     return false; // to avoid reloading
 }
