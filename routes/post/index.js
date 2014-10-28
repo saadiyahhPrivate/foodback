@@ -77,14 +77,15 @@ router.post('/', utils.requireLogin, function(req, res) {
                             if (err) {
                                 utils.sendErrResponse(res, 500, "Unknown Error");
                             } else {
-                                review.populate('scope', function(err, doc) {
+                                review.populate('scope author', function(err, doc) {
                                     if (err) {
                                         utils.sendErrResponse(res, 500, "Unknown Error");
                                     } else {
-                                        utils.sendSuccessResponse(res, {review: doc});
+                                        doc.author = doc.author.name;
+                                        utils.sendSuccessResponse(res, doc); // doc : populated review
+
                                     }
                                 });
-                                // TODO phase 3: page to be rendered
                             }
                         });
                     }

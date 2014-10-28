@@ -22,8 +22,8 @@ function error(xhr) {
 }
 
 // Assert that the given review is equivalent to the test review.
-function checkReview(assert, newReview) {;
-//    assert.strictEqual(newReview.author.name, user.name, 'Check author');
+function checkReview(assert, newReview) {
+    assert.strictEqual(newReview.author, user.name, 'Check author');
     assert.strictEqual(newReview.scope.hall, review.hall, 'Check hall.');
     assert.strictEqual(newReview.scope.period, review.period, 'Check period.');
     assert.equal(newReview.rating, review.rating, 'Check rating.');
@@ -164,7 +164,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
 QUnit.test("Get Reviews by Scope with Tags", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',]
+        type: 'GET',
         url: '/reviews/simmons/brunch?tags=food,chef',
         dataType: 'json',
         success: function(data) {
