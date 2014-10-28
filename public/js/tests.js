@@ -181,7 +181,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
 QUnit.test("Upvote Test", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/reviews/vote/up/' + currentReviewId,
         success: function(data) {
             assert.ok(data.success, 'Upvote success.');
@@ -227,7 +227,7 @@ QUnit.test("Post Test 2", function(assert) {
 QUnit.test("Downvote Test", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/reviews/vote/down/' + currentReviewId,
         success: function(data) {
             assert.ok(data.success, 'Downvote success.');

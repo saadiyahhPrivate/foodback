@@ -23,6 +23,8 @@ function logout() {
 }
 
 function postReview() {
+	clearAlerts();
+	
     var review = {
         hall: $("#new_review_hall").val(),
         period: $("#new_review_period").val(),
@@ -37,6 +39,7 @@ function postReview() {
         dataType: "json",
         data: review,
         success: function(data) {
+        	$('#post_form').trigger('reset');
         	$('#success-container').text('Review successfully posted.');
 			$('#success-container').slideDown();
         }, 
