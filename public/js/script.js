@@ -88,24 +88,23 @@ function formatString(string) {
     return string;
 }
 
-function reviewHeader(author, hall, period, rating) {
+function reviewHeader(author, hall, period) {
     var title = $('<span>').addClass('review_title').text(period + ' at ' + hall);
-    var by = $('<span>').addClass('review_author').text('Posted by' + author);
-    var rating = $('<span>').addClass('review_rating').text(rating + ' stars');
-    return $('<div>').addClass('review_heading').append(title, by, rating);
+    var by = $('<span>').addClass('review_author').text('Posted by ' + author);
+    return $('<div>').addClass('review_heading').append(title, by);
 }
 
-function reviewBody(content, score, tags) {
+function reviewBody(content, score, tags, rating) {
     var content = $('<p>').addClass('review_title').text(content);
     var score = $('<span>').addClass('review_score').text(score + ' points');
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
-	console.log(tags);
+	var rating = $('<span>').addClass('review_rating').text(rating + ' stars');
     var i;
     for (i = 0; i < tags.length; i++) {
         var tag = $('<span>').addClass('review_tag').text(tags[i]);
         tagsSpan.append(tag);
     }
-    return $('<div>').addClass('review_body').append(content, tagsSpan, score);
+    return $('<div>').addClass('review_body').append(content, rating, tagsSpan, score);
 }
 
 function createReviewDiv(review) {
@@ -118,8 +117,8 @@ function createReviewDiv(review) {
 		score = review.score,
 		id = review._id;
 
-		var header = reviewHeader(author, hall, period, rating);
-		var body = reviewBody(content, score, tags);
+		var header = reviewHeader(author, hall, period);
+		var body = reviewBody(content, score, tags, rating);
 
 		var reviewDiv = $('<div>').addClass('review').append(header, body);
 		reviewDiv.data('id', id);
@@ -166,6 +165,8 @@ function getReviews() {
 				var reviews = data.content,
 					reviewsDiv = $('#reviews'),
 					i;
+
+				reviewsDiv.text('');
 
 				for (i = 0; i < reviews.length; i++) {
 					var div = createReviewDiv(reviews[i]);
