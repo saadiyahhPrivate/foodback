@@ -47,7 +47,7 @@ function hallSearch(req, res, hall) {
                 if (err) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
-                    parseReviews(req, reviews);
+                    reviews = parseReviews(req, reviews);
                     content.reviews = reviews;
                     utils.sendSuccessResponse(res, content);
                 }
@@ -71,7 +71,7 @@ function scopeSearch(req, res, hall, period) {
 	            if (err) {
 	                utils.sendErrResponse(res, 500, 'Unknown error.');
 	            } else {
-	                parseReviews(req, reviews);
+	                reviews = parseReviews(req, reviews);
 	                content = {};
 	                content.reviews = reviews;
 	                content.score = scope.numStars;
@@ -86,26 +86,31 @@ function scopeSearch(req, res, hall, period) {
 }
 
 function parseReviews(req, reviews) {
+	var output = [];
     if (req.session.username) {
         var username = req.session.username,
             i;
         for (i = 0; i < reviews.length; i++) {
-            var review = reviews[i];
+            var review = reviews[i].toJSON();
             review.canDelete = review.author._id === username ? true : false;
             review.canVote = review.voters.indexOf(username) === -1 ? true: false;
             review.author = review.author.name;
             delete review.voters;
+            output.push(review);
         }
     } else {
         var i;
         for (i = 0; i < reviews.length; i++) {
-            var review = reviews[i];
+            var review = reviews[i].toJSON();
             review.canDelete = false;
             review.canVote = false;
             review.author = review.author.name;
             delete review.voters;
+            output.push(review);
         }
     }
+    
+    return output;
 }
 
 /*
@@ -169,7 +174,7 @@ router.get('/', function(req, res) {
 	        if (err) {
 	            utils.sendErrResponse(res, 500, 'Unknown error.');
 	        } else {
-	            parseReviews(req, reviews);
+	            reviews = parseReviews(req, reviews);
 	            utils.sendSuccessResponse(res, {reviews: reviews});
 	        }
 	    });
