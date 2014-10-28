@@ -30,6 +30,14 @@ function hallSearch(req, res, hall) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scopes) {
+        	content = {};
+            content.score = 0;
+            content.count = 0;
+            for (var i = 0; i < scopes.length; i++) {
+            	content.score += scopes[i].numStars;
+            	content.count += scopes[i].totalReviews;
+            }
+            
             var ids = scopes.map(function (val, i, arr) {
                 return val._id;
             });
@@ -42,7 +50,8 @@ function hallSearch(req, res, hall) {
                     utils.sendErrResponse(res, 500, 'Unknown error.');
                 } else {
                     parseReviews(req, reviews);
-                    utils.sendSuccessResponse(res, reviews);
+                    content.reviews = reviews;
+                    utils.sendSuccessResponse(res, content);
                 }
             });
         } else {
@@ -65,7 +74,11 @@ function scopeSearch(req, res, hall, period) {
 	                utils.sendErrResponse(res, 500, 'Unknown error.');
 	            } else {
 	                parseReviews(req, reviews);
-	                utils.sendSuccessResponse(res, reviews);
+	                content = {};
+	                content.reviews = reviews;
+	                content.score = scope.numStars;
+	                content.count = scope.totalReviews;
+	                utils.sendSuccessResponse(res, content);
 	            }
 	        });
 	    } else {
@@ -130,8 +143,14 @@ function makeNewReview(author, reqBody){
 //     - (OPTIONAL) tags: a comma-separated list of tags to search for
 // Response:
 //     - success: true if the search finished without error
-//     - content: on success, an array containing the review objects that
-//                matched the search
+//     - content: on success, an object with either one or three fields:
+//         - (if dininghall was specified) score: the sum of all the star
+//           ratings this dining hall has received so far, for a specific meal
+//           period (if mealperiod was specified) or overall
+//         - (if dininghall was specified) count: the number of reviews this
+//           dining hall has received so far, for a specific meal period (if
+//           mealperiod was specified) or overall
+//         - reviews: an array containing the review objects that matched the search
 //     - err: on failure, an error message
 router.get('/', function(req, res) {
 	var hall = req.query.dininghall;
@@ -153,7 +172,7 @@ router.get('/', function(req, res) {
 	            utils.sendErrResponse(res, 500, 'Unknown error.');
 	        } else {
 	            parseReviews(req, reviews);
-	            utils.sendSuccessResponse(res, reviews);
+	            utils.sendSuccessResponse(res, {reviews: reviews});
 	        }
 	    });
 	}

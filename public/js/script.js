@@ -176,17 +176,15 @@ function getReviews() {
 		type: 'GET',
 		datatype: 'json',
 		success: function (data) {
-			if (data.success) {
-				var reviews = data.content,
-					reviewsDiv = $('#reviews'),
-					i;
+			var reviews = data.content.reviews,
+				reviewsDiv = $('#reviews'),
+				i;
 
-				reviewsDiv.text('');
-
-				for (i = 0; i < reviews.length; i++) {
-					var div = createReviewDiv(reviews[i]);
-					reviewsDiv.append(div);
-				}
+			reviewsDiv.text('');
+	
+			for (i = 0; i < reviews.length; i++) {
+				var div = createReviewDiv(reviews[i]);
+				reviewsDiv.append(div);
 			}
 		},
 		error: error

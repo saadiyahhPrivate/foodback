@@ -84,7 +84,7 @@ QUnit.test("Get All Reviews", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            var review = findReview(assert, data.content);
+            var review = findReview(assert, data.content.reviews);
             checkReview(assert, review);
             start();
         },
@@ -101,7 +101,7 @@ QUnit.test("Get All Reviews with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            var review = findReview(assert, data.content);
+            var review = findReview(assert, data.content.reviews);
             checkReview(assert, review);
             start();
         },
@@ -118,7 +118,7 @@ QUnit.test("Get Reviews by Dining Hall", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            var review = findReview(assert, data.content);
+            var review = findReview(assert, data.content.reviews);
             checkReview(assert, review);
             start();
         },
@@ -135,7 +135,7 @@ QUnit.test("Get Reviews by Dining Hall with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            var review = findReview(assert, data.content);
+            var review = findReview(assert, data.content.reviews);
             checkReview(assert, review);
             start();
         },
@@ -152,7 +152,7 @@ QUnit.test("Get Reviews by Scope", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            var review = findReview(assert, data.content);
+            var review = findReview(assert, data.content.reviews);
             checkReview(assert, review);
             start();
         },
@@ -169,7 +169,7 @@ QUnit.test("Get Reviews by Scope with Tags", function(assert) {
         dataType: 'json',
         success: function(data) {
             assert.ok(data.success, 'Query success.');
-            var review = findReview(assert, data.content);
+            var review = findReview(assert, data.content.reviews);
             checkReview(assert, review);
             start();
         },
