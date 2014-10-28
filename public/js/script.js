@@ -83,8 +83,12 @@ function toggleReviewForm() {
 }
 
 function formatString(string) {
-    string = string.replace('-', ' ');
-    string = string.charAt(0).toUpperCase() + string.substring(1);
+    if (string === "mccormick") {
+    	string = "McCormick";
+    } else {
+    	string = string.replace('-', ' ');
+        string = string.charAt(0).toUpperCase() + string.substring(1);
+    }
     return string;
 }
 
