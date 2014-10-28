@@ -81,7 +81,7 @@ router.post('/', utils.requireLogin, function(req, res) {
                                     if (err) {
                                         utils.sendErrResponse(res, 500, "Unknown Error");
                                     } else {
-                                        utils.sendSuccessResponse(res, {review: doc});
+                                        utils.sendSuccessResponse(res, doc); // doc : populated review
                                     }
                                 });
                                 // TODO phase 3: page to be rendered
