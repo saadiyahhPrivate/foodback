@@ -162,6 +162,47 @@ router.post('/', utils.requireLogin, function(req, res) {
 	});
 });
 
+// DELETE /reviews/:review_id
+// Request parameters:
+//     - review_id: a String representation of the MongoDB _id of the review
+// Response:
+//     - success: true if the review was successfully deleted
+//     - err: on failure, an error message
+router.del('/:review_id', utils.requireLogin, function(req, res) {
+	var user = req.session.username; // sessions usernames
+	var review_id = req.params.review_id;
+
+	if (!(req.session.username)) {
+		utils.sendErrResponse(res, 403, 'You must be signed in to do this action.');
+		return;
+	}
+
+	Review.findById(review_id, function(err, doc){
+		if (err) {
+			utils.sendErrResponse(res, 500, "Unknown Error");
+		} else {
+			if (doc) {
+				if (doc.author === user) {
+					doc.remove(function(err) {
+						if (err) {
+							utils.sendErrResponse(res, 500, "Unknown Error");
+						} else{
+							//success
+							utils.sendSuccessResponse(res); //nothing to send
+						}
+					});
+				} else {
+					utils.sendErrResponse(res, 403,
+							"You are not eligible to delete this review.");
+				}
+			} else{
+				utils.sendErrResponse(res, 404,
+						"Could not find the review you are looking for.");
+			}
+		}
+	});
+});
+
 // GET /reviews/:dininghall
 // Request parameters:
 //     - dininghall: the name of the dining hall for which to find reviews
