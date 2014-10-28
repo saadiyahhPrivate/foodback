@@ -18,76 +18,76 @@ var models = require('../data/models'),
 
 var scopes = [
     {
-        hall: 'Maseeh',
-        period: 'Breakfast'
+        hall: 'maseeh',
+        period: 'breakfast'
     },
     {
-        hall: 'Maseeh',
-        period: 'Brunch'
+        hall: 'maseeh',
+        period: 'brunch'
     },
     {
-        hall: 'Maseeh',
-        period: 'Lunch'
+        hall: 'maseeh',
+        period: 'lunch'
     },
     {
-        hall: 'Maseeh',
-        period: 'Dinner'
-    },
-
-    {
-        hall: 'McCormick',
-        period: 'Breakfast'
-    },
-    {
-        hall: 'McCormick',
-        period: 'Brunch'
-    },
-    {
-        hall: 'McCormick',
-        period: 'Dinner'
+        hall: 'maseeh',
+        period: 'dinner'
     },
 
     {
-        hall: 'Baker',
-        period: 'Breakfast'
+        hall: 'mccormick',
+        period: 'breakfast'
     },
     {
-        hall: 'Baker',
-        period: 'Brunch'
+        hall: 'mccormick',
+        period: 'brunch'
     },
     {
-        hall: 'Baker',
-        period: 'Dinner'
-    },
-
-    {
-        hall: 'Next',
-        period:'Breakfast'
-    },
-    {
-        hall: 'Next',
-        period: 'Brunch'
-    },
-    {
-        hall: 'Next',
-        period: 'Dinner'
+        hall: 'mccormick',
+        period: 'dinner'
     },
 
     {
-        hall: 'Simmons',
-        period: 'Breakfast'
+        hall: 'baker',
+        period: 'breakfast'
     },
     {
-        hall: 'Simmons',
-        period: 'Brunch'
+        hall: 'baker',
+        period: 'brunch'
     },
     {
-        hall: 'Simmons',
-        period: 'Dinner'
+        hall: 'baker',
+        period: 'dinner'
+    },
+
+    {
+        hall: 'next',
+        period:'breakfast'
     },
     {
-        hall: 'Simmons',
-        period: 'Late Night'
+        hall: 'next',
+        period: 'brunch'
+    },
+    {
+        hall: 'next',
+        period: 'dinner'
+    },
+
+    {
+        hall: 'simmons',
+        period: 'breakfast'
+    },
+    {
+        hall: 'simmons',
+        period: 'brunch'
+    },
+    {
+        hall: 'simmons',
+        period: 'dinner'
+    },
+    {
+        hall: 'simmons',
+        period: 'late-night'
     }
 ];
 
