@@ -52,7 +52,7 @@ var createUser = function(req, res, userInfo) {
         		text: 'Visit the following URL to verify your email address ' +
         		'and log into your Foodback MIT account: ' +
         		'http://ps3-applephi.rhcloud.com/users/verify?username=' +
-        		userInfo._id + '?token=' + userInfo.token
+        		userInfo._id + '&token=' + userInfo.token
         	};
         	
         	transporter.sendMail(mailOps, function(err, info) {

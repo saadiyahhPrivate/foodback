@@ -172,6 +172,8 @@ function getReviews() {
 		},
 		error: error
 	});
+	
+	return false;
 }
 
 $(function () {
@@ -182,6 +184,7 @@ $(function () {
     $('#post_button').click(postReview);
     $('#logout-link').click(logout);
     $(".review_delete").click(deleteReview);
-	$('#search_hall, #search_period, #search_tags').change(getReviews);
+	$('#search_hall, #search_period').change(getReviews);
+	$('#tags_button').click(getReviews);
 	getReviews();
 });
