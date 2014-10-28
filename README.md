@@ -1,5 +1,6 @@
 # Foodback
 
+Access the app: http://ps3-applephi.rhcloud.com
 View the test script: http://ps3-applephi.rhcloud.com/tests
 
 ### Current delegation of tasks:
