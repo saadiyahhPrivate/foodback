@@ -137,8 +137,8 @@ router.get('/', function(req, res) {
 	var hall = req.query.dininghall;
     var period = req.query.mealperiod;
 	
-	if (dininghall) {
-		if (mealperiod) {
+	if (hall) {
+		if (period) {
 			scopeSearch(req, res, hall, period);
 		} else {
 			hallSearch(req, res, hall);
