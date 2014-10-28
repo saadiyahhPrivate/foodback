@@ -36,7 +36,7 @@ function postReview() {
         type: "POST",
         dataType: "json",
         data: review,
-        success: function(data){
+        success: function(data) {
         	$('#success-container').text('Review successfully posted.');
 			$('#success-container').slideDown();
         }, 
