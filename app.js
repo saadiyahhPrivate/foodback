@@ -89,3 +89,112 @@ var ip = process.env.OPENSHIFT_NODEJS_IP;
 app.listen(port || 8080, ip);
 
 module.exports = app;
+
+var mongoose = require('mongoose');
+
+var connection_string = 'localhost/ps3';
+
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' +
+            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PORT + '/ps3';
+}
+
+mongoose.connect('mongodb://' + connection_string);
+
+var db = mongoose.connection;
+
+var models = require('../data/models'),
+    Scope = models.Scope;
+
+var scopes = [
+    {
+        hall: 'maseeh',
+        period: 'breakfast'
+    },
+    {
+        hall: 'maseeh',
+        period: 'brunch'
+    },
+    {
+        hall: 'maseeh',
+        period: 'lunch'
+    },
+    {
+        hall: 'maseeh',
+        period: 'dinner'
+    },
+
+    {
+        hall: 'mccormick',
+        period: 'breakfast'
+    },
+    {
+        hall: 'mccormick',
+        period: 'brunch'
+    },
+    {
+        hall: 'mccormick',
+        period: 'dinner'
+    },
+
+    {
+        hall: 'baker',
+        period: 'breakfast'
+    },
+    {
+        hall: 'baker',
+        period: 'brunch'
+    },
+    {
+        hall: 'baker',
+        period: 'dinner'
+    },
+
+    {
+        hall: 'next',
+        period:'breakfast'
+    },
+    {
+        hall: 'next',
+        period: 'brunch'
+    },
+    {
+        hall: 'next',
+        period: 'dinner'
+    },
+
+    {
+        hall: 'simmons',
+        period: 'breakfast'
+    },
+    {
+        hall: 'simmons',
+        period: 'brunch'
+    },
+    {
+        hall: 'simmons',
+        period: 'dinner'
+    },
+    {
+        hall: 'simmons',
+        period: 'late-night'
+    }
+];
+
+function init() {
+    Scope.remove().exec();
+
+    var i;
+    for (i = 0; i < scopes.length; i++) {
+        var scopeObj = scopes[i];
+        scopeObj.numStars = 0;
+        scopeObj.totalReviews = 0;
+
+        var scope = new Scope(scopeObj);
+        scope.save();
+    }
+}
+
+init();
