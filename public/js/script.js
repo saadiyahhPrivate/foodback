@@ -145,8 +145,8 @@ function createReviewDiv(review) {
 		score = review.score,
 		id = review._id;
 
-		var header = reviewHeader(author, hall, period);
-		var body = reviewBody(content, score, tags, rating);
+		var header = reviewHeader(author, hall, period, rating);
+		var body = reviewBody(content, score, tags);
 
 		var reviewDiv = $('<div>').addClass('review').append(header, body);
 		reviewDiv.data('id', id);
