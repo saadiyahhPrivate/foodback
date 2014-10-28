@@ -34,45 +34,45 @@ var loginUser = function(req, username) {
 // Checks that a string is a valid MIT Kerberos ID. Returns true if it is valid,
 // or false otherwise.
 var validateKerberos = function(kerberos) {
-	return KERBEROS_REGEX.test(kerberos);
+    return KERBEROS_REGEX.test(kerberos);
 }
 
 // Attempts to create a user with the given information. Upon success, a
 // verification email is sent to the user.
 var createUser = function(req, res, userInfo) {
-	var user = new User(userInfo);
+    var user = new User(userInfo);
     user.save(function(err) {
         if (err) {
-        	utils.sendErrResponse(res, 500, 'Unknown error');
+            utils.sendErrResponse(res, 500, 'Unknown error');
         } else {
             var mailOps = {
-        		from: 'Foodback Team <foodback@mit.edu>',
-        		to: userInfo._id + '@mit.edu',
-        		subject: 'Please verify your Foodback MIT account',
-        		text: 'Visit the following URL to verify your email address ' +
-        		'and log into your Foodback MIT account: ' +
-        		'http://ps3-applephi.rhcloud.com/users/verify?username=' +
-        		userInfo._id + '&token=' + userInfo.token
-        	};
-        	
-        	transporter.sendMail(mailOps, function(err, info) {
-        	    if (err) {
-        	    	utils.sendErrResponse(res, 500, 'Unknown error');
-        	    } else {
-        	    	utils.sendSuccessResponse(res, {username: userInfo._id});
-        	    }
-        	});
+                from: 'Foodback Team <foodback@mit.edu>',
+                to: userInfo._id + '@mit.edu',
+                subject: 'Please verify your Foodback MIT account',
+                text: 'Visit the following URL to verify your email address ' +
+                'and log into your Foodback MIT account: ' +
+                'http://ps3-applephi.rhcloud.com/users/verify?username=' +
+                userInfo._id + '&token=' + userInfo.token
+            };
+            
+            transporter.sendMail(mailOps, function(err, info) {
+                if (err) {
+                    utils.sendErrResponse(res, 500, 'Unknown error');
+                } else {
+                    utils.sendSuccessResponse(res, {username: userInfo._id});
+                }
+            });
         }
     });
 }
 
 // Login/signup page
 router.get('/login', function(req, res) {
-	if (req.session.username) {
-		res.redirect('/');
-	} else {
-		res.render('login');
-	}
+    if (req.session.username) {
+        res.redirect('/');
+    } else {
+        res.render('login');
+    }
 });
 
 // POST /users/signup
@@ -109,7 +109,7 @@ router.post('/signup', function(req, res, next) {
         return;
     }
     if (name.length > NAME_MAX_LENGTH) {
-    	utils.sendErrResponse(res, 403, 'Name cannot exceed ' +
+        utils.sendErrResponse(res, 403, 'Name cannot exceed ' +
                 NAME_MAX_LENGTH + ' characters.');
         return;
     }
@@ -127,14 +127,14 @@ router.post('/signup', function(req, res, next) {
                         'An account already exists for ' + username +
                         '@mit.edu');
             } else {
-            	var token = new ObjectID().valueOf();
+                var token = new ObjectID().valueOf();
                 var userInfo = {
                     _id: username,
                     name: name,
                     password: password,
                     token: token
                 };
-            	createUser(req, res, userInfo);
+                createUser(req, res, userInfo);
             }
         } else {
             utils.sendErrResponse(res, 500, 'Unknown error');
@@ -153,27 +153,27 @@ router.get('/verify', function(req, res) {
     var username = req.query.username;
     var token = req.query.token;
     if (!(username && token)) {
-    	utils.sendErrResponse(res, 403, 'Username and token required');
-    	return;
+        utils.sendErrResponse(res, 403, 'Username and token required');
+        return;
     }
     
     User.findById(username, function(err, doc) {
-    	if (err) {
-    		utils.sendErrResponse(res, 500, 'Unknown error');
+        if (err) {
+            utils.sendErrResponse(res, 500, 'Unknown error');
         } else if (!doc) {
-        	utils.sendErrResponse(res, 404, 'No such user');
+            utils.sendErrResponse(res, 404, 'No such user');
         } else if (doc.token != token) {
             utils.sendErrResponse(res, 403, 'Incorrect token');
         } else {
-        	doc.verified = true;
-        	doc.save(function(err) {
-        		if (err) {
-        			utils.sendErrResponse(res, 500, 'Unknown error');
-        		} else {
-        			loginUser(req, username);
-        			res.redirect('/');
-        		}
-        	});
+            doc.verified = true;
+            doc.save(function(err) {
+                if (err) {
+                    utils.sendErrResponse(res, 500, 'Unknown error');
+                } else {
+                    loginUser(req, username);
+                    res.redirect('/');
+                }
+            });
         }
     });
 });
@@ -209,10 +209,10 @@ router.post('/login', function(req, res, next) {
             // Do not give any information on whether this user exists
             utils.sendErrResponse(res, 403, 'Incorrect username or password');
         } else if (!doc.verified) {
-        	utils.sendErrResponse(res, 403, 'Account not yet verified. ' +
-        			'Please check your email.');
+            utils.sendErrResponse(res, 403, 'Account not yet verified. ' +
+                    'Please check your email.');
         } else if (doc.password != password) {
-        	utils.sendErrResponse(res, 403, 'Incorrect username or password');
+            utils.sendErrResponse(res, 403, 'Incorrect username or password');
         } else {
             loginUser(req, username);
             utils.sendSuccessResponse(res);

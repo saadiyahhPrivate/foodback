@@ -7,19 +7,19 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-	text-align: center;
+    text-align: center;
 }
 
 .page-container {
-	margin-top: 70px;
-	max-width: 750px;
+    margin-top: 70px;
+    max-width: 750px;
 }
 
 #post_form {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-	padding-top: 20px;
+    padding-top: 20px;
 
     transition: all 1s ease;
 }
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-center {
-	text-align: center;
+    text-align: center;
 }
 
 .alert {
@@ -47,15 +47,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .review_content {
-	padding: 15px;
+    padding: 15px;
 }
 
 .review_tags {
-	float: left;
+    float: left;
 }
 
 .review_options {
-	float: right;
+    float: right;
 }
 
 .review_tag {
@@ -64,9 +64,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .review_vote .btn {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 
 .review_delete {
-	margin-left: 10px;
+    margin-left: 10px;
 }

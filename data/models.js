@@ -25,8 +25,8 @@ var userSchema = new Schema({
     name: String,
     password: String,
     verified: {
-    	type: Boolean,
-    	default: false
+        type: Boolean,
+        default: false
     },
     token: String
 });

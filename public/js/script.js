@@ -3,36 +3,36 @@
 // Get reviews (author: Abdi)
 // Vote on reviews (author: Sophia)
 function error(jqxhr) {
-	var response = $.parseJSON(jqxhr.responseText);
-	$('#error-container').text(response.err);
-	$('#error-container').slideDown();
+    var response = $.parseJSON(jqxhr.responseText);
+    $('#error-container').text(response.err);
+    $('#error-container').slideDown();
 }
 
 function clearAlerts() {
-	$('#error-container').hide();
-	$('#success-container').hide();
+    $('#error-container').hide();
+    $('#success-container').hide();
 }
 
 function logout() {
-	$.ajax({
-		url: '/users/logout',
-		type: "GET",
-		dataType: "json",
-		success: function(response) {
-			$('#user-header').text("");
-			$('#user-header').append('<li><a href="/users/login">Log In or Sign Up</a></li>');
-			$('#post_form').hide();
-			$('#make_button').hide();
-			$('.review_delete').hide();
-			$('.review_vote').hide();
-		},
-		error: error
-	});
+    $.ajax({
+        url: '/users/logout',
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            $('#user-header').text("");
+            $('#user-header').append('<li><a href="/users/login">Log In or Sign Up</a></li>');
+            $('#post_form').hide();
+            $('#make_button').hide();
+            $('.review_delete').hide();
+            $('.review_vote').hide();
+        },
+        error: error
+    });
 }
 
 // Saadiyah
 function postReview() {
-	clearAlerts();
+    clearAlerts();
 
     var review = {
         hall: $("#new_review_hall").val(),
@@ -48,9 +48,9 @@ function postReview() {
         dataType: "json",
         data: review,
         success: function(data) {
-        	$('#post_form').trigger('reset');
-        	$('#success-container').text('Review successfully posted.');
-			$('#success-container').slideDown();
+            $('#post_form').trigger('reset');
+            $('#success-container').text('Review successfully posted.');
+            $('#success-container').slideDown();
         },
         error: error
     });
@@ -123,9 +123,9 @@ function toggleReviewForm() {
 // Abdi
 function formatString(string) {
     if (string === "mccormick") {
-    	string = "McCormick";
+        string = "McCormick";
     } else {
-    	string = string.replace('-', ' ');
+        string = string.replace('-', ' ');
         string = string.charAt(0).toUpperCase() + string.substring(1);
     }
     return string;
@@ -134,13 +134,13 @@ function formatString(string) {
 // Abdi
 function reviewHeader(author, hall, period, rating) {
     if (rating > 1) {
-    	var starText = '' + rating + ' stars';
+        var starText = '' + rating + ' stars';
     } else {
-    	var starText = '' + rating + ' star';
+        var starText = '' + rating + ' star';
     }
     
     var title = $('<span>').addClass('review_title').text(period + ' at ' +
-    		hall + ': ' + starText);
+            hall + ': ' + starText);
     
     var by = $('<span>').addClass('review_author').text('Posted by ' + author);
     return $('<div>').addClass('review_heading').append(title, by);
@@ -148,135 +148,135 @@ function reviewHeader(author, hall, period, rating) {
 
 // Abdi
 function reviewBody(content, tags) {
-	var contentHTML = '<p>' + content.replace(/\n\n/g, '</p><p>') + "</p>";
-	contentHTML = contentHTML.replace(/\n/g, '<br \>');
+    var contentHTML = '<p>' + content.replace(/\n\n/g, '</p><p>') + "</p>";
+    contentHTML = contentHTML.replace(/\n/g, '<br \>');
     var content = $('<div>').addClass('review_content').append(contentHTML);
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
     
     if (tags.length > 0) {
-    	var i;
+        var i;
         for (i = 0; i < tags.length; i++) {
             var tag = $('<span>').addClass('review_tag').text(tags[i]);
             tagsSpan.append(tag);
         }
         return $('<div>').addClass('review_body').append(content, tagsSpan);
     } else {
-    	return $('<div>').addClass('review_body').append(content);
+        return $('<div>').addClass('review_body').append(content);
     }
 }
 
 // Sophia
 function reviewOptions(score, canVote, canDelete) {
-	var optDiv = $('<div>').addClass('review_options');
-	
-	if (score == 1) {
-    	var score = $('<span>').addClass('review_score').text('1 point');
+    var optDiv = $('<div>').addClass('review_options');
+    
+    if (score == 1) {
+        var score = $('<span>').addClass('review_score').text('1 point');
     } else {
-    	var score = $('<span>').addClass('review_score').text(score + ' points');
+        var score = $('<span>').addClass('review_score').text(score + ' points');
     }
-	
-	optDiv.append(score);
-	
-	if (canVote) {
-		var up = $('<button>').addClass('btn btn-sm btn-primary review_upvote').text('+1'),
-			down = $('<button>').addClass('btn btn-sm btn-primary review_downvote').text('-1');
+    
+    optDiv.append(score);
+    
+    if (canVote) {
+        var up = $('<button>').addClass('btn btn-sm btn-primary review_upvote').text('+1'),
+            down = $('<button>').addClass('btn btn-sm btn-primary review_downvote').text('-1');
 
-		var vote = $('<span>').addClass('review_vote');
-		vote.append(up, down);
-		optDiv.append(vote);
-	}
+        var vote = $('<span>').addClass('review_vote');
+        vote.append(up, down);
+        optDiv.append(vote);
+    }
 
-	if (canDelete) {
-		var del = $('<button>').addClass('btn btn-sm btn-danger review_delete').text('Delete');
-		optDiv.append(del);
-	}
-	
-	return optDiv;
+    if (canDelete) {
+        var del = $('<button>').addClass('btn btn-sm btn-danger review_delete').text('Delete');
+        optDiv.append(del);
+    }
+    
+    return optDiv;
 }
 
 // Abdi
 function createReviewDiv(review) {
-	var author = review.author,
-		hall = formatString(review.scope.hall),
-		period = formatString(review.scope.period),
-		rating = review.rating,
-		content = review.content,
-		tags = review.tags,
-		score = review.score,
-		id = review._id;
+    var author = review.author,
+        hall = formatString(review.scope.hall),
+        period = formatString(review.scope.period),
+        rating = review.rating,
+        content = review.content,
+        tags = review.tags,
+        score = review.score,
+        id = review._id;
 
-		var header = reviewHeader(author, hall, period, rating);
-		var body = reviewBody(content, tags);
-		var options = reviewOptions(score, review.canVote, review.canDelete);
+        var header = reviewHeader(author, hall, period, rating);
+        var body = reviewBody(content, tags);
+        var options = reviewOptions(score, review.canVote, review.canDelete);
 
-		var reviewDiv = $('<div>').addClass('panel-body review').append(header, body, options);
-		reviewDiv.data('id', id);
-		
-		var reviewWrapper = $('<div>').addClass('panel panel-default').append(reviewDiv);
+        var reviewDiv = $('<div>').addClass('panel-body review').append(header, body, options);
+        reviewDiv.data('id', id);
+        
+        var reviewWrapper = $('<div>').addClass('panel panel-default').append(reviewDiv);
 
-		return reviewWrapper;
+        return reviewWrapper;
 }
 
 // Abdi
 function getReviews() {
-	var base_url = '/reviews',
-		hall = $('#search_hall').val(),
-		period = $('#search_period').val(),
-		tags = $('#search_tags').val();
+    var base_url = '/reviews',
+        hall = $('#search_hall').val(),
+        period = $('#search_period').val(),
+        tags = $('#search_tags').val();
 
-	if (hall !== 'all') {
-		base_url += '?dininghall=' + hall;
-		if (period !== 'all') {
-			base_url += '&mealperiod=' + period;
-		}
-		base_url = tags === "" ? base_url : base_url + '&tags=' + tags;
-	} else {
-		base_url = tags === "" ? base_url : base_url + '?tags=' + tags;
-	}
+    if (hall !== 'all') {
+        base_url += '?dininghall=' + hall;
+        if (period !== 'all') {
+            base_url += '&mealperiod=' + period;
+        }
+        base_url = tags === "" ? base_url : base_url + '&tags=' + tags;
+    } else {
+        base_url = tags === "" ? base_url : base_url + '?tags=' + tags;
+    }
 
-	$.ajax({
-		url: base_url,
-		type: 'GET',
-		datatype: 'json',
-		success: function (data) {
-			var reviews = data.content.reviews,
-				reviewsDiv = $('#reviews'),
-				i;
+    $.ajax({
+        url: base_url,
+        type: 'GET',
+        datatype: 'json',
+        success: function (data) {
+            var reviews = data.content.reviews,
+                reviewsDiv = $('#reviews'),
+                i;
 
-			reviewsDiv.text('');
-			
-			var score = data.content.score;
-			var count = data.content.count;
-			if (score != undefined) {
-				var scopeText = formatString(hall);
-				if (period !== 'all') {
-					scopeText = formatString(period) + ' at ' + scopeText;
-				}
-				
-				if (count > 0) {
-					var average = (score / count).toFixed(2);
-					scopeText = scopeText + ' has an average rating of ' +
-							average + ' stars.';
-				} else {
-					scopeText = scopeText + ' has not been rated yet.';
-				}
-				
-				reviewsDiv.append('<h3>' + scopeText + '</h3>');
-			}
-	
-			for (i = 0; i < reviews.length; i++) {
-				var div = createReviewDiv(reviews[i]);
-				reviewsDiv.append(div);
-			}
-			
-			$(".review_delete").click(deleteReview);
-			$(".review_upvote").click(upvote);
-			$(".review_downvote").click(downvote);
-		},
-		error: error
-	});
+            reviewsDiv.text('');
+            
+            var score = data.content.score;
+            var count = data.content.count;
+            if (score != undefined) {
+                var scopeText = formatString(hall);
+                if (period !== 'all') {
+                    scopeText = formatString(period) + ' at ' + scopeText;
+                }
+                
+                if (count > 0) {
+                    var average = (score / count).toFixed(2);
+                    scopeText = scopeText + ' has an average rating of ' +
+                            average + ' stars.';
+                } else {
+                    scopeText = scopeText + ' has not been rated yet.';
+                }
+                
+                reviewsDiv.append('<h3>' + scopeText + '</h3>');
+            }
+    
+            for (i = 0; i < reviews.length; i++) {
+                var div = createReviewDiv(reviews[i]);
+                reviewsDiv.append(div);
+            }
+            
+            $(".review_delete").click(deleteReview);
+            $(".review_upvote").click(upvote);
+            $(".review_downvote").click(downvote);
+        },
+        error: error
+    });
 
-	return false;
+    return false;
 }
 
 $(function () {
@@ -286,7 +286,7 @@ $(function () {
     $('#make_button').click(toggleReviewForm);
     $('#post_button').click(postReview);
     $('#logout-link').click(logout);
-	$('#search_hall, #search_period').change(getReviews);
-	$('#tags_button').click(getReviews);
-	getReviews();
+    $('#search_hall, #search_period').change(getReviews);
+    $('#tags_button').click(getReviews);
+    getReviews();
 });

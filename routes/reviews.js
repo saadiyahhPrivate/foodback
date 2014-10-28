@@ -30,10 +30,10 @@ function hallSearch(req, res, hall) {
         if (err) {
             utils.sendErrResponse(res, 500, 'Unknown error.');
         } else if (scopes) {
-        	content = {score: 0, count: 0};
+            content = {score: 0, count: 0};
             for (var i = 0; i < scopes.length; i++) {
-            	content.score += scopes[i].numStars;
-            	content.count += scopes[i].totalReviews;
+                content.score += scopes[i].numStars;
+                content.count += scopes[i].totalReviews;
             }
             
             var ids = scopes.map(function (val, i, arr) {
@@ -59,34 +59,34 @@ function hallSearch(req, res, hall) {
 }
 
 function scopeSearch(req, res, hall, period) {
-	Scope.findOne({hall: hall, period: period}, function (err, scope) {
-	    if (err) {
-	        utils.sendErrResponse(res, 500, 'Unknown error.');
-	    } else if (scope) {
-	        var query = {scope: scope._id};
-	        attachTags(req, query);
-	
-	        var handle = getReviewHandle(query);
-	        handle.exec(function (err, reviews) {
-	            if (err) {
-	                utils.sendErrResponse(res, 500, 'Unknown error.');
-	            } else {
-	                reviews = parseReviews(req, reviews);
-	                content = {};
-	                content.reviews = reviews;
-	                content.score = scope.numStars;
-	                content.count = scope.totalReviews;
-	                utils.sendSuccessResponse(res, content);
-	            }
-	        });
-	    } else {
-	        utils.sendSuccessResponse(res, []);
-	    }
-	});
+    Scope.findOne({hall: hall, period: period}, function (err, scope) {
+        if (err) {
+            utils.sendErrResponse(res, 500, 'Unknown error.');
+        } else if (scope) {
+            var query = {scope: scope._id};
+            attachTags(req, query);
+    
+            var handle = getReviewHandle(query);
+            handle.exec(function (err, reviews) {
+                if (err) {
+                    utils.sendErrResponse(res, 500, 'Unknown error.');
+                } else {
+                    reviews = parseReviews(req, reviews);
+                    content = {};
+                    content.reviews = reviews;
+                    content.score = scope.numStars;
+                    content.count = scope.totalReviews;
+                    utils.sendSuccessResponse(res, content);
+                }
+            });
+        } else {
+            utils.sendSuccessResponse(res, []);
+        }
+    });
 }
 
 function parseReviews(req, reviews) {
-	var output = [];
+    var output = [];
     if (req.session.username) {
         var username = req.session.username,
             i;
@@ -156,29 +156,29 @@ function makeNewReview(author, reqBody){
 //         - reviews: an array containing the review objects that matched the search
 //     - err: on failure, an error message
 router.get('/', function(req, res) {
-	var hall = req.query.dininghall;
+    var hall = req.query.dininghall;
     var period = req.query.mealperiod;
-	
-	if (hall) {
-		if (period) {
-			scopeSearch(req, res, hall, period);
-		} else {
-			hallSearch(req, res, hall);
-		}
-	} else {
-		var query = {};
-	    attachTags(req, query);
+    
+    if (hall) {
+        if (period) {
+            scopeSearch(req, res, hall, period);
+        } else {
+            hallSearch(req, res, hall);
+        }
+    } else {
+        var query = {};
+        attachTags(req, query);
 
-	    var handle = getReviewHandle(query);
-	    handle.exec(function (err, reviews) {
-	        if (err) {
-	            utils.sendErrResponse(res, 500, 'Unknown error.');
-	        } else {
-	            reviews = parseReviews(req, reviews);
-	            utils.sendSuccessResponse(res, {reviews: reviews});
-	        }
-	    });
-	}
+        var handle = getReviewHandle(query);
+        handle.exec(function (err, reviews) {
+            if (err) {
+                utils.sendErrResponse(res, 500, 'Unknown error.');
+            } else {
+                reviews = parseReviews(req, reviews);
+                utils.sendSuccessResponse(res, {reviews: reviews});
+            }
+        });
+    }
 });
 
 // POST /reviews
@@ -194,52 +194,52 @@ router.get('/', function(req, res) {
 //                contains the review that was just posted
 //     - err: on failure, an error message
 router.post('/', utils.requireLogin, function(req, res) {
-	var user = req.session.username;
-	var scope = {hall: req.body.hall, period: req.body.period};
-	var my_review_JSON = makeNewReview(user, req.body);
+    var user = req.session.username;
+    var scope = {hall: req.body.hall, period: req.body.period};
+    var my_review_JSON = makeNewReview(user, req.body);
 
-	if (!(req.body.hall && req.body.period && req.body.content && req.body.rating)){
-		utils.sendErrResponse(res, 403, 'All fields except tags are required');
-		return;
-	}
+    if (!(req.body.hall && req.body.period && req.body.content && req.body.rating)){
+        utils.sendErrResponse(res, 403, 'All fields except tags are required');
+        return;
+    }
 
-	Scope.findOne(scope, function(err, doc) {
-		if (err) {
-			utils.sendErrResponse(res, 500, "Unknown Error");
-		} else {
-			if (doc) {
-				var scopeID = doc._id;
-				my_review_JSON.scope = scopeID;
-				var newReview = new Review(my_review_JSON);
-				
-				doc.numStars += newReview.rating;
-				doc.totalReviews++;
-				doc.save(function(err, doc2) {
-					if (err) {
-						console.log("Error updating scope score");
-					}
-				});
+    Scope.findOne(scope, function(err, doc) {
+        if (err) {
+            utils.sendErrResponse(res, 500, "Unknown Error");
+        } else {
+            if (doc) {
+                var scopeID = doc._id;
+                my_review_JSON.scope = scopeID;
+                var newReview = new Review(my_review_JSON);
+                
+                doc.numStars += newReview.rating;
+                doc.totalReviews++;
+                doc.save(function(err, doc2) {
+                    if (err) {
+                        console.log("Error updating scope score");
+                    }
+                });
 
-				newReview.save(function(err, review) {
-					if (err) {
-						utils.sendErrResponse(res, 500, "Unknown Error");
-					} else {
-						review.populate('scope author', function(err, doc) {
-							if (err) {
-								utils.sendErrResponse(res, 500, "Unknown Error");
-							} else {
-								doc.author = doc.author.name;
-								utils.sendSuccessResponse(res, doc); // doc : populated review
-							}
-						});
-					}
-				});
-			} else {
-				utils.sendErrResponse(res, 403, "That combination of dining" +
-						" hall and meal period does not exist.");
-			}
-		}
-	});
+                newReview.save(function(err, review) {
+                    if (err) {
+                        utils.sendErrResponse(res, 500, "Unknown Error");
+                    } else {
+                        review.populate('scope author', function(err, doc) {
+                            if (err) {
+                                utils.sendErrResponse(res, 500, "Unknown Error");
+                            } else {
+                                doc.author = doc.author.name;
+                                utils.sendSuccessResponse(res, doc); // doc : populated review
+                            }
+                        });
+                    }
+                });
+            } else {
+                utils.sendErrResponse(res, 403, "That combination of dining" +
+                        " hall and meal period does not exist.");
+            }
+        }
+    });
 });
 
 // DELETE /reviews/:review_id
@@ -249,48 +249,48 @@ router.post('/', utils.requireLogin, function(req, res) {
 //     - success: true if the review was successfully deleted
 //     - err: on failure, an error message
 router.delete('/:review_id', utils.requireLogin, function(req, res) {
-	var user = req.session.username; // sessions usernames
-	var review_id = req.params.review_id;
+    var user = req.session.username; // sessions usernames
+    var review_id = req.params.review_id;
 
-	if (!(req.session.username)) {
-		utils.sendErrResponse(res, 403, 'You must be signed in to do this action.');
-		return;
-	}
+    if (!(req.session.username)) {
+        utils.sendErrResponse(res, 403, 'You must be signed in to do this action.');
+        return;
+    }
 
-	Review.findById(review_id, function(err, doc){
-		if (err) {
-			utils.sendErrResponse(res, 500, "Unknown Error");
-		} else {
-			if (doc) {
-				if (doc.author === user) {
-					Scope.findById(doc.scope, function(err, scope) {
-						scope.numStars -= doc.rating;
-						scope.totalReviews--;
-						scope.save(function(err, doc2) {
-							if (err) {
-								console.log("Error updating scope score");
-							}
-						});
-					});
-					
-					doc.remove(function(err) {
-						if (err) {
-							utils.sendErrResponse(res, 500, "Unknown Error");
-						} else{
-							//success
-							utils.sendSuccessResponse(res); //nothing to send
-						}
-					});
-				} else {
-					utils.sendErrResponse(res, 403,
-							"You are not eligible to delete this review.");
-				}
-			} else{
-				utils.sendErrResponse(res, 404,
-						"Could not find the review you are looking for.");
-			}
-		}
-	});
+    Review.findById(review_id, function(err, doc){
+        if (err) {
+            utils.sendErrResponse(res, 500, "Unknown Error");
+        } else {
+            if (doc) {
+                if (doc.author === user) {
+                    Scope.findById(doc.scope, function(err, scope) {
+                        scope.numStars -= doc.rating;
+                        scope.totalReviews--;
+                        scope.save(function(err, doc2) {
+                            if (err) {
+                                console.log("Error updating scope score");
+                            }
+                        });
+                    });
+                    
+                    doc.remove(function(err) {
+                        if (err) {
+                            utils.sendErrResponse(res, 500, "Unknown Error");
+                        } else{
+                            //success
+                            utils.sendSuccessResponse(res); //nothing to send
+                        }
+                    });
+                } else {
+                    utils.sendErrResponse(res, 403,
+                            "You are not eligible to delete this review.");
+                }
+            } else{
+                utils.sendErrResponse(res, 404,
+                        "Could not find the review you are looking for.");
+            }
+        }
+    });
 });
 
 module.exports = router;
