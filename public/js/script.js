@@ -15,7 +15,8 @@ function logout() {
 		type: "GET",
 		dataType: "json",
 		success: function(response) {
-			$('#user-header').text('<li><a href="/users/login">Log In or Sign Up</a></li>');
+			$('#user-header').text("");
+			$('#user-header').append('<li><a href="/users/login">Log In or Sign Up</a></li>');
 		},
 		error: error
 	});
