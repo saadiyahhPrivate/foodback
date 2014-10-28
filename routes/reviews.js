@@ -126,7 +126,7 @@ function makeNewReview(author, reqBody){
     var tags = reqBody.tags;
     var voters = [];
     //assumes the tags is a string of comma separated strings
-    if (tags == undefined){
+    if (tags == undefined || tags.length === 0){
         tags = [];
     }
     else{
