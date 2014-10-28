@@ -184,10 +184,7 @@ function createReviewDiv(review) {
 
 		var header = reviewHeader(author, hall, period, rating);
 		var body = reviewBody(content, score, tags);
-
-		var reviewDiv = $('<div>').addClass('panel panel-default review').append(header, body);
-		reviewDiv.data('id', id);
-
+		
 		if (review.canVote) {
 			var up = $('<button>').addClass('btn btn-sm btn-primary review_upvote').text('+1'),
 				down = $('<button>').addClass('btn btn-sm btn-primary review_downvote').text('-1');
@@ -202,7 +199,12 @@ function createReviewDiv(review) {
 			body.append(del);
 		}
 
-		return reviewDiv;
+		var reviewDiv = $('<div>').addClass('panel-body review').append(header, body);
+		reviewDiv.data('id', id);
+		
+		var reviewWrapper = $('<div>').addClass('panel panel-default').append(reviewDiv);
+
+		return reviewWrapper;
 }
 
 // Abdi
