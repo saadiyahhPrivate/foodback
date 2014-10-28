@@ -51,8 +51,8 @@ var createUser = function(req, res, userInfo) {
         		subject: 'Please verify your Foodback MIT account',
         		text: 'Visit the following URL to verify your email address ' +
         		'and log into your Foodback MIT account: ' +
-        		'http://ps3-applephi.rhcloud.com/users/verify/' +
-        		userInfo._id + '/' + userInfo.token
+        		'http://ps3-applephi.rhcloud.com/users/verify?username=' +
+        		userInfo._id + '?token=' + userInfo.token
         	};
         	
         	transporter.sendMail(mailOps, function(err, info) {
@@ -142,16 +142,21 @@ router.post('/signup', function(req, res, next) {
     });
 });
 
-// GET /users/verify/:username/:token
-// Request parameters:
+// GET /users/verify
+// Request query:
 //     - username: the username of the account that is being verified
 //     - token: the user's verification token
 // Response:
 //     - success: true if the user was verified and logged in
 //     - err: on failure, an error message
-router.get('/verify/:username/:token', function(req, res) {
-    var username = req.params.username;
-    var token = req.params.token;
+router.get('/verify', function(req, res) {
+    var username = req.query.username;
+    var token = req.query.token;
+    if (!(username && token)) {
+    	utils.sendErrResponse(res, 403, 'Username and token required');
+    	return;
+    }
+    
     User.findById(username, function(err, doc) {
     	if (err) {
     		utils.sendErrResponse(res, 500, 'Unknown error');
