@@ -62,7 +62,7 @@ QUnit.test("Post Test", function(assert) {
     stop();
     $.ajax({
         type: 'POST',
-        url: '/reviews/post',
+        url: '/reviews',
         data: review,
         dataType: 'json',
         success: function(data) {
@@ -196,8 +196,8 @@ QUnit.test("Upvote Test", function(assert) {
 QUnit.test("Delete Test", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',
-        url: '/reviews/delete/' + currentReviewId,
+        type: 'DELETE',
+        url: '/reviews/' + currentReviewId,
         success: function(data) {
             assert.ok(data.success, 'Delete success.');
             start();
@@ -210,7 +210,7 @@ QUnit.test("Post Test 2", function(assert) {
     stop();
     $.ajax({
         type: 'POST',
-        url: '/reviews/post',
+        url: '/reviews',
         data: review,
         dataType: 'json',
         success: function(data) {
@@ -241,8 +241,8 @@ QUnit.test("Downvote Test", function(assert) {
 QUnit.test("Delete Test 2", function(assert) {
     stop();
     $.ajax({
-        type: 'GET',
-        url: '/reviews/delete/' + currentReviewId,
+        type: 'DELETE',
+        url: '/reviews/' + currentReviewId,
         success: function(data) {
             assert.ok(data.success, 'Delete success.');
             start();
