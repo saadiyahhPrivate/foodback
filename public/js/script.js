@@ -17,6 +17,7 @@ function logout() {
 		success: function(response) {
 			$('#user-header').text("");
 			$('#user-header').append('<li><a href="/users/login">Log In or Sign Up</a></li>');
+			$('#post_form').data('inView', false);
 			$('make_button').hide();
 		},
 		error: error
