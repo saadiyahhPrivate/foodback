@@ -94,13 +94,14 @@ function reviewHeader(author, hall, period, rating) {
 function reviewBody(content, score, tags) {
     var content = $('<p>').addClass('review_title').text(content);
     var score = $('<span>').addClass('review_score').text(score + ' points');
-    var tags = $('<span>').addClass('review_tags').text('Tagged in: ');
+    var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
+	console.log(tags);
     var i;
     for (i = 0; i < tags.length; i++) {
         var tag = $('<span>').addClass('review_tag').text(tags[i]);
-        tags.append(tag);
+        tagsSpan.append(tag);
     }
-    return $('<div>').addClass('review_body').append(content, tags, score);
+    return $('<div>').addClass('review_body').append(content, tagsSpan, score);
 }
 
 function createReviewDiv(review) {
@@ -166,13 +167,11 @@ function getReviews() {
 					var div = createReviewDiv(reviews[i]);
 					reviewsDiv.append(div);
 				}
-			} else {
-				console.log(data);
 			}
 		},
 		error: error
 	});
-	
+
 	return false;
 }
 
