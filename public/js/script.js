@@ -234,6 +234,25 @@ function getReviews() {
 				i;
 
 			reviewsDiv.text('');
+			
+			var score = data.content.score;
+			var count = data.content.count;
+			if (score != undefined) {
+				var scopeText = formatString(hall);
+				if (period !== 'all') {
+					scopeText = formatString(period) + ' at ' + scopeText;
+				}
+				
+				if (count > 0) {
+					var average = (score / count).toFixed(2);
+					scopeText = scopeText + ' has an average rating of ' +
+							average + ' stars.';
+				} else {
+					scopeText = scopeText + ' has not been rated yet.';
+				}
+				
+				reviewsDiv.append('<h3>' + scopeText + '</h3>');
+			}
 	
 			for (i = 0; i < reviews.length; i++) {
 				var div = createReviewDiv(reviews[i]);
