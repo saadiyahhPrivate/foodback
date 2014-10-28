@@ -23,7 +23,31 @@ function logout() {
 }
 
 function postReview() {
-    // Saadiyah
+    var review = {
+        hall: $("#new_review_hall").val(),
+        period: $("#new_review_period").val(),
+        content: $("#new_review_content").val(), 
+        tags: $("#new_review_tags").val(), 
+        rating: $("#new_review_rating").val()
+    }
 
+    $.ajax({
+        url: "/reviews/post",
+        type: "POST",
+        dataType: "json",
+        data: review,
+        success: function(data){
+            if (data.success === true){
+                location.reload();
+                $("#new_review_message").text("");
+            }
+            else{
+                $("#new_review_message").text("Failed to post review. Try again");
+            }
+        }, 
+        error: function(jqxhr){
+            $("#new_review_message").text("Failed to post review. Try again");
+        }
+    });
     return false; // to avoid reloading
 }

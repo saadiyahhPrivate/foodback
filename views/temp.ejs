@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foodback posts</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="//code.jquery.com/qunit/qunit-1.15.0.js"></script>
+        <script src="/js/tests.js"></script>
+        <script src="/jquery/jquet.js"></script>
+    </head>
+    <body>
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+    <p>My first paragraph.</p>
+
+    <input type="submit" value="newReview" onclick="toggle();"></input>
+        <script>
+          var toggle = function() {
+              var mydiv = document.getElementById('newpost');
+              if (mydiv.style.display === 'block' || mydiv.style.display === '')
+                mydiv.style.display = 'none';
+              else
+                mydiv.style.display = 'block'
+          }
+        </script>
+
+
+
+        <div id="newpost" style="display: none"><br>
+
+        <form name="posting" action="reviews/post" method="post">
+
+            <input type="hidden" name="name" value=<%=doc.name%>>            
+            <input type="hidden" name="name" value=<%=doc.name%>> 
+            <input type="hidden" name="name" value=<%=doc.name%>> 
+            <input type="hidden" name="name" value=<%=doc.name%>> 
+
+            <div>
+
+            <select class="form-control" name:"dininghall">
+                <option value="Maseeh">Maseeh</option>
+                <option value="mcCormick">mcCormick</option>
+                <option value="Baker">Baker</option>
+                <option value="Next">Next</option>
+                <option value="Simmons">Simmons</option>
+            </select>
+            <select class="form-control" name:"period">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Brunch">Brunch</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Late-night">Late-Night</option>
+            </select> </br> </br>
+
+            <div>
+                Post: 
+                <input type="textarea" name="content" class="postTextboxStyling" required>
+            </div></br>
+
+            <div>
+                Tags: 
+                <input type="textarea" name="tags">
+            </div></br>
+
+            Rating:
+            <input type="number" name="rating" min="1" max="5">
+
+            </br>
+
+
+            </div>
+            <input type="submit" value="Submit Review">
+        </form>
+    </div>
+
+
+    <p>there things afterwards</p>
+
+    </body>
+    </html>
+    </body>
+</html>
