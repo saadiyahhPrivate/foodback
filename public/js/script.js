@@ -1,6 +1,7 @@
 // General JavaScript
 // Post/delete reviews (author: Saadiyah)
 // Get reviews (author: Abdi)
+// Vote on reviews (author: Sophia)
 function error(jqxhr) {
 	var response = $.parseJSON(jqxhr.responseText);
 	$('#error-container').text(response.err);
@@ -57,15 +58,51 @@ function postReview() {
 }
 
 // Saadiyah
-function deleteReview(){
+function deleteReview() {
     var id = $(this).parent().data("id");
 
     $.ajax({
-        url:"/reviews/"+ id,
+        url: "/reviews/"+ id,
         type: "DELETE",
-        dataType:"json",
-        success: function(data){
+        dataType: "json",
+        success: function(data) {
             $('#success-container').text('Review successfully deleted.');
+            $('#success-container').slideDown();
+            getReviews();
+        },
+        error:error
+    });
+    return false;
+}
+
+// Sophia
+function upvote() {
+    var id = $(this).parent().parent().data("id");
+
+    $.ajax({
+        url: "/reviews/vote/up/" + id,
+        type: "POST",
+        dataType: "json",
+        success: function(data) {
+            $('#success-container').text('Your vote has been cast.');
+            $('#success-container').slideDown();
+            getReviews();
+        },
+        error:error
+    });
+    return false;
+}
+
+// Sophia
+function downvote() {
+    var id = $(this).parent().parent().data("id");
+
+    $.ajax({
+        url: "/reviews/vote/down/" + id,
+        type: "POST",
+        dataType: "json",
+        success: function(data) {
+            $('#success-container').text('Your vote has been cast.');
             $('#success-container').slideDown();
             getReviews();
         },
@@ -153,7 +190,7 @@ function createReviewDiv(review) {
 
 		if (review.canVote) {
 			var up = $('<button>').addClass('review_upvote').text('Approve'),
-				down = $('<button>').addClass('review_upvote').text('Disappove');
+				down = $('<button>').addClass('review_downvote').text('Disappove');
 
 			var vote = $('<span>').addClass('review_vote');
 			vote.append(up, down);
@@ -202,6 +239,8 @@ function getReviews() {
 			}
 			
 			$(".review_delete").click(deleteReview);
+			$(".review_upvote").click(upvote);
+			$(".review_downvote").click(downvote);
 		},
 		error: error
 	});
