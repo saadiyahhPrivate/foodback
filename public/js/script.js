@@ -67,6 +67,7 @@ function deleteReview(){
         success: function(data){
             $('#success-container').text('Review successfully deleted.');
             $('#success-container').slideDown();
+            getReviews();
         },
         error:error
     });
@@ -100,24 +101,37 @@ function formatString(string) {
 }
 
 // Abdi
-function reviewHeader(author, hall, period) {
-    var title = $('<span>').addClass('review_title').text(period + ' at ' + hall);
+function reviewHeader(author, hall, period, rating) {
+    if (rating > 1) {
+    	var starText = '' + rating + ' stars';
+    } else {
+    	var starText = '' + rating + ' star';
+    }
+    
+    var title = $('<span>').addClass('review_title').text(period + ' at ' +
+    		hall + ': ' + starText);
+    
     var by = $('<span>').addClass('review_author').text('Posted by ' + author);
     return $('<div>').addClass('review_heading').append(title, by);
 }
 
 // Abdi
-function reviewBody(content, score, tags, rating) {
+function reviewBody(content, score, tags) {
     var content = $('<p>').addClass('review_title').text(content);
     var score = $('<span>').addClass('review_score').text(score + ' points');
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
-	var rating = $('<span>').addClass('review_rating').text(rating + ' stars');
-    var i;
-    for (i = 0; i < tags.length; i++) {
-        var tag = $('<span>').addClass('review_tag').text(tags[i]);
-        tagsSpan.append(tag);
+    
+    if (tags.length > 0) {
+    	var i;
+        for (i = 0; i < tags.length; i++) {
+            var tag = $('<span>').addClass('review_tag').text(tags[i]);
+            tagsSpan.append(tag);
+        }
+        return $('<div>').addClass('review_body').append(content, tagsSpan, score);
+    } else {
+    	return $('<div>').addClass('review_body').append(content, score);
     }
-    return $('<div>').addClass('review_body').append(content, rating, tagsSpan, score);
+    
 }
 
 // Abdi
