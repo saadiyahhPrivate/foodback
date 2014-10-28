@@ -10,13 +10,9 @@ var User = models.User,
     Review = models.Review,
     Scope = models.Scope;
 
-var post = require('./post/index');
 var vote = require('./vote/index');
-var remove = require('./delete/index'); // using delete throws an error (keyword)
 
-router.use('/post', post);
 router.use('/vote', vote);
-router.use('/delete', remove);
 
 function getReviewHandle(query) {
     return Review.find(query).populate('author', '-password').populate('scope', 'hall period -_id');
