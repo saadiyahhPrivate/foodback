@@ -1,3 +1,6 @@
+// General JavaScript
+// Post/delete reviews (author: Saadiyah)
+// Get reviews (author: Abdi)
 function error(jqxhr) {
 	var response = $.parseJSON(jqxhr.responseText);
 	$('#error-container').text(response.err);
@@ -26,6 +29,7 @@ function logout() {
 	});
 }
 
+// Saadiyah
 function postReview() {
 	clearAlerts();
 
@@ -52,6 +56,7 @@ function postReview() {
     return false; // to avoid reloading
 }
 
+// Saadiyah
 function deleteReview(){
     var id = $(this).parent().data("id");
 
@@ -68,6 +73,7 @@ function deleteReview(){
     return false;
 }
 
+// Abdi
 function toggleReviewForm() {
     var form = $('#post_form');
     var inView = form.data('inView');
@@ -82,6 +88,7 @@ function toggleReviewForm() {
     var inView = form.data('inView', inView);
 }
 
+// Abdi
 function formatString(string) {
     if (string === "mccormick") {
     	string = "McCormick";
@@ -92,12 +99,14 @@ function formatString(string) {
     return string;
 }
 
+// Abdi
 function reviewHeader(author, hall, period) {
     var title = $('<span>').addClass('review_title').text(period + ' at ' + hall);
     var by = $('<span>').addClass('review_author').text('Posted by ' + author);
     return $('<div>').addClass('review_heading').append(title, by);
 }
 
+// Abdi
 function reviewBody(content, score, tags, rating) {
     var content = $('<p>').addClass('review_title').text(content);
     var score = $('<span>').addClass('review_score').text(score + ' points');
@@ -111,6 +120,7 @@ function reviewBody(content, score, tags, rating) {
     return $('<div>').addClass('review_body').append(content, rating, tagsSpan, score);
 }
 
+// Abdi
 function createReviewDiv(review) {
 	var author = review.author,
 		hall = formatString(review.scope.hall),
@@ -144,6 +154,7 @@ function createReviewDiv(review) {
 		return reviewDiv;
 }
 
+// Abdi
 function getReviews() {
 	var base_url = '/reviews',
 		hall = $('#search_hall').val(),

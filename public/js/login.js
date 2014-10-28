@@ -1,3 +1,4 @@
+// Login/signup page JavaScript (author: Sophia)
 $(function() {
 	$('#login-username').popover({
 		trigger: 'focus',
