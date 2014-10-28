@@ -194,12 +194,12 @@ function createReviewDiv(review) {
 
 			var vote = $('<span>').addClass('review_vote');
 			vote.append(up, down);
-			reviewDiv.append(vote);
+			body.append(vote);
 		}
 
 		if (review.canDelete) {
 			var del = $('<button>').addClass('btn btn-sm btn-danger review_delete').text('Delete');
-			reviewDiv.append(del);
+			body.append(del);
 		}
 
 		return reviewDiv;
