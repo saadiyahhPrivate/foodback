@@ -1,7 +1,7 @@
 function error(jqxhr) {
 	var response = $.parseJSON(jqxhr.responseText);
 	$('#error-container').text(response.err);
-	$('#error-container').show();
+	$('#error-container').slideDown();
 }
 
 function clearAlerts() {

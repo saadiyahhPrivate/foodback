@@ -57,7 +57,7 @@ $(function() {
 						'A verification email has been sent to ' +
 						response.content.username + '@mit.edu. You must ' +
 						'verify your account before logging in.');
-				$('#success-container').show();
+				$('#success-container').slideDown();
 			},
 			error: error
 		});
