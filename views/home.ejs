@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <label class="control-label col-xs-2" for="hall">Dining Hall:</label>
                     <div class="col-xs-4">
-                        <select class="form-control" name="hall" required>
+                        <select id="new_review_hall" class="form-control" name="hall" required>
                             <option value="" selected disabled>Select</option>
                             <option value="baker">Baker</option>
                             <option value="maseeh">Maseeh</option>
@@ -58,7 +58,7 @@
                     </div>
                     <label class="control-label col-xs-2" for="period">Meal Period:</label>
                     <div class="col-xs-4">
-                        <select class="form-control" name="period" required>
+                        <select id="new_review_period" class="form-control" name="period" required>
                             <option value="" selected disabled>Select</option>
                             <option value="breakfast">Breakfast</option>
                             <option value="brunch">Brunch</option>
@@ -74,13 +74,13 @@
                 </div>
 
                 <div class="form-group col-xs-12 form-center">
-                    <textarea class="form-control" name="content" rows="10" required></textarea>
+                    <textarea id="new_review_content" class="form-control" name="content" rows="10" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-xs-2" for="rating">Rating:</label>
                     <div class="col-xs-2">
-                        <select class="form-control" name="rating" required>
+                        <select id="new_review_rating" class="form-control" name="rating" required>
                             <option value="" selected disabled>Select</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -91,7 +91,7 @@
                     </div>
                     <label class="control-label col-xs-2" for="tags">Tags:</label>
                     <div class="col-xs-6">
-                        <input class="form-control" type="text" name="tags" placeholder="Optional; separate tags with commas">
+                        <input id="new_review_tags" class="form-control" type="text" name="tags" placeholder="Optional; separate tags with commas">
                     </div>
                 </div>
 
