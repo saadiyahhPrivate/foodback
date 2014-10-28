@@ -151,7 +151,11 @@ function reviewBody(content, score, tags) {
 	var contentHTML = '<p>' + content.replace(/\n\n/g, '</p><p>') + "</p>";
 	contentHTML = contentHTML.replace(/\n/g, '<br \>');
     var content = $('<div>').addClass('review_content').append(contentHTML);
-    var score = $('<span>').addClass('review_score').text(score + ' points');
+    if (score == 1) {
+    	var score = $('<span>').addClass('review_score').text('1 point');
+    } else {
+    	var score = $('<span>').addClass('review_score').text(score + ' points');
+    }
     var tagsSpan = $('<span>').addClass('review_tags').text('Tagged in: ');
     
     if (tags.length > 0) {
@@ -185,8 +189,8 @@ function createReviewDiv(review) {
 		reviewDiv.data('id', id);
 
 		if (review.canVote) {
-			var up = $('<button>').addClass('review_upvote').text('Approve'),
-				down = $('<button>').addClass('review_downvote').text('Disappove');
+			var up = $('<button>').addClass('btn btn-sm btn-primary review_upvote').text('+1'),
+				down = $('<button>').addClass('btn btn-sm btn-primary review_downvote').text('-1');
 
 			var vote = $('<span>').addClass('review_vote');
 			vote.append(up, down);
@@ -194,7 +198,7 @@ function createReviewDiv(review) {
 		}
 
 		if (review.canDelete) {
-			var del = $('<button>').addClass('review_delete').text('Delete');
+			var del = $('<button>').addClass('btn btn-sm btn-danger review_delete').text('Delete');
 			reviewDiv.append(del);
 		}
 
