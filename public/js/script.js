@@ -200,6 +200,8 @@ function getReviews() {
 				var div = createReviewDiv(reviews[i]);
 				reviewsDiv.append(div);
 			}
+			
+			$(".review_delete").click(deleteReview);
 		},
 		error: error
 	});
@@ -214,7 +216,6 @@ $(function () {
     $('#make_button').click(toggleReviewForm);
     $('#post_button').click(postReview);
     $('#logout-link').click(logout);
-    $(".review_delete").click(deleteReview);
 	$('#search_hall, #search_period').change(getReviews);
 	$('#tags_button').click(getReviews);
 	getReviews();
