@@ -44,14 +44,34 @@ function createReviewHTML(review) {
         rating = review.rating,
         content = review.content,
         tags = review.tags,
-        score = review.score;
+        score = review.score,
+        id = review._id;
 
         var header = reviewHeader(author, hall, period, rating);
         var body = reviewBody(content, score, tags);
 
-        var review = $('<div>').addClass('review').append(header, body);
+        var reviewDiv = $('<div>').addClass('review').append(header, body);
+        reviewDiv.data('id', id);
+
+        if (review.canVote) {
+            var up = $('<button>').addClass('review_upvote').text('Approve'),
+                down = $('<button>').addClass('review_upvote').text('Disappove');
+
+            var vote = $('<span>').addClass('review_vote');
+            vote.append(up, down);
+            review.append(vote);
+        }
+
+        if (review.canDelete) {
+            var del = $('<button>').addClass('review_delete').text('Delete');
+            reviewDiv.append(del);
+        }
 
         return review;
+}
+
+function getReviews() {
+    var
 }
 
 $(function () {
