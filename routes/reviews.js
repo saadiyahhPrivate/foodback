@@ -33,7 +33,9 @@ function hallSearch(req, res, hall) {
         	content = {score: 0, count: 0};
             for (var i = 0; i < scopes.length; i++) {
             	content.score += scopes[i].numStars;
+            	console.log(scopes[i].numStars);
             	content.count += scopes[i].totalReviews;
+            	console.log(scopes[i].totalReviews);
             }
             
             var ids = scopes.map(function (val, i, arr) {
