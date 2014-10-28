@@ -85,7 +85,6 @@ router.post('/', utils.requireLogin, function(req, res) {
                                         utils.sendSuccessResponse(res, {review: doc});
                                     }
                                 });
-                                // TODO phase 3: page to be rendered
                             }
                         });
                     }
