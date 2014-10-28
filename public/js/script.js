@@ -32,7 +32,7 @@ function postReview() {
     }
 
     $.ajax({
-        url: "/reviews/post",
+        url: "/reviews",
         type: "POST",
         dataType: "json",
         data: review,
@@ -43,6 +43,22 @@ function postReview() {
         error: error
     });
     return false; // to avoid reloading
+}
+
+function deleteReview(){
+    var id = $(this).parent().data("id");
+
+    $.ajax({
+        url:"/reviews/"+ id, 
+        type: "DELETE",
+        dataType:"json",
+        success: function(data){
+            $('#success-container').text('Review successfully deleted.');
+            $('#success-container').slideDown();  
+        }, 
+        error:error
+    });
+    return false;
 }
 
 function toggleReviewForm() {
@@ -108,4 +124,5 @@ $(function () {
     $('#make_button').click(toggleReviewForm);
     $('#post_button').click(postReview);
     $('#logout-link').click(logout);
+    $(".review_delete").click(deleteReview);
 });
